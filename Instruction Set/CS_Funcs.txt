@@ -17,8 +17,6 @@ F2
     TIH: IRH <- DB
     TRD: Rd  <- DB
     TMM: Mem <- DB 
-    TPC: PC  <- DB
-    TLR: LR  <- DB
     TAR: Ad  <- DB
 
 F3
