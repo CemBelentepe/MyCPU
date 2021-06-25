@@ -1,0 +1,72 @@
+/////////////
+ORIL (OPCODE 4)
+    MOVI, CMPI
+OGII (OPCODE 5)
+    ALUI
+
+ORII (OPCODE 6)
+    STRI, LDRI
+OMII (OPCODE 6)
+    BIcc
+OIII (OPCODE 6)
+    BI, BLI
+
+OGGG (OPCODE 7)
+    ALU
+
+ORR_ (OPCODE 8)
+    NOP CLR  B   BL
+    STR STRR PSH MOV
+    LDR LDRR POP CMP
+
+OMR_ (OPCODE 8)
+    Bcc
+
+///
+    1xxxx -> ALUI
+    011xx -> xx: ALU
+    0101x -> CMPI
+    0100x -> MOVI
+    00111 -> ...
+    00110 -> 0: BI  , 1: BLI
+    0010x -> BIcc
+    00011 -> 0: STRI, 1: LDRI 
+    00010 -> 000: Bcc, 1__: TAR
+    00001 -> 000: STR, 001: STRR, 010: PSH, 011: MOV, 100: LDR, 101: LDRR, 110: POP, 111: CMP
+    00000 -> 000: NOP, 001: CLR , 010: B, 011: BL, 100: PSHR, 101: POPR, 110: Bx, 111: BLx
+
+///
+NOP     0   
+CLR     1            
+B       3, 5
+BL      4, 6
+STR     8, 9, 6
+PSH     10
+LDR     12, 13, 7
+POP     14
+MOV     11, 18
+CMP     15, 19
+B{cc}   16, 17
+TAR     20
+
+ALU     22, 23
+
+// 20-31 -> empty
+
+// +32 -> 1Ixxxx
+ADD, ADC, SUB, SBB, AND, ORR, EOR, NEG, LSL, ROR, LSR, ASR, MUL, DIV, IMUL, IDIV
+
+/// {#, 0}
+    0000xxxx -> 0xxxx -> 0,1,2,3,4,5,6,7        | NOP, CLR , B, BL, PSHR, POPR, Bx, BLx
+                         8,9,10,11,12,13,14,15  | STR, STRR, PSH, MOV, LDR, LDRR, POP, CMP
+    00011x   -> 1000x -> 16,17                  | STRI, LDRI
+    00110x   -> 1001x -> 18,19                  | BI, BLI
+    00010000 -> 10100 -> 20                     | Bcc
+    0010     -> 10101 -> 21                     | BIcc
+    010x     -> 1011x -> 22, 23                 | MOVI, CMPI
+    000101   -> 11000 -> 24                     | TAR
+    011      -> 11010 -> 26                     | ALU
+    1        -> 11011 -> 27                     | ALUI
+
+
+

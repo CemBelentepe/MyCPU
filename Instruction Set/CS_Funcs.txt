@@ -1,0 +1,36 @@
+F1
+    NOP: NOP
+    FMM: DB <- Mem
+    FRD: DB <- Rd
+    FRM: DB <- Rm
+    FIM: DB <- Imm8
+    FPI: DB <- PC+2*Imm{8, 10}
+    FPC: DB <- PC
+    ALR: DB <- Rd op Rm
+    ALI: DB <- Rd op Imm
+    FRR: DB <- Rm, Rn
+    FDZ: DB <- 0
+
+F2
+    NOP: NOP
+    TIL: IRL <- DB
+    TIH: IRH <- DB
+    TRD: Rd  <- DB
+    TMM: Mem <- DB 
+    TPC: PC  <- DB
+    TLR: LR  <- DB
+    TAR: Ad  <- DB
+
+F3
+    NOP: NOP
+    APC: AB  <- PC
+    ASP: AB  <- SP
+    AAR: AB  <- AR
+    ARA: AB  <- AR+Rm
+    ARI: AB  <- AR+Imm6
+
+F4
+    NOP: NOP
+    IPC: INC(PC)
+    ISP: INC(SP)
+    DSP: DEC(SP)

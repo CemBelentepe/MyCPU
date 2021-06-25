@@ -1,0 +1,24 @@
+loop:
+    mov r0, r2
+    bgt loop
+
+loop == 4
+0x04: inst1_l
+0x05: inst1_h
+0x06: inst2_l
+0x07: inst2_h .... pc=8 to 4, pc+2*imm = pc'
+0x08: 
+
+8+2imm=4
+2*imm = -4
+imm = -2
+
+////////////
+0x15
+ALIGN
+mov r0, r2 => 00001011 00000010
+
+00011001
+--------
+00000010
+00001011

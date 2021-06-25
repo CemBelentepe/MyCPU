@@ -1,0 +1,12 @@
+// Function call
+
+_start:
+    
+
+
+
+func:
+    psh lrh, lrl
+
+
+    pop pch, pcl
