@@ -1,13 +1,16 @@
-#include "imgui.h"
-#include "imgui-SFML.h"
+#include <imgui.h>
+#include <imgui-SFML.h>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "MyCPU.h"
+#include "StandardBus.h"
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(640, 480), "");
+	sf::RenderWindow window(sf::VideoMode(1024, 768), "MyCPU Emulator");
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
@@ -15,11 +18,9 @@ int main()
 
 	float color[3] = { 0.f, 0.f, 0.f };
 
-	// let's use char array as buffer, see next part
-	// for instructions on using std::string with ImGui
-	char windowTitle[255] = "ImGui + SFML = <3";
+	MyCPU myCPU("controlStorage.txt", std::make_unique<StandardBus>("program.txt"));
 
-	window.setTitle(windowTitle);
+
 	window.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
 	sf::Clock deltaClock;
 	while (window.isOpen()) 
@@ -36,30 +37,10 @@ int main()
 		}
 
 		ImGui::SFML::Update(window, deltaClock.restart());
+		
+		myCPU.update();
 
-		ImGui::Begin("Sample window"); // begin window
-
-									   // Background color edit
-		if (ImGui::ColorEdit3("Background color", color)) 
-		{
-			// this code gets called if color value changes, so
-			// the background color is upgraded automatically!
-			bgColor.r = static_cast<sf::Uint8>(color[0] * 255.f);
-			bgColor.g = static_cast<sf::Uint8>(color[1] * 255.f);
-			bgColor.b = static_cast<sf::Uint8>(color[2] * 255.f);
-		}
-
-		// Window title text edit
-		ImGui::InputText("Window title", windowTitle, 255);
-
-		if (ImGui::Button("Update window title")) 
-		{
-			// this code gets if user clicks on the button
-			// yes, you could have written if(ImGui::InputText(...))
-			// but I do this to show how buttons work :)
-			window.setTitle(windowTitle);
-		}
-		ImGui::End(); // end window
+		myCPU.render();
 
 		window.clear(bgColor); // fill background with color
 		ImGui::SFML::Render(window);

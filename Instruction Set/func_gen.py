@@ -1,7 +1,7 @@
 
 def createEnums(funcs):
     for key in funcs:
-        out = "enum class " + key + " { "
+        out = "static enum class " + key + " { "
         for val in funcs[key]:
             out += val + ", "
         out += "};"
@@ -9,7 +9,7 @@ def createEnums(funcs):
 
 def createMaps(funcs):
     for key in funcs:
-        out = "std::unordered_map<" + key + ", std::string> " + key + "_map{ "
+        out = "static std::unordered_map<" + key + ", std::string> " + key + "_map{ "
         i = 0
         for val in funcs[key]:
             out += "{" + key + "::" + val + ", \"" + val + "\"}, "

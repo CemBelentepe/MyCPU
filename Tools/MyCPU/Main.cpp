@@ -6,18 +6,18 @@
 #include <vector>
 #include <unordered_map>
 
-enum class F1 { NOP, FMM, FRD, FRM, FIM, FPI, FPC, ALR, ALI, FRR, FDZ, };
-enum class F2 { NOP, TIL, TIH, TRD, TMM, TPC, TLR, TAR, };
-enum class F3 { NOP, APC, ASP, AAR, ARA, ARI, };
-enum class F4 { NOP, IPC, ISP, DSP, };
+static enum class F1 { NOP, FMM, FRD, FRM, FIM, FPI, FPC, ALR, ALI, FRR, FDZ, };
+static enum class F2 { NOP, TIL, TIH, TMM, TRD, TRM, TAR, TLR, };
+static enum class F3 { NOP, APC, ASP, AAR, ARA, ARI, };
+static enum class F4 { NOP, IPC, ISP, DSP, };
 
-std::unordered_map<F1, std::string> F1_map{ {F1::NOP, "NOP"}, {F1::FMM, "FMM"}, {F1::FRD, "FRD"}, {F1::FRM, "FRM"}, {F1::FIM, "FIM"}, {F1::FPI, "FPI"},
-											{F1::FPC, "FPC"}, {F1::ALR, "ALR"}, {F1::ALI, "ALI"}, {F1::FRR, "FRR"}, {F1::FDZ, "FDZ"}, };
-std::unordered_map<F2, std::string> F2_map{ {F2::NOP, "NOP"}, {F2::TIL, "TIL"}, {F2::TIH, "TIH"}, {F2::TRD, "TRD"}, {F2::TMM, "TMM"}, {F2::TPC, "TPC"},
-											{F2::TLR, "TLR"}, {F2::TAR, "TAR"}, };
-std::unordered_map<F3, std::string> F3_map{ {F3::NOP, "NOP"}, {F3::APC, "APC"}, {F3::ASP, "ASP"}, {F3::AAR, "AAR"}, {F3::ARA, "ARA"}, {F3::ARI, "ARI"}, };
+static std::unordered_map<F1, std::string> F1_map{ {F1::NOP, "NOP"}, {F1::FMM, "FMM"}, {F1::FRD, "FRD"}, {F1::FRM, "FRM"}, {F1::FIM, "FIM"}, {F1::FPI, "FPI"},
+										{F1::FPC, "FPC"}, {F1::ALR, "ALR"}, {F1::ALI, "ALI"}, {F1::FRR, "FRR"}, {F1::FDZ, "FDZ"}, };
+static std::unordered_map<F2, std::string> F2_map{ {F2::NOP, "NOP"}, {F2::TIL, "TIL"}, {F2::TIH, "TIH"}, {F2::TMM, "TMM"}, {F2::TRD, "TRD"}, {F2::TRM, "TRM"},
+										{F2::TAR, "TAR"}, {F2::TLR, "TLR"}, };
+static std::unordered_map<F3, std::string> F3_map{ {F3::NOP, "NOP"}, {F3::APC, "APC"}, {F3::ASP, "ASP"}, {F3::AAR, "AAR"}, {F3::ARA, "ARA"}, {F3::ARI, "ARI"}, };
 
-std::unordered_map<F4, std::string> F4_map{ {F4::NOP, "NOP"}, {F4::IPC, "IPC"}, {F4::ISP, "ISP"}, {F4::DSP, "DSP"}, };
+static std::unordered_map<F4, std::string> F4_map{ {F4::NOP, "NOP"}, {F4::IPC, "IPC"}, {F4::ISP, "ISP"}, {F4::DSP, "DSP"}, };
 
 enum class CD { U, C };
 enum class BR { JMP, MAP };
@@ -26,20 +26,12 @@ std::unordered_map<BR, std::string> BR_map{ {BR::JMP, "JMP"}, {BR::MAP, "MAP"} }
 
 std::unordered_map<std::string, uint8_t> OpCodes
 {
-	{"NOP", 0},
-	{"CLR", 1},
-	{"B", 3}, {"BI", 5},
-	{"BL", 4}, {"BLI", 6},
-	{"STR", 8}, {"STRR", 9}, {"STRI", 6},
-	{"PSH", 10},
-	{"LDR", 12}, {"LDRR", 13}, {"LDRI", 7},
-	{"POP", 14},
-	{"MOV", 11}, {"MOVI", 18},
-	{"CMP", 15}, {"CMPI", 19},
-	{"Bcc", 16}, {"BIcc", 17},
-	{"TAR", 20},
-	{"ALU", 22}, {"ALUI", 23},
-	{"FETCH", 24}
+	{"NOP", 0}, {"CLR", 1}, {"B", 2}, {"BL", 3}, {"PSHR", 4}, {"POPR", 5},
+	{"Bx", 6}, {"BLx", 7}, {"STR", 8}, {"STRR", 9}, {"PSH", 10}, {"MOV", 11},
+	{"LDR", 12}, {"LDRR", 13}, {"POP", 14}, {"CMP", 15}, {"STRI", 16}, {"LDRI", 17},
+	{"BI", 18}, {"BLI", 19}, {"Bcc", 20}, {"BIcc", 21}, {"MOVI", 22}, {"CMPI", 23},
+	{"MOVD", 24}, {"ALU", 26}, {"ALUI", 27},
+	{"FETCH", 28}
 };
 
 template <typename T>
@@ -100,6 +92,8 @@ uint8_t mapper(const std::string& ad)
 {
 	if (ad == "" || ad == "NONE")
 		return 0;
+	else if (ad == "PSH_2")
+		return 2 * OpCodes["PSH"] + 1;
 	else
 	{
 		try
@@ -229,5 +223,6 @@ int main()
 
 	std::cout << "Completed!" << std::endl;
 
+	out_file.close();
 	return 0;
 }

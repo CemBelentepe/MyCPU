@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,11 +12,11 @@
     <Filter Include="Vendor">
       <UniqueIdentifier>{de18ca58-3232-4068-98ee-6a6b4e2783e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CPU">
+      <UniqueIdentifier>{d1df0dd6-5180-4471-a5e8-a3f16cdbbb77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\vendor\imgui\imgui_draw.cpp">
       <Filter>Vendor</Filter>
     </ClCompile>
@@ -39,5 +35,42 @@
     <ClCompile Include="..\vendor\imgui\imgui_tables.cpp">
       <Filter>Vendor</Filter>
     </ClCompile>
+    <ClCompile Include="MyCPU.cpp">
+      <Filter>CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlUnit.cpp">
+      <Filter>CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardBus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyCPU.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlUnit.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="MicroProgram.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Bus.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardBus.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="controlStorage.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="program.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

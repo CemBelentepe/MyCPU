@@ -15,9 +15,11 @@ F2
     NOP: NOP
     TIL: IRL <- DB
     TIH: IRH <- DB
-    TRD: Rd  <- DB
     TMM: Mem <- DB 
+    TRD: Rd  <- DB
+    TRM: Rm  <- DB
     TAR: Ad  <- DB
+    TLR: LR  <- LR
 
 F3
     NOP: NOP

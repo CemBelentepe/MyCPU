@@ -9,3 +9,22 @@
     000101   -> 11000 -> 24                     | MOVD
     011      -> 11010 -> 26                     | ALU
     1        -> 11011 -> 27                     | ALUI
+
+
+{"NOP", 0}, {"CLR", 1}, {"B", 2}, {"BL", 3}, {"PSHR", 4}, {"POPR", 5},
+{"Bx", 6}, {"BLx", 7}, {"STR", 8}, {"STRR", 9}, {"PSH", 10}, {"MOV", 11},
+{"LDR", 12}, {"LDRR", 13}, {"POP", 14}, {"CMP", 15}, {"STRI", 16}, {"LDRI", 17},
+{"BI", 18}, {"BLI", 19}, {"Bcc", 20}, {"BIcc", 21}, {"MOVI", 22}, {"CMPI", 23},
+{"MOVD", 24}, {"ALU", 26}, {"ALUI", 27},
+{"FETCH", 28}
+
+0000    -> xxxx -> NOP, CLR , B, BL, PSHR, POPR, Bx, BLx, STR, STRR, PSH, MOV, LDR, LDRR, POP, CMP
+0001    -> 0000: Bcc, 00__: Reserved, 01: MOVD, 10: STRI, 11: LDRI
+0010    -> BIcc
+0011    -> 00: BI, 01: BLI, 1_: Reserved
+0100    -> MOVI
+0101    -> CMPI
+011_    -> ALU
+1___    -> ALUI
+
+"NOP" ,"CLR" ,"B" ,"BL" ,"PSHR" ,"POPR" ,"Bx" ,"BLx" ,"STR" ,"STRR" ,"PSH" ,"MOV" ,"LDR" ,"LDRR" ,"POP" ,"CMP"
