@@ -57,6 +57,7 @@ ControlSignals ControlUnit::decodeInstruction(uint16_t inst)
 			cs.p_rd = get_bits(inst, 7, 4);
 			cs.p_rm = get_bits(inst, 3, 0);
 			cs.p_ad = 0;
+			cs.op = 2;
 			if (lookup[get_bits(inst, 11, 8)] == "B")
 				cs.p_rm = 8;
 			break;
@@ -70,19 +71,19 @@ ControlSignals ControlUnit::decodeInstruction(uint16_t inst)
 				cs.p_rd = get_bits(inst, 3, 0);
 				cs.p_rm = 8;
 			}
-			else if (get_bits(inst, 11, 8) == 0b10)
+			else if (get_bits(inst, 11, 10) == 0b01)
 			{
 				cs.mp = get_mp("MOVD");
 				cs.p_ad = get_bits(inst, 9, 8);
 				cs.p_rm = get_bits(inst, 7, 4);
 				cs.p_rn = get_bits(inst, 3, 0);
 			}
-			else if (get_bits(inst, 11, 10) == 0b1)
+			else if (get_bits(inst, 11, 11) == 0b1)
 			{
-				if (get_bits(inst, 10, 9) == 0b0)
-					cs.mp = get_mp("LDRI");
-				else
+				if (get_bits(inst, 10, 10) == 0b0)
 					cs.mp = get_mp("STRI");
+				else
+					cs.mp = get_mp("LDRI");
 				cs.p_rd = get_bits(inst, 9, 6);
 				cs.imm_adr = get_bits(inst, 5, 0);
 			}
@@ -134,6 +135,7 @@ ControlSignals ControlUnit::decodeInstruction(uint16_t inst)
 			cs.mp = get_mp("CMPI");
 			cs.p_rd = get_bits(inst, 11, 8);
 			cs.imm8 = get_bits(inst, 7, 0);
+			cs.op = 2;
 			break;
 		}
 		default:
@@ -163,9 +165,16 @@ ControlSignals ControlUnit::nextStep(const ControlSignals& cs, const MyCPU& myCp
 	ControlSignals signal;
 	if (cs.mp.br == BR::JMP)
 	{
-		if (cs.mp.cd == CD::U || (cs.mp.cd == CD::C && evaluateCond(cs.bcc, myCpu.flags)))
+		if (cs.mp.cd == CD::U)
 		{
 			this->currentPos = cs.mp.ad;
+		}
+		else if (cs.mp.cd == CD::C)
+		{
+			if (evaluateCond(cs.bcc, myCpu.flags))
+				this->currentPos = cs.mp.ad;
+			else 
+				this->currentPos++;;
 		}
 		else
 		{

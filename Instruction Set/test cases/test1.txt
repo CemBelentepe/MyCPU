@@ -22,7 +22,7 @@ _start:
     str r0, [ar, r3]
     add r3, #1
     cmp r2, #0
-    bge .loop
+    bgt .loop
 
 .end:
     b   .end

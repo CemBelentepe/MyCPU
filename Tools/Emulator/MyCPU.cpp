@@ -198,22 +198,22 @@ uint8_t MyCPU::operate(uint8_t mode, uint8_t dataA, uint8_t dataB)
 	case 0:
 		res = dataA + dataB;
 		flags[2] = res > 255;
-		flags[1] = (dataA < 128 && dataB < 128 && res > 128) || (dataA >= 128 && dataB >= 128 && res < 128);
+		flags[0] = (dataA < 128 && dataB < 128 && res > 128) || (dataA >= 128 && dataB >= 128 && res < 128);
 		break;
 	case 1:
 		res = dataA + dataB + flags[2];
 		flags[2] = res >= 256;
-		flags[1] = (dataA < 128 && dataB < 128 && res >= 128) || (dataA >= 128 && dataB >= 128 && res < 128);
+		flags[0] = (dataA < 128 && dataB < 128 && res >= 128) || (dataA >= 128 && dataB >= 128 && res < 128);
 		break;
 	case 2:
 		res = dataA - dataB;
 		flags[2] = res > 255;
-		flags[1] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
+		flags[0] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
 		break;
 	case 3:
 		res = dataA - dataB - ~flags[2];
 		flags[2] = res > 255;
-		flags[1] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
+		flags[0] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
 		break;
 	case 4:
 		res = dataA * dataB;
@@ -224,7 +224,7 @@ uint8_t MyCPU::operate(uint8_t mode, uint8_t dataA, uint8_t dataB)
 	case 6:
 		res = dataB - dataA;
 		flags[2] = res > 255;
-		flags[1] = (dataB < 128 && dataA >= 128 && res >= 128) || (dataB >= 128 && dataA < 128 && res < 128);
+		flags[0] = (dataB < 128 && dataA >= 128 && res >= 128) || (dataB >= 128 && dataA < 128 && res < 128);
 		break;
 	case 7:
 		res = -dataB;
