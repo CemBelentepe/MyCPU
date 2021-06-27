@@ -11,7 +11,7 @@ public:
 	MyCPU(const std::string& inst_filename, std::unique_ptr<Bus> bus);
 
 	void update();
-	void render();
+	void render(sf::RenderWindow& window);
 
 	friend class ControlUnit;
 private:

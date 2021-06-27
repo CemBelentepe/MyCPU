@@ -44,9 +44,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StandardBus.cpp">
-      <Filter>CPU</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyCPU.h">
@@ -59,6 +56,9 @@
       <Filter>CPU</Filter>
     </ClInclude>
     <ClInclude Include="Bus.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyBus.h">
       <Filter>CPU</Filter>
     </ClInclude>
     <ClInclude Include="StandardBus.h">

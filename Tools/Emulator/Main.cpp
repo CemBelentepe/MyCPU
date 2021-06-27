@@ -15,8 +15,6 @@ int main()
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
-	sf::Color bgColor;
-
 	float color[3] = { 0.f, 0.f, 0.f };
 
 	MyCPU myCPU("controlStorage.txt", std::make_unique<StandardBus>("program.txt"));
@@ -46,9 +44,8 @@ int main()
 		
 		myCPU.update();
 
-		myCPU.render();
-
-		window.clear(bgColor); // fill background with color
+		window.clear(sf::Color::Black);
+		myCPU.render(window);
 		ImGui::SFML::Render(window);
 		window.display();
 	}

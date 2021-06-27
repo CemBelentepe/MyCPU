@@ -1,0 +1,29 @@
+Memory Structure:
+    0x0000 -> Code
+    0x4000 -> RAM
+    0xC000 -> Peripherals
+
+Peripherals:
+    PPU:
+    0xC000: update
+    0xC001: update_mode
+    0xC002: color_r
+    0xC003: color_g
+    0xC004: color_b
+    0xC005: color_a
+    0xC006: target_x
+    0xC007: target_y
+    0xC008: target_w
+    0xC009: target_h
+    0xC00A: texture_adr
+    0xC00C: src_x
+    0xC00D: src_y
+    0xC00E: src_w
+    0xC00F: src_h
+    
+    update_mode:
+        clear_screen
+        update_pixel
+        put_texture_rgb
+        put_texture_rgba
+    

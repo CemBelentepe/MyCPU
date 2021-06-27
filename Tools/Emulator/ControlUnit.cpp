@@ -261,10 +261,10 @@ std::vector<std::string> ControlUnit::dissambleMemory(const MyCPU& myCpu)
 			ss << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm);
 			break;
 		case 16: // STRI
-			ss << getRegName(cs.p_rd) << ", [AR, #0x" << std::hex << std::setw(2) << std::setfill('0') << unsigned int(cs.imm_adr);
+			ss << getRegName(cs.p_rd) << ", [AR, #0x" << std::hex << std::setw(2) << std::setfill('0') << unsigned int(cs.imm_adr) << "]";
 			break;
 		case 17: // LDRI
-			ss << getRegName(cs.p_rd) << ", [AR, #0x" << std::hex << std::setw(2) << std::setfill('0') << unsigned int(cs.imm_adr);
+			ss << getRegName(cs.p_rd) << ", [AR, #0x" << std::hex << std::setw(2) << std::setfill('0') << unsigned int(cs.imm_adr) << "]";
 			break;
 		case 18: // BI
 		{

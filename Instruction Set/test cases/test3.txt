@@ -1,12 +1,22 @@
 // Function call
 
 _start:
-    
-
-
-
-func:
-    psh lrh, lrl
-
-
-    pop pch, pcl
+    mov arl, #0x00
+    mov arh, #0xC0
+    mov r7, #0
+    str r7, [AR, #1]
+    mov r0, #0
+    mov r1, #0
+    mov r2, #0
+    mov r3, #0 // posX
+    mov r4, #0 // posY
+.loop: // 16              
+    // set colors
+    str r0, [AR, #2]
+    str r1, [AR, #3]
+    str r2, [AR, #4]
+    str r7, [AR]
+    add r0, #1
+    add r1, #2
+    add r2, #4
+    b   .loop

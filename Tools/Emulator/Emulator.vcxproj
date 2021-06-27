@@ -160,13 +160,13 @@
     <ClCompile Include="ControlUnit.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyCPU.cpp" />
-    <ClCompile Include="StandardBus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bus.h" />
     <ClInclude Include="ControlUnit.h" />
     <ClInclude Include="MicroProgram.h" />
     <ClInclude Include="MyCPU.h" />
+    <ClInclude Include="EmptyBus.h" />
     <ClInclude Include="StandardBus.h" />
   </ItemGroup>
   <ItemGroup>

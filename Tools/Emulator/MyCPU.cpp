@@ -63,10 +63,10 @@ void MyCPU::update()
 	ImGui::End();
 }
 
-void MyCPU::render()
+void MyCPU::render(sf::RenderWindow& window)
 {
 	cu.render();
-	bus->render();
+	bus->render(window);
 }
 
 void MyCPU::executeNext()
