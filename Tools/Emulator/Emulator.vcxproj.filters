@@ -45,7 +45,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StandardBus.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>CPU</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

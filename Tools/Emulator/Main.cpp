@@ -10,7 +10,8 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1024, 768), "MyCPU Emulator");
+	// sf::RenderWindow window(sf::VideoMode(1024, 768), "MyCPU Emulator");
+	sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[1], "MyCPU Emulator"); // , sf::Style::Fullscreen);
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
@@ -31,12 +32,17 @@ int main()
 			ImGui::SFML::ProcessEvent(event);
 
 			if (event.type == sf::Event::Closed) 
-			{
 				window.close();
-			}
+			if (event.type == sf::Event::KeyPressed)
+				if (event.key.code == sf::Keyboard::Escape)
+					window.close();
 		}
 
-		ImGui::SFML::Update(window, deltaClock.restart());
+		sf::Time dt = deltaClock.restart();
+		ImGui::SFML::Update(window, dt);
+		ImGui::Begin("Debug");
+		ImGui::Text("FPS: %.2f", 1.0f / dt.asSeconds());
+		ImGui::End();
 		
 		myCPU.update();
 

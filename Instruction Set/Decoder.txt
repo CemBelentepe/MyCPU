@@ -28,3 +28,4 @@
 1___    -> ALUI
 
 "NOP" ,"CLR" ,"B" ,"BL" ,"PSHR" ,"POPR" ,"Bx" ,"BLx" ,"STR" ,"STRR" ,"PSH" ,"MOV" ,"LDR" ,"LDRR" ,"POP" ,"CMP"
+

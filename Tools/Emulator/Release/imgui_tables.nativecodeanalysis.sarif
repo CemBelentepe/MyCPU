@@ -1,0 +1,505 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.28.29914.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "commandLine": "\"D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.28.29910\\bin\\HostX86\\x86\\c1xx.dll\" -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x007BB1C0 -il C:\\Users\\cemal\\AppData\\Local\\Temp\\_CL_3b3b2aefast -typedil -f ..\\vendor\\imgui\\imgui_tables.cpp -Ze -D_MSC_EXTENSIONS -Zp8 -Gs -pc \\:/ -D_MSC_VER=1928 -D_MSC_FULL_VER=192829914 -D_MSC_BUILD=0 -D_WIN32 -D_M_IX86=600 -D_M_IX86_FP=2 -GR -D_CPPRTTI -I C:\\Users\\cemal\\Documents\\GitHub\\myCPU\\Tools\\vendor\\imgui_club -I C:\\Users\\cemal\\Documents\\GitHub\\myCPU\\Tools\\vendor\\imgui -I C:\\Users\\cemal\\Documents\\GitHub\\myCPU\\Tools\\vendor\\imgui-sfml -I C:\\Users\\cemal\\Documents\\GitHub\\myCPU\\Tools\\vendor\\sfml_32bit\\include -nologo -W 3 -diagnostics:column -D_GUARDOVERFLOW_CRT_ALLOCATORS=1 -GF -Og -Ot -Oi -ltcg -DCODE_ANALYSIS -DWIN32 -DNDEBUG -D_CONSOLE -D_UNICODE -DUNICODE -EHs -D_CPPUNWIND -EHc -MD -D_MT -D_DLL -GS -D_M_FP_PRECISE -permissive- -Zc:wchar_t -Zc:forScope -FoRelease\\imgui_tables.obj -FdRelease\\vc142.pdb -Gd -analyze:projectdirectory C:\\Users\\cemal\\Documents\\GitHub\\myCPU\\Tools\\Emulator -analyze:rulesetdirectory ;D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.28.29910\\bin\\HostX86\\x86\\EspXEngine.dll -FC -errorreport:prompt -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.28.29910\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.28.29910\\atlmfc\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I D:\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I D:\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I D:\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I D:\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I D:\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Users\\cemal\\Documents\\GitHub\\myCPU\\Tools\\Emulator\\Include\\um",
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/emulator/standardbus.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "d41d8cd98f00b204e9800998ecf8427e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/cemal/Documents/GitHub/myCPU/Tools/Emulator/MyCPU.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "03659b7547a8ffb9c1c86faea9909c17"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/emulator/mycpu.h"
+          },
+          "hashes": {
+            "md5": "62e04d5fc30c48914c50dda4f84a68cb"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/emulator/controlunit.h"
+          },
+          "hashes": {
+            "md5": "5e2af42c0232919e97c076d7fb8916b2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/emulator/microprogram.h"
+          },
+          "hashes": {
+            "md5": "08b02ffb1b04944b74014e8c136c15c5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/emulator/bus.h"
+          },
+          "hashes": {
+            "md5": "b3e8c055102a166c2aa313da20d949ca"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/imgui/imgui.h"
+          },
+          "hashes": {
+            "md5": "d55a54d35b0500f083ea88234c7aa828"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/imgui/imconfig.h"
+          },
+          "hashes": {
+            "md5": "8508db7aed0eb23cd31835bc44d927e6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/color.hpp"
+          },
+          "hashes": {
+            "md5": "07301ae0ee0cdd62bc5ef0a1abb97d5c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/export.hpp"
+          },
+          "hashes": {
+            "md5": "4c99b37ab064eecd2dc04f890e0e7934"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/config.hpp"
+          },
+          "hashes": {
+            "md5": "79367476ad239718af3bac17d6678594"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/vector2.hpp"
+          },
+          "hashes": {
+            "md5": "1ee6ea4744555ffcfe19381215d19865"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/vector2.inl"
+          },
+          "hashes": {
+            "md5": "acdd5107243c1ba598b34c866ab7e13a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/imgui-sfml/imgui-sfml_export.h"
+          },
+          "hashes": {
+            "md5": "269910f4ab3967cf7fe1fea65c141bb3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/imgui-sfml/imgui-sfml.h"
+          },
+          "hashes": {
+            "md5": "fdc183cb2317c91ba3167cfad771294c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/rect.hpp"
+          },
+          "hashes": {
+            "md5": "8056555a37b33bf962b6fde792f22cf7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/rect.inl"
+          },
+          "hashes": {
+            "md5": "7da8c0a42f2f40e306aa7cb56bdfd01f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/time.hpp"
+          },
+          "hashes": {
+            "md5": "e359819c305da1c21dd13c94a852f501"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/export.hpp"
+          },
+          "hashes": {
+            "md5": "447736c1a2430bba477583b74bd138af"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/joystick.hpp"
+          },
+          "hashes": {
+            "md5": "17633c7af8d82d93862391d74891c40b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/export.hpp"
+          },
+          "hashes": {
+            "md5": "bfc821b0762ef8aaa8091343e29a6d4c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/string.hpp"
+          },
+          "hashes": {
+            "md5": "804eb52948e1709a4258de89f074d54a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/utf.hpp"
+          },
+          "hashes": {
+            "md5": "34faf3a521dd334e97a27f3d388f92d1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/utf.inl"
+          },
+          "hashes": {
+            "md5": "aff70a851901080ee91fb2296d7efb24"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/string.inl"
+          },
+          "hashes": {
+            "md5": "4a7e280a78ab1668f19047bc6c7a5095"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/cemal/Documents/GitHub/myCPU/Tools/vendor/imgui_club/imgui_memory_editor/imgui_memory_editor.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "b779beff11423ad7e4f81914681d45a2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/emulator/main.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "5921263c3bd1e9a0e8aa988b02740729"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/renderwindow.hpp"
+          },
+          "hashes": {
+            "md5": "ee4ca86b595bad41046ba75c2576ce40"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/rendertarget.hpp"
+          },
+          "hashes": {
+            "md5": "cec87cae5dc5f1e5f3b338af75f8d25f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/view.hpp"
+          },
+          "hashes": {
+            "md5": "c4ac69c50d2bb7086b8164b70695f18b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/transform.hpp"
+          },
+          "hashes": {
+            "md5": "ed3bc8923bc026a6711f74705dca995e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/blendmode.hpp"
+          },
+          "hashes": {
+            "md5": "b13908702f42e8b62d19972aeab8103a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/renderstates.hpp"
+          },
+          "hashes": {
+            "md5": "8b35c55635db9f44a5ae0f687497da6d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/primitivetype.hpp"
+          },
+          "hashes": {
+            "md5": "7985138d8b859333fb7c22c0c87ef455"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/vertex.hpp"
+          },
+          "hashes": {
+            "md5": "3a00427928109925f7bc31cd9b034dc4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/noncopyable.hpp"
+          },
+          "hashes": {
+            "md5": "1eaa018f85f78ada8b5e9876df2ab3e5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/graphics/image.hpp"
+          },
+          "hashes": {
+            "md5": "4c03355f7edc894da0c9505e33cd7fee"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/window.hpp"
+          },
+          "hashes": {
+            "md5": "e0aa5f7c92ee7c04b96775ded1e69641"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/contextsettings.hpp"
+          },
+          "hashes": {
+            "md5": "0f967b95e14ed319047a4dcc884b3410"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/cursor.hpp"
+          },
+          "hashes": {
+            "md5": "015d0a877f7b33273bbb5de22eb0139a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/glresource.hpp"
+          },
+          "hashes": {
+            "md5": "dc0eaff1f769371273fb35e365819b82"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/videomode.hpp"
+          },
+          "hashes": {
+            "md5": "3c8574fe0a43e6bafad19310c541c548"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/windowhandle.hpp"
+          },
+          "hashes": {
+            "md5": "422f86ee48216938021dc29d718b3e05"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/windowstyle.hpp"
+          },
+          "hashes": {
+            "md5": "7e99556b9efb96e6dc7d766963ab36be"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/clock.hpp"
+          },
+          "hashes": {
+            "md5": "5aac8fd64298adc589b351ee1dde29ec"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/event.hpp"
+          },
+          "hashes": {
+            "md5": "8eec40f56407d16e10bd70e5d0a5f744"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/keyboard.hpp"
+          },
+          "hashes": {
+            "md5": "5d58b408d2a03156394d121214483aa5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/mouse.hpp"
+          },
+          "hashes": {
+            "md5": "4899f008b6f11121227e8bb155c82ae5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/window/sensor.hpp"
+          },
+          "hashes": {
+            "md5": "5e48d305fd1361369d0c122e3b95ea52"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/vector3.hpp"
+          },
+          "hashes": {
+            "md5": "faeaa57530c47a6b60e9497f5c4ec340"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/sfml_32bit/include/sfml/system/vector3.inl"
+          },
+          "hashes": {
+            "md5": "c50630c11a627fdc378cb8573b5c436c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/emulator/standardbus.h"
+          },
+          "hashes": {
+            "md5": "097e8a36812aee02a9c4e1f16fc80a7f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/cemal/Documents/GitHub/myCPU/Tools/Emulator/ControlUnit.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "777ac22cfdc4b47362c0b4f0a6d126d9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/cemal/Documents/GitHub/myCPU/Tools/vendor/imgui/imgui_widgets.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "636609159f54a41faf4930f52915ae8b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/imgui/imgui_internal.h"
+          },
+          "hashes": {
+            "md5": "217229b3c4ae200e0cb49b1b85fc6850"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/imgui/imstb_textedit.h"
+          },
+          "hashes": {
+            "md5": "402f60752d999a5b9b340cb0b84ebe1a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/cemal/documents/github/mycpu/tools/vendor/imgui/imgui_tables.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "fb55868301f6f529af2bf46b97114a7c"
+          }
+        }
+      ]
+    }
+  ]
+}

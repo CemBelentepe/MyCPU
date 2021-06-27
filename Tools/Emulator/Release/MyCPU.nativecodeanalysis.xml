@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\cemal\Documents\GitHub\myCPU\Tools\Emulator\</FILEPATH>
+      <FILENAME>MyCPU.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'MyCPU::gprs' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>MyCPU::{ctor}</FUNCTION>
+    <DECORATED>??0MyCPU@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@VBus@@U?$default_delete@VBus@@@std@@@2@@Z</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>MyCPU::gprs</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\cemal\Documents\GitHub\myCPU\Tools\Emulator\</FILEPATH>
+      <FILENAME>MyCPU.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'MyCPU::adrs' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>MyCPU::{ctor}</FUNCTION>
+    <DECORATED>??0MyCPU@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@VBus@@U?$default_delete@VBus@@@std@@@2@@Z</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>MyCPU::adrs</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\cemal\Documents\GitHub\myCPU\Tools\Emulator\</FILEPATH>
+      <FILENAME>MyCPU.cpp</FILENAME>
+      <LINE>5</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'MyCPU::timer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>MyCPU::{ctor}</FUNCTION>
+    <DECORATED>??0MyCPU@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@VBus@@U?$default_delete@VBus@@@std@@@2@@Z</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>MyCPU::timer</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

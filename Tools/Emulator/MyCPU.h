@@ -24,6 +24,7 @@ private:
 	std::unique_ptr<Bus> bus;
 	ControlUnit cu;
 	ControlSignals cs;
+	std::vector<std::string> dsm_program;
 
 	std::array<uint8_t, 8> gprs;
 	std::array<uint16_t, 4> adrs;

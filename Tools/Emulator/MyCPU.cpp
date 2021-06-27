@@ -3,8 +3,10 @@
 #include <imgui-SFML.h>
 
 MyCPU::MyCPU(const std::string& inst_filename, std::unique_ptr<Bus> bus)
-	:cu(inst_filename), bus(std::move(bus)), cs(cu.initStep())
+	:cu(inst_filename), bus(std::move(bus))
 {
+	cs = cu.initStep();
+	dsm_program = cu.dissambleMemory(*this);
 }
 
 void MyCPU::update()
@@ -12,7 +14,9 @@ void MyCPU::update()
 	ImGui::Begin("CPU");
 	bus->update();
 	static bool checked = false;
-	static int val = 60;
+	static int clockSpeed = 60;
+	static int codeSize = 128;
+	static int ips = 1;
 
 	for (int i = 0; i < 8; i += 2)
 		ImGui::Text("R%d: 0x%.2X\t  R%d: 0x%.2X", i, gprs[i], i + 1, gprs[i + 1]);
@@ -22,19 +26,39 @@ void MyCPU::update()
 	ImGui::Text("ZCNV: %d%d%d%d", (int)flags[3], (int)flags[2], (int)flags[1], (int)flags[0]);
 
 	ImGui::Checkbox("Auto Execute", &checked);
-	ImGui::SliderInt("Clock Speed", &val, 1, 120);
+	ImGui::SliderInt("CpF", &clockSpeed, 1, 120);
+	ImGui::SliderInt("IpS", &ips, 1, 120);
 	if (checked)
 	{
 		timer++;
-		if (timer >= val)
+		if (timer >= clockSpeed)
 		{
-			executeNext();
+			for(int i = 0; i < ips; i++)
+				executeNext();
 			timer = 0;
 		}
 	}
 
 	if (ImGui::Button("Clock!"))
 		executeNext();
+
+	ImGui::Begin("Dissasemble");
+	ImGui::InputInt("Code Length", &codeSize);
+	ImGui::BeginChild("Data");
+	ImVec4 colNormal(255, 255, 255, 255);
+	ImVec4 colActive(0, 255, 0, 255);
+	int start = (adrs[0] / 2) - codeSize/2;
+	if (start < 0)
+		start = 0;
+	for (int i = 0; i < codeSize; i++)
+	{
+		std::string str = this->dsm_program[start + i];
+		if (start + i == adrs[0]/2)
+			ImGui::SetScrollHereY();
+		ImGui::TextColored(start + i  == adrs[0]/2 ? colActive : colNormal, "%s", str.c_str());
+	}
+	ImGui::EndChild();
+	ImGui::End();
 
 	ImGui::End();
 }
@@ -202,17 +226,17 @@ uint8_t MyCPU::operate(uint8_t mode, uint8_t dataA, uint8_t dataB)
 		break;
 	case 1:
 		res = dataA + dataB + flags[2];
-		flags[2] = res >= 256;
+		flags[2] = res > 255;
 		flags[0] = (dataA < 128 && dataB < 128 && res >= 128) || (dataA >= 128 && dataB >= 128 && res < 128);
 		break;
 	case 2:
 		res = dataA - dataB;
-		flags[2] = res > 255;
+		flags[2] = dataA > dataB;
 		flags[0] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
 		break;
 	case 3:
 		res = dataA - dataB - ~flags[2];
-		flags[2] = res > 255;
+		flags[2] = dataA > dataB + ~flags[2];
 		flags[0] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
 		break;
 	case 4:

@@ -5,6 +5,7 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include <imgui_memory_editor/imgui_memory_editor.h>
+#include <iomanip>
 
 ControlUnit::ControlUnit(const std::string& storage_filename)
 	:currentPos(mapper("FETCH"))
@@ -24,9 +25,13 @@ ControlUnit::ControlUnit(const std::string& storage_filename)
 
 ControlSignals ControlUnit::decodeInstruction(uint16_t inst)
 {
+	std::string o_name;
+	uint8_t p_name;
 	auto get_mp = [&](const std::string& name)
 	{
 		currentPos = mapper(name);
+		p_name = currentPos;
+		o_name = name;
 		return controlStorage[currentPos];
 	};
 
@@ -148,6 +153,8 @@ ControlSignals ControlUnit::decodeInstruction(uint16_t inst)
 		}
 		}
 	}
+	cs.p_name = p_name;
+	cs.name = o_name;
 
 	return cs;
 }
@@ -173,7 +180,7 @@ ControlSignals ControlUnit::nextStep(const ControlSignals& cs, const MyCPU& myCp
 		{
 			if (evaluateCond(cs.bcc, myCpu.flags))
 				this->currentPos = cs.mp.ad;
-			else 
+			else
 				this->currentPos++;;
 		}
 		else
@@ -191,13 +198,125 @@ ControlSignals ControlUnit::nextStep(const ControlSignals& cs, const MyCPU& myCp
 	return signal;
 }
 
+std::vector<std::string> ControlUnit::dissambleMemory(const MyCPU& myCpu)
+{
+	std::vector<std::string> vec;
+	std::vector<std::string> conds{ "NO", "AL", "EQ", "NE", "HS", "LO", "MI", "PL", "VS", "VC", "HI", "LS", "GE", "LT", "GT", "LE" };
+	for (int i = 0; i < 0x1'0000; i += 2)
+	{
+		std::stringstream ss;
+		ss << "0x" << std::uppercase << std::hex << std::setfill('0') << std::setw(2) << i << ":\t";
+		uint16_t inst = (myCpu.bus->read(i + 1) << 8) | (myCpu.bus->read(i + 0) << 0);
+
+		ControlSignals cs = this->decodeInstruction(inst);
+		ss << std::setw(4) << std::setfill(' ') << cs.name << "\t";
+
+		switch (cs.p_name/2)
+		{
+		case 0: // NOP
+			break;
+		case 1: // CLR
+			ss << getRegName(cs.p_rd);
+			break;
+		case 2: // B
+			ss << getRegName(cs.p_rd);
+			break;
+		case 3: // BL
+			ss << getRegName(cs.p_rd);
+			break;
+		case 4: // PSHR
+			ss << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm);
+			break;
+		case 5: // POPR
+			ss << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm);
+			break;
+		case 6: // Bx
+			ss << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm);
+			break;
+		case 7: // BLx
+			ss << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm);
+			break;
+		case 8: // STR
+			ss << getRegName(cs.p_rd) << ", [AR]";
+			break;
+		case 9: // STRR
+			ss << getRegName(cs.p_rd) << ", [AR, " << getRegName(cs.p_rm) << "]";
+			break;
+		case 10: // PSH
+			ss << getRegName(cs.p_rd);
+			break;
+		case 11: // MOV
+			ss << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm);
+			break;
+		case 12: // LDR
+			ss << getRegName(cs.p_rd) << ", [AR]";
+			break;
+		case 13: // LDRR
+			ss << getRegName(cs.p_rd) << ", [AR, " << getRegName(cs.p_rm) << "]";
+			break;
+		case 14: // POP
+			ss << getRegName(cs.p_rd);
+			break;
+		case 15: // CMP
+			ss << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm);
+			break;
+		case 16: // STRI
+			ss << getRegName(cs.p_rd) << ", [AR, #0x" << std::hex << std::setw(2) << std::setfill('0') << unsigned int(cs.imm_adr);
+			break;
+		case 17: // LDRI
+			ss << getRegName(cs.p_rd) << ", [AR, #0x" << std::hex << std::setw(2) << std::setfill('0') << unsigned int(cs.imm_adr);
+			break;
+		case 18: // BI
+		{
+			uint16_t next = (uint16_t(i)) + (cs.imm_adr << 1) + 2;
+			ss << "0x" << std::hex << std::setw(2) << std::setfill('0') << int(next);
+			break;
+		}
+		case 19: // BLI
+		{
+			uint16_t next = (uint16_t(i)) + (cs.imm_adr << 1) + 2;
+			ss << "0x" << std::hex << std::setw(2) << std::setfill('0') << int(next);
+			break;
+		}
+		case 20: // Bcc
+			ss << conds[cs.bcc] << ", " << getRegName(cs.p_rd);
+			break;
+		case 21: // BIcc
+		{
+			uint16_t next = (uint16_t(i)) + (cs.imm_adr << 1) + 2;
+			ss << conds[cs.bcc] << ", 0x" << std::hex << std::setw(2) << std::setfill('0') << int(next);
+			break;
+		}
+		case 22: // MOVI
+			ss << getRegName(cs.p_rd) << std::hex << std::setw(2) << std::setfill('0') << ", #" << int(cs.imm8);
+			break;
+		case 23: // CMPI
+			ss << getRegName(cs.p_rd) << std::hex << std::setw(2) << std::setfill('0') << ", #" << int(cs.imm8);
+			break;
+		case 24: // MOVD
+			ss << getARegName(cs.p_ad) << ", " << getRegName(cs.p_rm) << ", " << getRegName(cs.p_rn);
+			break;
+		case 26: // ALU
+			ss << getARegName(cs.p_ad) << ", " << getRegName(cs.p_rm) << ", " << getRegName(cs.p_rn);
+			break;
+		case 27: // ALUI
+			ss << getRegName(cs.p_rd) << std::hex << std::setw(2) << std::setfill('0') << ", #" << int(cs.imm8);
+			break;
+		default:
+			ss << "???";
+			break;
+		}
+		
+		vec.push_back(ss.str());
+	}
+	return std::move(vec);
+}
+
 void ControlUnit::render()
 {
-	ImGui::Begin("CPU");
-	ImGui::Text("CAR: %s", to_binary(this->currentPos, 6).c_str());
-	ImGui::End();
-
 	ImGui::Begin("Control Storage");
+	ImGui::Text("CAR: %s", to_binary(this->currentPos, 6).c_str());
+	ImGui::BeginChild("CS");
 	ImVec4 colNormal(255, 255, 255, 255);
 	ImVec4 colActive(0, 255, 0, 255);
 	for (int i = 0; i < controlStorage.size(); i++)
@@ -207,6 +326,7 @@ void ControlUnit::render()
 			ImGui::SetScrollHereY();
 		ImGui::TextColored(i == currentPos ? colActive : colNormal, "%s: %s", to_binary(i, 6).c_str(), str.c_str());
 	}
+	ImGui::EndChild();
 	ImGui::End();
 }
 
@@ -241,6 +361,28 @@ bool ControlUnit::evaluateCond(uint8_t mode, const std::bitset<4>& flags)
 	case 15: return z && n != v;
 	default:
 		return false;
+	}
+}
+
+std::string ControlUnit::getRegName(uint8_t reg)
+{
+	std::stringstream ss;
+	if (reg < 8)
+		ss << "R" << int(reg);
+	else
+		ss << getARegName(reg) << (reg < 12 ? "L" : "H");
+	return ss.str();
+}
+
+std::string ControlUnit::getARegName(uint8_t reg)
+{
+	switch (reg % 4)
+	{
+	case 0: return "PC";
+	case 1: return "LR";
+	case 2: return "SP";
+	case 3: return "AR";
+	default: return "ER";
 	}
 }
 
