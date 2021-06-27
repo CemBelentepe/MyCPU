@@ -202,6 +202,7 @@ std::vector<std::string> ControlUnit::dissambleMemory(const MyCPU& myCpu)
 {
 	std::vector<std::string> vec;
 	std::vector<std::string> conds{ "NO", "AL", "EQ", "NE", "HS", "LO", "MI", "PL", "VS", "VC", "HI", "LS", "GE", "LT", "GT", "LE" };
+	std::vector<std::string> alu_ops{ "ADD", "ADC", "SUB", "SBB", "MUL", "DIV", "RSB", "NEG", "AND", "ORR", "EOR", "NOT", "LSL", "ROR", "LSR", "ASR" };
 	for (int i = 0; i < 0x1'0000; i += 2)
 	{
 		std::stringstream ss;
@@ -297,10 +298,10 @@ std::vector<std::string> ControlUnit::dissambleMemory(const MyCPU& myCpu)
 			ss << getARegName(cs.p_ad) << ", " << getRegName(cs.p_rm) << ", " << getRegName(cs.p_rn);
 			break;
 		case 26: // ALU
-			ss << getARegName(cs.p_ad) << ", " << getRegName(cs.p_rm) << ", " << getRegName(cs.p_rn);
+			ss << alu_ops[cs.op] << ", " << getRegName(cs.p_rd) << ", " << getRegName(cs.p_rm) << ", " << getRegName(cs.p_rn);
 			break;
 		case 27: // ALUI
-			ss << getRegName(cs.p_rd) << std::hex << std::setw(2) << std::setfill('0') << ", #" << int(cs.imm8);
+			ss << alu_ops[cs.op] << ", " << getRegName(cs.p_rd) << std::hex << std::setw(2) << std::setfill('0') << ", #" << int(cs.imm8);
 			break;
 		default:
 			ss << "???";

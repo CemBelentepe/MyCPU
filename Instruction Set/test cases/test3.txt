@@ -1,4 +1,4 @@
-// Function call
+// Colored BG
 
 _start:
     mov arl, #0x00
@@ -8,9 +8,7 @@ _start:
     mov r0, #0
     mov r1, #0
     mov r2, #0
-    mov r3, #0 // posX
-    mov r4, #0 // posY
-.loop: // 16              
+.loop:              
     // set colors
     str r0, [AR, #2]
     str r1, [AR, #3]
