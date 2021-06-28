@@ -12,8 +12,8 @@
 class EmptyBus : public Bus
 {
 public:
-	EmptyBus(const std::string& rom_filename)
-		: Bus(), ram(0x01'0000, 0)
+	EmptyBus(const std::string& rom_filename, size_t bus_size = 0x1'0000)
+		: Bus(), ram(bus_size, 0)
 	{
 		std::ifstream file(rom_filename);
 		std::string line;

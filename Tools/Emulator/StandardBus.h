@@ -14,7 +14,7 @@ class StandardBus : public EmptyBus
 {
 public:
 	StandardBus(const std::string& rom_filename)
-		: EmptyBus(rom_filename), m_data(256 * 240 * 4, 255)
+		: EmptyBus(rom_filename, 0xC000), m_data(256 * 240 * 4, 255)
 	{
 		texture.create(256, 240);
 		texture.update(m_data.data());
@@ -40,7 +40,10 @@ public:
 	}
 	virtual uint8_t read(uint16_t address) override
 	{
-		return ram[address];
+		if (address < 0xC000)
+			return ram[address];
+		else
+			return 0;
 	}
 
 protected:
