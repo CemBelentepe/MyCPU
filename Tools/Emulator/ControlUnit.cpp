@@ -331,6 +331,11 @@ void ControlUnit::render()
 	ImGui::End();
 }
 
+uint8_t ControlUnit::getCar() const
+{
+	return currentPos;
+}
+
 void ControlUnit::errorInvalidInst()
 {
 	std::cout << "[ERROR] Invalid instruction." << std::endl;
@@ -355,11 +360,11 @@ bool ControlUnit::evaluateCond(uint8_t mode, const std::bitset<4>& flags)
 	case 8: return v;
 	case 9: return !v;
 	case 10: return c && !z;
-	case 11: return !c && z;
+	case 11: return !c || z;
 	case 12: return n == v;
 	case 13: return n != v;
 	case 14: return !z && n == v;
-	case 15: return z && n != v;
+	case 15: return z || n != v;
 	default:
 		return false;
 	}

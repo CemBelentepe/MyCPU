@@ -25,7 +25,7 @@ void MyCPU::update()
 	ImGui::Text("IR: 0x%.4X", ir);
 	ImGui::Text("ZCNV: %d%d%d%d", (int)flags[3], (int)flags[2], (int)flags[1], (int)flags[0]);
 
-	ImGui::Checkbox("Auto Execute", &checked);
+	ImGui::Checkbox("Auto Clock", &checked);
 	ImGui::SliderInt("CpF", &clockSpeed, 1, 120);
 	ImGui::SliderInt("IpS", &ips, 1, 120);
 	if (checked)
@@ -33,7 +33,7 @@ void MyCPU::update()
 		timer++;
 		if (timer >= clockSpeed)
 		{
-			for(int i = 0; i < ips; i++)
+			for (int i = 0; i < ips; i++)
 				executeNext();
 			timer = 0;
 		}
@@ -41,21 +41,27 @@ void MyCPU::update()
 
 	if (ImGui::Button("Clock!"))
 		executeNext();
+	if (ImGui::Button("Execute!"))
+	{
+		do {
+			executeNext();
+		} while (cu.getCar() != 56);
+	}
 
 	ImGui::Begin("Dissasemble");
 	ImGui::InputInt("Code Length", &codeSize);
 	ImGui::BeginChild("Data");
 	ImVec4 colNormal(255, 255, 255, 255);
 	ImVec4 colActive(0, 255, 0, 255);
-	int start = (adrs[0] / 2) - codeSize/2;
+	int start = (adrs[0] / 2) - codeSize / 2;
 	if (start < 0)
 		start = 0;
 	for (int i = 0; i < codeSize; i++)
 	{
 		std::string str = this->dsm_program[start + i];
-		if (start + i == adrs[0]/2)
+		if (start + i == adrs[0] / 2)
 			ImGui::SetScrollHereY();
-		ImGui::TextColored(start + i  == adrs[0]/2 ? colActive : colNormal, "%s", str.c_str());
+		ImGui::TextColored(start + i == adrs[0] / 2 ? colActive : colNormal, "%s", str.c_str());
 	}
 	ImGui::EndChild();
 	ImGui::End();

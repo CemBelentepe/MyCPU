@@ -51,7 +51,7 @@ protected:
 		{
 			switch (ppu.update_mode)
 			{
-			case 0:
+			case 0: // clear screen
 				for (int i = 0; i < m_data.size(); i += 4)
 				{
 					m_data[i + 0] = ppu.color_r;
@@ -60,7 +60,7 @@ protected:
 					m_data[i + 3] = 255;
 				}
 				break;
-			case 1:
+			case 1: // update_pixel
 			{
 				int p = (ppu.target_x + ppu.target_y * 256) * 4;
 				m_data[p + 0] = ppu.color_r;
@@ -69,12 +69,12 @@ protected:
 				m_data[p + 3] = 255; // Add later
 				break;
 			}
-			case 2:
+			case 2: // put_texture_rgb
 			{
 				for (int i = 0; i < ppu.src_w; i++)
 					for (int j = 0; j < ppu.src_h; j++)
 					{
-						int sip = (ppu.target_x + i + (ppu.target_y + j) * 256) * 4;
+						int sip = (ppu.target_x + i + (ppu.target_y + j) * 256) * 3;
 						int dip = ppu.texture_adr + (i + j * ppu.src_w) * 4;
 						m_data[sip + 0] = ram[dip + 0];
 						m_data[sip + 1] = ram[dip + 1];
@@ -83,7 +83,7 @@ protected:
 					}
 				break;
 			}
-			case 3:
+			case 3: // put_texture_rgba
 				for (int i = 0; i < ppu.src_w; i++)
 					for (int j = 0; j < ppu.src_h; j++)
 					{

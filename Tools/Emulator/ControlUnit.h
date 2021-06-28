@@ -34,6 +34,7 @@ public:
 	std::vector<std::string> dissambleMemory(const MyCPU& myCpu);
 
 	void render();
+	uint8_t getCar() const;
 
 private:
 	ControlSignals decodeInstruction(uint16_t inst);
