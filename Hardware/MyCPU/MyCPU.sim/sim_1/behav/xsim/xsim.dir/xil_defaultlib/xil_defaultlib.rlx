@@ -1,0 +1,7 @@
+0.7
+2020.2
+Nov 18 2020
+09:47:47
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.sim/sim_1/behav/xsim/glbl.v,1605673889,verilog,,,,glbl,,,,,,,,
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sim_1/new/RegFiles_tb.v,1624905983,verilog,,,,RegFiles_tb,,,,,,,,
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/RegFiles.v,1624905905,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sim_1/new/RegFiles_tb.v,,AddressRegister;GPRFile;GeneralRegister,,,,,,,,
