@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`default_nettype none
 
 module GeneralRegister(clk, reset, i_data, i_en, i_func, o_data);
     input wire clk, reset;
@@ -118,3 +119,24 @@ module AdrFile(clk, reset, i_data, i_funsel, i_as_dw, i_regsel, i_sel_a, i_sel_b
     assign o_c = w_outputs[i_sel_c];
 endmodule
 
+module InstRegister(clk, reset, i_data, i_h, i_load, o_data);
+    input wire clk, reset;
+    input wire[7:0] i_data;
+    input wire i_h, i_load;
+    output wire[15:0] o_data;
+    
+    reg[15:0] data;
+    assign o_data = data;
+    
+    always@(negedge clk) begin
+        if(reset)
+            data <= 0;
+        else if(i_load)
+            if(i_h)
+                data[15:8] <= i_data;
+            else
+                data[7:0] <= i_data;
+    end
+endmodule
+
+`default_nettype wire

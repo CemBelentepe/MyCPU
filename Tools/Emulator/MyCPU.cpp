@@ -269,7 +269,7 @@ uint8_t MyCPU::operate(uint8_t mode, uint8_t dataA, uint8_t dataB)
 		res = dataA ^ dataB;
 		break;
 	case 11:
-		res = ~dataA;
+		res = ~dataB;
 		break;
 	case 12:
 		dataB = dataB & 0b111;
