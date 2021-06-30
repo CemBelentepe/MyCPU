@@ -27,7 +27,7 @@ void MyCPU::update()
 
 	ImGui::Checkbox("Auto Clock", &checked);
 	ImGui::SliderInt("CpF", &clockSpeed, 1, 120);
-	ImGui::SliderInt("IpS", &ips, 1, 120);
+	ImGui::SliderInt("IpS", &ips, 1, 4096);
 	if (checked)
 	{
 		timer++;

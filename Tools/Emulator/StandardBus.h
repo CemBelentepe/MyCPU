@@ -52,7 +52,7 @@ protected:
 		uint8_t ea = address & 0x000F;
 		if (ea == 0)
 		{
-			switch (ppu.update_mode)
+			switch (data)
 			{
 			case 0: // clear screen
 				for (int i = 0; i < m_data.size(); i += 4)
