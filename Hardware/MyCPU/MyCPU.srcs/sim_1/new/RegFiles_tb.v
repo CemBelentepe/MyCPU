@@ -19,6 +19,23 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+module RunProgram_tb();
+    reg clk, reset;
+    wire[7:0] o_data_bus;
+    wire[15:0] o_addr_bus;
+    wire o_we, o_dbg;
+    
+    CPU_Complex uut(clk, reset, o_data_bus, o_addr_bus, o_we, o_dbg);
+    
+    initial begin
+        clk <= 0; reset <= 1; #25;
+        reset <= 0;
+    end
+    
+    always begin
+        clk = ~clk; #25;
+    end
+endmodule
 
 module RegFiles_tb();
     reg clk, reset;

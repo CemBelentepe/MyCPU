@@ -50,11 +50,11 @@ module ControlUnit(clk, reset, zcnv, ir, alu_set_flag, alu_sa, alu_sb, alu_op,
     wire can_jmp;
     
     // Control Word
-    wire[19:0] control_word;
+    reg[19:0] control_word;
     wire[3:0] f1 = control_word[19:16];
     wire[2:0] f2 = control_word[15:13];
-    wire[2:0] f3= control_word[12:10];
-    wire[1:0] f4= control_word[9:8];
+    wire[2:0] f3 = control_word[12:10];
+    wire[1:0] f4 = control_word[9:8];
     wire cd = control_word[7];
     wire br = control_word[6];
     wire[5:0] br_ad = control_word[5:0];
@@ -77,9 +77,8 @@ module ControlUnit(clk, reset, zcnv, ir, alu_set_flag, alu_sa, alu_sb, alu_op,
             car <= br_ad;
         else
             car <= car + 1;
+        control_word <= control_storage[car];
     end
-        
-    assign control_word = control_storage[car];
     
     // Microoperation Decoder
     InstDecoder inst_decoder(.i_inst(ir), .o_mapped(mapped_inst), .o_rd(rd), .o_rm(rm), .o_rn(rn), .o_ad(ad), 
