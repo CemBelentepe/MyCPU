@@ -37,6 +37,28 @@ module RunProgram_tb();
     end
 endmodule
 
+module AddSub_tb();
+    reg[7:0] i_a, i_b;
+    reg i_c, i_is_sub;
+    wire o_c;
+    wire[7:0] o_res;
+    
+    AddSub uut(i_a, i_b, i_c, i_is_sub, o_c, o_res);
+
+    initial begin
+        i_a <= 0; i_b <= 0; i_c <= 0; i_is_sub <= 0; #50;
+        i_a <= 5; i_b <= 50; i_c <= 0; i_is_sub <= 0; #50;
+        i_a <= 5; i_b <= 50; i_c <= 1; i_is_sub <= 0; #50;
+
+        i_a <= 0; i_b <= 0; i_c <= 0; i_is_sub <= 1; #50;
+        i_a <= 0; i_b <= 0; i_c <= 1; i_is_sub <= 1; #50;
+        i_a <= 50; i_b <= 5; i_c <= 0; i_is_sub <= 1; #50;
+        i_a <= 50; i_b <= 5; i_c <= 1; i_is_sub <= 1; #50;
+        i_a <= 5; i_b <= 50; i_c <= 0; i_is_sub <= 1; #50;
+        i_a <= 5; i_b <= 50; i_c <= 1; i_is_sub <= 1; #50;
+    end
+endmodule
+
 module RegFiles_tb();
     reg clk, reset;
     reg[15:0] i_data;

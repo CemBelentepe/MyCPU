@@ -2,8 +2,8 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Thu Jul  1 20:13:34 2021
-# Process ID: 14648
+# Start of session at: Fri Jul  2 01:11:40 2021
+# Process ID: 7684
 # Current directory: C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.runs/synth_1
 # Command line: vivado.exe -log CPU_Complex.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source CPU_Complex.tcl
 # Log file: C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.runs/synth_1/CPU_Complex.vds

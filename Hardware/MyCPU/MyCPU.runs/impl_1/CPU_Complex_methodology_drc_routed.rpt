@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Thu Jul  1 20:15:19 2021
+| Date         : Fri Jul  2 01:13:24 2021
 | Host         : DESKTOP-2N1UFQC running 64-bit major release  (build 9200)
 | Command      : report_methodology -file CPU_Complex_methodology_drc_routed.rpt -pb CPU_Complex_methodology_drc_routed.pb -rpx CPU_Complex_methodology_drc_routed.rpx
 | Design       : CPU_Complex
@@ -23,11 +23,12 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 189
+             Violations found: 190
 +-----------+------------------+-----------------------------+------------+
 | Rule      | Severity         | Description                 | Violations |
 +-----------+------------------+-----------------------------+------------+
 | TIMING-17 | Critical Warning | Non-clocked sequential cell | 189        |
+| TIMING-20 | Warning          | Non-clocked latch           | 1          |
 +-----------+------------------+-----------------------------+------------+
 
 2. REPORT DETAILS
@@ -975,6 +976,11 @@ Related violations: <none>
 TIMING-17#189 Critical Warning
 Non-clocked sequential cell  
 The clock pin ram/mem_reg_1_7/CLKARDCLK is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#1 Warning
+Non-clocked latch  
+The latch cpu/alu/o_zcnv_reg[2] cannot be properly analyzed as its control pin cpu/alu/o_zcnv_reg[2]/G is not reached by a timing clock
 Related violations: <none>
 
 
