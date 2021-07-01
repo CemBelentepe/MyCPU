@@ -27,7 +27,7 @@ void MyCPU::update()
 
 	ImGui::Checkbox("Auto Clock", &checked);
 	ImGui::SliderInt("CpF", &clockSpeed, 1, 120);
-	ImGui::SliderInt("IpS", &ips, 1, 4096);
+	ImGui::SliderInt("IpS", &ips, 1, 120);
 	if (checked)
 	{
 		timer++;
@@ -237,12 +237,12 @@ uint8_t MyCPU::operate(uint8_t mode, uint8_t dataA, uint8_t dataB)
 		break;
 	case 2:
 		res = dataA - dataB;
-		flags[2] = dataA > dataB;
+		flags[2] = dataA >= dataB;
 		flags[0] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
 		break;
 	case 3:
 		res = dataA - dataB - ~flags[2];
-		flags[2] = dataA > dataB + ~flags[2];
+		flags[2] = dataA >= dataB + ~flags[2];
 		flags[0] = (dataA < 128 && dataB >= 128 && res >= 128) || (dataA >= 128 && dataB < 128 && res < 128);
 		break;
 	case 4:
@@ -253,7 +253,7 @@ uint8_t MyCPU::operate(uint8_t mode, uint8_t dataA, uint8_t dataB)
 		break;
 	case 6:
 		res = dataB - dataA;
-		flags[2] = res > 255;
+		flags[2] = dataB >= dataA;
 		flags[0] = (dataB < 128 && dataA >= 128 && res >= 128) || (dataB >= 128 && dataA < 128 && res < 128);
 		break;
 	case 7:

@@ -1,12 +1,13 @@
 `timescale 1ns / 1ps
 `default_nettype none
 
-module CPU(clk, reset, i_data_bus, o_data_bus, o_addr_bus, o_we);
+module CPU(clk, reset, i_data_bus, o_data_bus, o_addr_bus, o_we, o_dbg);
     input wire clk, reset;
     input wire[7:0] i_data_bus;
     output wire[7:0] o_data_bus;
     output wire[15:0] o_addr_bus;
     output wire o_we;
+    output wire o_dbg;
     
     // Control Bus
      // ALU
@@ -33,7 +34,7 @@ module CPU(clk, reset, i_data_bus, o_data_bus, o_addr_bus, o_we);
     // BUS
     wire mem_we;
     wire[2:0] bus_dbl, bus_dbh;
-    wire[2:0] bus_ab;
+    wire[1:0] bus_ab;
     
     // Imm
     wire[7:0] imm_data;
@@ -136,7 +137,7 @@ module CPU(clk, reset, i_data_bus, o_data_bus, o_addr_bus, o_we);
         .gpr_sa(gpr_sa), .gpr_sb(gpr_sb), .gpr_sc(gpr_sc), .gpr_regsel(gpr_regsel), .gpr_funsel(gpr_funsel), 
         .adr_sa(adr_sa), .adr_sb(adr_sb), .adr_sc(adr_sc), .adr_regsel(adr_regsel), .adr_as_dw(adr_as_dw), .adr_funsel(adr_funsel), 
         .ir_h(ir_h), .ir_load(ir_load), .mem_we(mem_we), .bus_dbl(bus_dbl), .bus_dbh(bus_dbh), .bus_ab(bus_ab),
-        .imm_data(imm_data), .imm_addr(imm_addr));
+        .imm_data(imm_data), .imm_addr(imm_addr), .dbg(o_dbg));
 endmodule
 
 `default_nettype wire
