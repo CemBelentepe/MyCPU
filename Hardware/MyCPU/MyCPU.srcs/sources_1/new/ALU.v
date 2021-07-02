@@ -21,8 +21,8 @@ module ALU(i_a, i_b, i_op, i_zcnv, o_res, o_zcnv);
     AddSub adder(.i_a(add_a), .i_b(add_b), .i_c(add_c_in), .i_is_sub(add_is_sub), .o_c(add_c_out), .o_res(add_res));
     
     always @(*) begin
-        o_zcnv[3] = ~|res;
-        o_zcnv[1] = res[7];
+        o_zcnv[3] <= ~|res;
+        o_zcnv[1] <= res[7];
         case(i_op)
             4'h0: begin
                 add_a <= i_a;
@@ -84,6 +84,7 @@ module ALU(i_a, i_b, i_op, i_zcnv, o_res, o_zcnv);
                 add_c_in <= 1;
                 add_is_sub <= 1;
                 res <= add_res;
+                o_zcnv[2] <= add_c_out;
                 o_zcnv[0] <= (i_a[7] & ~i_b[7] & ~res[7]) | (~i_a[7] & i_b[7] & res[7]);
             end
             4'h7: begin

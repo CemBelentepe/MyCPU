@@ -50,7 +50,7 @@ module ControlUnit(clk, reset, zcnv, ir, alu_set_flag, alu_sa, alu_sb, alu_op,
     wire can_jmp;
     
     // Control Word
-    reg[19:0] control_word;
+    wire[19:0] control_word;
     wire[3:0] f1 = control_word[19:16];
     wire[2:0] f2 = control_word[15:13];
     wire[2:0] f3 = control_word[12:10];
@@ -73,12 +73,14 @@ module ControlUnit(clk, reset, zcnv, ir, alu_set_flag, alu_sa, alu_sb, alu_op,
     always @(posedge clk) begin
         if(reset)
             car <= 0;
-        else if(~br | (br & can_jmp))
+        else if(br)
+            car <= mapped_inst;
+        else if(~cd |cd & can_jmp)
             car <= br_ad;
         else
             car <= car + 1;
-        control_word <= control_storage[car];
     end
+    assign control_word = control_storage[car];
     
     // Microoperation Decoder
     InstDecoder inst_decoder(.i_inst(ir), .o_mapped(mapped_inst), .o_rd(rd), .o_rm(rm), .o_rn(rn), .o_ad(ad), 
@@ -238,7 +240,7 @@ module F2Decoder(i_func, i_rd, i_rm, i_ad, gpr_regsel, gpr_funsel, adr_regsel, a
                 gpr_funsel <= 0;
             end
             default: begin
-                gpr_regsel <= 1 << i_rd;
+                gpr_regsel <= 0;
                 gpr_funsel <= 0;
             end
         endcase
@@ -415,12 +417,12 @@ module InstDecoder(i_inst, o_mapped, o_rd, o_rm, o_rn, o_ad, o_cond, imm_data, i
     assign o_mapped = {inst_addr, 1'b0};
     
     always@(*) begin
-        case(i_inst[15:14])
-            6'b00111: o_dbg <= 1;
+        case(i_inst[15:11])
+            5'b00111: o_dbg <= 1;
             default: o_dbg <= 0;
         endcase
         casez(i_inst[15:10])
-            6'b0000?: begin
+            6'b0000??: begin
                 // NOP, CLR , B, BL, PSHR, POPR, Bx, BLx, STR, STRR, PSH, MOV, LDR, LDRR, POP, CMP
                 inst_addr <= {1'b0, i_inst[11:8]};
                 o_rd <= i_inst[7:4];
