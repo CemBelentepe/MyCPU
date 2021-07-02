@@ -1,6 +1,6 @@
 // Creates and doubles an array
 
-b   _start
+//b   _start
 
 arr:
     space 10

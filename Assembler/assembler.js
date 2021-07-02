@@ -44,7 +44,7 @@ for (let i = 2; i<process.argv.length; i++) {
 }
 
 // if some files couldn't be read, we won't continue
-if (errors.length) displayErrorsAndExit()
+if (errors.length || warnings.length) displayErrorsAndExit()
 
 
 
@@ -54,10 +54,10 @@ function lineNumberToString(n) {
             n -= fileMetadata[file].lines
         }
         else {
-            return `[${fileMetadata[file].name}, line:${n}]`
+            return `${cyan}[${fileMetadata[file].name}, line:${n}]${black}`
         }
     }
-    return `[file:?, line:?]`
+    return `${cyan}[file:?, line:?]${black}`
 }
 
 
@@ -111,7 +111,7 @@ let reservedNames = new RegExp(temp1 = `^(?:ar[lh]?|sp[lh]?|pc[lh]?|lr[lh]?|r\\d
 
 
 
-function exprTokenizer(str) {
+function exprTokenizer(str, lineNumber) {
     let reg1 = /\s*(\*\*|[\(\)\+\-\*\/]|0[xX][0-9a-fA-F]+|0[bB][0-1]+|0[oO][0-7]+|[0-9]+|[a-zA-Z_]\w*\.[a-zA-Z_]\w*|[a-zA-Z_]\w*|\.[a-zA-Z_]\w*)\s*/g
     // str = '  3  + 0XA3a**2 - -(4+0o1*he4llo)+henlo.3wor--3)('
     let len=0
@@ -135,7 +135,7 @@ function exprTokenizer(str) {
 // returns a number on success, and undefined on error
 function exprEvaluator(str, context, lineNumber, currentGlobalLabel) {
     
-    let res = exprTokenizer(str)
+    let res = exprTokenizer(str, lineNumber)
     if (!res) return
 
     // change identifiers with numeric values
@@ -200,7 +200,7 @@ function exprEvaluator(str, context, lineNumber, currentGlobalLabel) {
 
 function exprPartialEvaluator(str, context, lineNumber, currentGlobalLabel) {
 
-    let res = exprTokenizer(str)
+    let res = exprTokenizer(str, lineNumber)
     if (!res) return
 
     // change identifiers with numeric values
@@ -331,13 +331,13 @@ input.forEach((line,lineNumber) => {
                 }
 
                 // check whether another local label has the same name
-                if ( map[ `${lastGlobalLabel}.${labels[i]}` ] ) {
-                    let collidingLabel = map[ `${lastGlobalLabel}.${labels[i]}` ]
+                if ( map[ `${lastGlobalLabel}${labels[i]}` ] ) {
+                    let collidingLabel = map[ `${lastGlobalLabel}${labels[i]}` ]
                     errors.push(`Local label ${labels[i]} is defined in ${lineNumberToString(collidingLabel.line)} and ${lineNumberToString(lineNumber)}`)
                     continue
                 }
                 // register in the map
-                map[ `${lastGlobalLabel}.${labels[i]}` ] = {line: lineNumber, address: currentEmptyByte, type: 1}
+                map[ `${lastGlobalLabel}${labels[i]}` ] = {line: lineNumber, address: currentEmptyByte, type: 1}
             }
 
         }
@@ -398,6 +398,8 @@ input.forEach((line,lineNumber) => {
         }
         else if (head == '#start') {
             /// TODO: Return here after `b label`
+            errors.push(`#start is not implemented yet ${lineNumberToString(lineNumber)}`)
+            return
         }
         else if (head == '#align') {
             let align = exprEvaluator(body, map, lineNumber, lastGlobalLabel)
@@ -1000,7 +1002,7 @@ input.forEach((line,lineNumber) => {
 
 
 // error checkpoint 2
-if (errors.length) displayErrorsAndExit()
+if (errors.length || warnings.length) displayErrorsAndExit()
 
 
 // TODO: filled space boundaries
@@ -1016,7 +1018,7 @@ for (let entry in map) {
 
 thirdPass.forEach(({expr,lineNumber,isSigned,bits,address,binInst},i) => {
     let val = exprEvaluator(expr,map,lineNumber,'')
-    if (!val) return
+    if (val === undefined) return
 
 
     if (!isSigned && val >= 2**bits ) {
@@ -1059,8 +1061,16 @@ thirdPass.forEach(({expr,lineNumber,isSigned,bits,address,binInst},i) => {
 // l(bin)
 // l(thirdPass)
 
+// error checkpoint 3
+if (errors.length || warnings.length) displayErrorsAndExit()
+
+if (warnings.length) {
+    l(`${warnings.length} warning${warnings.length==1?'':'s'} occured:`)
+    warnings.forEach(wr => l(`${yellow}[WARNING]${black} ${wr}`))
+}
+
 l(`don\'t forget to set the test file correctly in source code!`)
-let testFileToCompare = './test/test3_bin.txt'
+let testFileToCompare = './test/test1_bin.txt'
 l(`Test file: ${testFileToCompare}`)
 let testfile = fs.readFileSync(testFileToCompare, 'utf8')
 let testBytes = []
