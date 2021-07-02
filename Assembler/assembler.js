@@ -7,6 +7,8 @@ let errors = [] // arr of strings
 let warnings = []
 let l = console.log
 
+let red = `\x1b[31m`, black = `\x1b[39m`, green = `\x1b[32m`, yellow = `\x1b[33m`, cyan = `\x1b[36m`
+
 if ( !process.argv[2] ) {
     errors.push('No input file(s) specified. Usage: node assembler.js (files)')
     displayErrorsAndExit()
@@ -14,8 +16,8 @@ if ( !process.argv[2] ) {
 
 function displayErrorsAndExit() {
     l(`${errors.length} error${errors.length==1?'':'s'} occured:`)
-    errors.forEach(er => l(`[ERROR] ${er}`))
-    warnings.forEach(wr => l(`[WARNING] ${wr}`))
+    errors.forEach(er => l(`${red}[ERROR]${black} ${er}`))
+    warnings.forEach(wr => l(`${yellow}[WARNING]${black} ${wr}`))
     process.exit(1)
 }
 
@@ -102,10 +104,10 @@ let opcodes = ['NOP', 'STR', 'LDR', 'PSH', 'POP', 'MOV', 'MOVD', 'CLR', 'CMP', '
 'ADC', 'SUB', 'SBB', 'AND', 'ORR', 'EOR', 'NOT', 'LSL', 'ROR', 'LSR', 'ASR', 'MUL', 'DIV', 'IMUL',
 'IDIV']
 let aluOpcodes = ['ADD','ADC','SUB','SBB','MUL','DIV','RSB','NEG','AND','ORR','EOR','NOT','LSL','ROR','LSR','ASR']
+let bccOpcodes = ['BEQ','BNE','BHS','BLO','BMI','BPL','BVS','BVC','BHI','BLS','BGE','BLT','BGT','BLE'] // excluding BCS(=BHS) and BCC(=BLO)
 
 let temp1
 let reservedNames = new RegExp(temp1 = `^(?:ar[lh]?|sp[lh]?|pc[lh]?|lr[lh]?|r\\d+|${opcodes.join('|')})$`, 'i')
-debugger;
 
 
 
@@ -283,7 +285,7 @@ let thirdPass = [] // [ {expr: '..', lineNumber: n, isSigned: bool, bits: n, add
 
 
 // register all the labels and strip from the code
-input = input.map((line,lineNumber) => {
+input.forEach((line,lineNumber) => {
     lineNumber++ // lines start from 1
 
     line = (function labelStripper() {
@@ -343,57 +345,55 @@ input = input.map((line,lineNumber) => {
         return line.substring(labelsStringLength, line.length) // strip the labels
     })()
 
+    let head, body
 
-
-    line = (function nextAddressCalculator() {
+    ;(function opcodeAndDirectiveParser() {
         
         // split to [head, body]
         let matchResult = line.match(/^\s*(\S+)\s*/)
-        if (!matchResult) return line
+        if (!matchResult) return
 
-        let head = matchResult[1].toLowerCase()
-        let body = line.substring(matchResult[0].length, line.length)
+        head = matchResult[1].toLowerCase()
+        body = line.substring(matchResult[0].length, line.length)
 
         // the main switch
         if (head == '#define') {
             let matchResult2 = body.match(/^\s*(\S+)\s*/)
             if (!matchResult2) {
                 errors.push(`#define requires an identifier ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else if ( !/^[a-zA-Z_]\w*$/.test(matchResult2[1]) ) {
                 errors.push(`Identifier ${matchResult2[1]} is not valid ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else if ( map[matchResult2[1]] ) {
                 errors.push(`Identifier ${matchResult2[1]} is already defined in ${lineNumberToString(map[matchResult2[1]].line)}. ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else if ( reservedNames.test(matchResult2[1]) ) {
                 errors.push(`Identifier ${matchResult2[1]} can't be one of the reserved keywords ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else { // identifier is fine
                 let val = exprEvaluator(body.substring(matchResult2[0].length, body.length), map, lineNumber, lastGlobalLabel)
-                if (val === undefined) return line
+                if (val === undefined) return
                 // register const
                 map[matchResult2[1]] = {line: lineNumber, address: val, type: 0}
-                return ''
             }
         }
         else if (head == '#undef') {
             let ident = body.trim()
             if (!map[ident]) {
                 errors.push(`Trying to undefine non-defined identifier ${ident} ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else if (map[ident].type !== 0) {
                 errors.push(`Trying to undefine the label ${ident} ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else {
                 delete map[ident]
-                return ''
             }
         }
         else if (head == '#start') {
@@ -402,64 +402,59 @@ input = input.map((line,lineNumber) => {
         else if (head == '#align') {
             let align = exprEvaluator(body, map, lineNumber, lastGlobalLabel)
             if (align === undefined) {
-                return line
+                return
             }
             else if (align <= 0) {
                 errors.push(`Alignment of ${align} needs to be positive ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
-            else if (currentEmptyByte % align) {
+            else if (currentEmptyByte % align) { // if needs an alignment
                 currentEmptyByte += (align - currentEmptyByte%align)
-                return ''
             }
-            else { // no need to move, already aligned
-                return ''
-            }
+            // no need to move, already aligned
+            
         }
         else if (head == '#org') {
             let org = exprEvaluator(body, map, lineNumber, lastGlobalLabel)
             if (org === undefined) {
-                return line
+                return
             }
             else {
                 filledRegions[filledRegions.length-1].toInc = currentEmptyByte-1
                 currentEmptyByte = org
                 filledRegions.push({fromInc: currentEmptyByte, startLine: lineNumber})
-                return ''
             }
         }
         else if (head == 'space') {
             if (currentEmptyByte < 0 ) {
                 errors.push(`Tried to write outside of the memory region: -0x${currentEmptyByte.toString(16)} ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else if (currentEmptyByte >= 2**16) {
                 errors.push(`Tried to write outside of the memory region: 0x${currentEmptyByte.toString(16)} ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
 
             let space = exprEvaluator(body, map, lineNumber, lastGlobalLabel)
             if (space === undefined) {
-                return line
+                return
             }
             else if (space === 0) {
                 warnings.push(`Expression evaluates to 0 in ${lineNumberToString(lineNumber)}`)
-                return ''
             }
             else if (space < 0) {
                 errors.push(`Expression evaluates to negative ${space} in ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else if ( currentEmptyByte + space > 2**16 ) {
                 errors.push(`Tried to write outside of the memory region: 0x${currentEmptyByte.toString(16)}...0x${(currentEmptyByte+space).toString(16)} ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else {
                 for (let i = currentEmptyByte; i<currentEmptyByte+space; i++) {
-                    bytes[i] = 0 // fill with zeros
+                    bytes[i] = 0xCD // fill with 0xCD
                 }
                 currentEmptyByte += space
-                return ''
             }
         }
         else if (head == 'db') {
@@ -492,22 +487,22 @@ input = input.map((line,lineNumber) => {
                         // checks before evaling, for every character
                         if (currentEmptyByte < 0 ) {
                             errors.push(`Tried to write outside of the memory region: -0x${currentEmptyByte.toString(16)} ${lineNumberToString(lineNumber)}`)
-                            return line
+                            return
                         }
                         else if (currentEmptyByte >= 2**16) {
                             errors.push(`Tried to write outside of the memory region: 0x${currentEmptyByte.toString(16)} ${lineNumberToString(lineNumber)}`)
-                            return line
+                            return
                         }
                         
                         if (item[k]=='\\') {
                             let escapeMap = {a:7,b:8,e:0x1b,f:12,n:10,r:13,t:9,v:11,['\\']:0x5c,['\'']:0x27,['"']:0x22,['?']:0x3f,['0']:0}
                             if (item[k+1]===undefined) {
                                 errors.push(`Trailing \\ without escape character in a string ${lineNumberToString(lineNumber)}`)
-                                return line
+                                return
                             }
                             else if (escapeMap[item[k+1]] === undefined) {
                                 errors.push(`Unknown escape character \\${item[k+1]} in a string ${lineNumberToString(lineNumber)}`)
-                                return line
+                                return
                             }
                             else {
                                 bytes[currentEmptyByte++] = escapeMap[item[k+1]]
@@ -518,7 +513,7 @@ input = input.map((line,lineNumber) => {
                             let charCode = item[k].charCodeAt()
                             if (charCode>255) {
                                 errors.push(`UTF-8 is not yet supported ${lineNumberToString(lineNumber)}`)
-                                return line
+                                return
                             }
                             bytes[currentEmptyByte++] = charCode
                         }
@@ -527,14 +522,13 @@ input = input.map((line,lineNumber) => {
                 else {
                     // expr
                     let val = exprEvaluator(item, map, lineNumber, lastGlobalLabel)
-                    if (val === undefined) return line
+                    if (val === undefined) return
                     else if (val < 0 || val > 255) {
                         warnings.push(`Item ${i+1} of the list is not 0..256, mod 256 will be taken ${lineNumberToString(lineNumber)}`)
                     }
                     bytes[currentEmptyByte++] = val
                 }
             }
-            return ''
         }
         else if (opcodes.map(o => o.toLowerCase()).includes(head.toLowerCase())) {
 
@@ -545,11 +539,11 @@ input = input.map((line,lineNumber) => {
 
             if (currentEmptyByte < 0 ) {
                 errors.push(`Tried to write outside of the memory region: -0x${currentEmptyByte.toString(16)} ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
             else if (currentEmptyByte > 2**16-2) {
                 errors.push(`Tried to write outside of the memory region: 0x${(currentEmptyByte+1).toString(16)} ${lineNumberToString(lineNumber)}`)
-                return line
+                return
             }
 
             /*
@@ -561,53 +555,51 @@ input = input.map((line,lineNumber) => {
             if ( opcode=='nop' ) {
                 insertBits(binInst, '0000 0000 0000 0000')
                 insertMem(bytes,binInst,currentEmptyByte)
-                return ''
             }
             else if ( opcode=='clr') {
                 if (params.length !== 1) {
                     errors.push(`CLR must have 1 parameter ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 insertBits(binInst, '0000 0001')
                 let reg = interpretAsRegister(params[0])
                 if (!reg) {
                     errors.push(`First parameter must be a register ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 else if (reg.double) {
                     errors.push(`Register in the first parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 insertBits(binInst, reg.reg.toString(2), 4)
                 insertBits(binInst, '0000')
                 insertMem(bytes,binInst,currentEmptyByte)
-                return ''
             }
             else if ( opcode=='movd') {
                 insertBits(binInst, '0001 01')
                 if (params.length != 2 && params.length != 3) {
                     errors.push(`MOVD takes 1 or 2 parameters ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 let reg1 = interpretAsRegister(params[0])
                 if (!reg1) {
                     errors.push(`First parameter must be a register ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 else if (!reg1.double) {
                     errors.push(`First parameter must be one of PC,LR,SP,AR ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 insertBits(binInst, reg1.reg.toString(2), 2)
                 if (params.length == 2) {
                     let reg2 = interpretAsRegister(params[1])
                     if (!reg2) {
                         errors.push(`Second parameter must be a register ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     else if (!reg2.double) {
                         errors.push(`Third parameter must be a register ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     insertBits(binInst, (reg2.reg+12).toString(2), 4)
                     insertBits(binInst, (reg2.reg+8).toString(2), 4)
@@ -617,40 +609,39 @@ input = input.map((line,lineNumber) => {
                     let reg3 = interpretAsRegister(params[2])
                     if (!reg2) {
                         errors.push(`Second parameter must be a register ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     else if (!reg3) {
                         errors.push(`Third parameter must be a register ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     else if (reg2.double) {
                         errors.push(`Register in the second parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     else if (reg3.double) {
                         errors.push(`Register in the third parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     insertBits(binInst, (reg2.reg).toString(2), 4)
                     insertBits(binInst, (reg3.reg).toString(2), 4)
                 }
                 insertMem(bytes,binInst,currentEmptyByte)
-                return ''
             }
             else if (opcode=='psh' || opcode=='pop') {
                 if (params.length != 1 && params.length != 2) {
                     errors.push(`PSH,POP take 1 or 2 parameters ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 let reg1 = interpretAsRegister(params[0])
                 if (!reg1) {
                     errors.push(`First parameter must be a register ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 if (reg1.double) {
                     if (params.length != 1) {
                         errors.push(`Register in the first parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     if (opcode=='psh') insertBits(binInst, '00000 100')
                     else insertBits(binInst, '00000 101')
@@ -673,11 +664,11 @@ input = input.map((line,lineNumber) => {
                         let reg2 = interpretAsRegister(params[1])
                         if (!reg2) {
                             errors.push(`Second parmeter must be a register ${lineNumberToString(lineNumber)}`)
-                            return line
+                            return
                         }
                         else if (reg2.double) {
                             errors.push(`Register in the second parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                            return line
+                            return
                         }
 
                         insertBits(binInst, reg1.reg.toString(2), 4)
@@ -685,26 +676,25 @@ input = input.map((line,lineNumber) => {
                     }
                 }
                 insertMem(bytes,binInst,currentEmptyByte)
-                return ''
             }
             else if (opcode == 'mov' || opcode == 'cmp') {
                 if (params.length != 2) {
                     errors.push(`${opcode.toUpperCase()} takes 2 parameters ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 let reg1 = interpretAsRegister(params[0])
                 if (!reg1) {
                     errors.push(`First parmeter must be a register ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 else if (reg1.double) { // NOTE: we don't let `mov Ad` because it doesn't make sense
                     errors.push(`Register in the second parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
 
                 if (!params[1]) {
                     errors.push(`Second parmeter must be a register, or expr ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 else if (params[1][0] == '#') { // immed
 
@@ -729,11 +719,11 @@ input = input.map((line,lineNumber) => {
                     let reg2 = interpretAsRegister(params[1])
                     if (!reg2) {
                         errors.push(`Second parmeter must be a register ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     else if (reg2.double) { // NOTE: we don't let `mov Ad` because it doesn't make sense
                         errors.push(`Register in the second parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
 
                     if (opcode == 'mov') insertBits(binInst, '00001 011')
@@ -743,29 +733,27 @@ input = input.map((line,lineNumber) => {
                     insertBits(binInst, reg2.reg.toString(2), 4)
                     insertMem(bytes,binInst,currentEmptyByte)
                 }
-
-                return ''
             }
             else if (aluOpcodes.includes(opcode.toUpperCase())) {
                 if (params.length != 2 && params.length != 3) {
                     errors.push(`ALU opcodes take 2 or 3 parameters ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
 
                 let reg1 = interpretAsRegister(params[0])
                 if (!reg1) {
                     errors.push(`First parmeter must be a register ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 else if (reg1.double || reg1.reg > 8) {
                     errors.push(`First parmeter must be a R0-R7 register ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
 
                 if (params[1][0] == '#') {
 
                     insertBits(binInst, '1')
-                    insertBits(binInst, aluOpcodes.indexOf(opcode).toString(2), 4)
+                    insertBits(binInst, aluOpcodes.indexOf(opcode.toUpperCase()).toString(2), 4)
                     insertBits(binInst, reg1.reg.toString(2), 3)
 
                     thirdPass.push({
@@ -777,75 +765,58 @@ input = input.map((line,lineNumber) => {
                         binInst: binInst
                     })
                 }
-                else { // add a,b,c or add a,Ad
+                else { // add Gd,Gm,Gn
                     
                     insertBits(binInst, '011')
-                    insertBits(binInst, aluOpcodes.indexOf(opcode).toString(2), 4)
+                    insertBits(binInst, aluOpcodes.indexOf(opcode.toUpperCase()).toString(2), 4)
                     insertBits(binInst, reg1.reg.toString(2), 3)
 
                     let reg2 = interpretAsRegister(params[1])
                     if (!reg2) {
                         errors.push(`Second parmeter must be a register ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
-                    if (reg2.double) {
-                        // alu r1 #1
-                        // alu r1, pc
-                        // alu r1, r2, r3
-                        if (params.length != 2) {
-                            errors.push(`Second parmeter must be a R0-R7 register ${lineNumberToString(lineNumber)}`)
-                            return line
-                        }
-                        
-                        insertBits(binInst, (reg2.reg+12).toString(2), 4)
-                        insertBits(binInst, (reg2.reg+8).toString(2), 4)
-                    }
-                    else {
-                        if (reg2.reg > 8) {
-                            errors.push(`Second parmeter must be a R0-R7 register ${lineNumberToString(lineNumber)}`)
-                            return line
-                        }
-
-                        let reg3 = interpretAsRegister(params[2])
-                        if (!reg3) {
-                            errors.push(`Third parmeter must be a register ${lineNumberToString(lineNumber)}`)
-                            return line
-                        }
-                        else if (reg3.double || reg3.reg > 8) {
-                            errors.push(`Third parmeter must be a R0-R7 register ${lineNumberToString(lineNumber)}`)
-                            return line
-                        }
-
-                        insertBits(binInst, reg2.reg.toString(2), 4)
-                        insertBits(binInst, reg3.reg.toString(2), 4)
+                    else if (reg2.double || reg2.reg > 8) {
+                        errors.push(`Second parmeter must be a R0-R7 register ${lineNumberToString(lineNumber)}`)
+                        return
                     }
 
+                    let reg3 = interpretAsRegister(params[2])
+                    if (!reg3) {
+                        errors.push(`Third parmeter must be a register ${lineNumberToString(lineNumber)}`)
+                        return
+                    }
+                    else if (reg3.double || reg3.reg > 8) {
+                        errors.push(`Third parmeter must be a R0-R7 register ${lineNumberToString(lineNumber)}`)
+                        return
+                    }
+                    
+                    insertBits(binInst, reg2.reg.toString(2), 3)
+                    insertBits(binInst, reg3.reg.toString(2), 3)
                     insertMem(bytes,binInst,currentEmptyByte)
                 }
-
-                return ''
             }
             else if (opcode == 'str' || opcode == 'ldr') {
                 if (params.length != 2 && params.length != 3) {
                     errors.push(`STR,LDR opcodes take 2 or 3 parameters ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
 
                 let reg1 = interpretAsRegister(params[0])
                 if (!reg1) {
                     errors.push(`First parmeter must be a register ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
                 else if (reg1.double) {
                     errors.push(`Register in the first parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
-                    return line
+                    return
                 }
 
 
                 if (params.length == 2) { // str rd, [AR]
                     if ( !/\[\s*AR\s*\]/i.test(params[1]) ) {
                         errors.push(`Second parmeter must be [AR] ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
 
                     if (opcode == 'str') insertBits(binInst, '00001 000')
@@ -859,11 +830,11 @@ input = input.map((line,lineNumber) => {
 
                     if (!/\[\s*AR\s*/i.test(params[1]) ) {
                         errors.push(`Second parmeter must be [AR, Rd] or [AR, #imm] ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
                     else if ( params[2][params[2].length-1] != ']')  { // if the last char isn't ]
                         errors.push(`Second parmeter end with ] ${lineNumberToString(lineNumber)}`)
-                        return line
+                        return
                     }
 
                     if (params[2][0] == '#') {  // immed
@@ -872,7 +843,7 @@ input = input.map((line,lineNumber) => {
                         else insertBits(binInst, '00011 1')
 
                         insertBits(binInst, reg1.reg.toString(2), 4)
-    
+
                         thirdPass.push({
                             expr: exprPartialEvaluator(params[2].substring(1, params[2].length-1), map, lineNumber, lastGlobalLabel),
                             lineNumber: lineNumber,
@@ -887,7 +858,7 @@ input = input.map((line,lineNumber) => {
                         let reg2 = interpretAsRegister(params[2].substring(0,params[2].length-1))
                         if (!reg2 || reg2.double) {
                             errors.push(`Second parmeter must be [AR, Rd] or [AR, #imm] ${lineNumberToString(lineNumber)}`)
-                            return line
+                            return
                         }
 
                         if (opcode == 'str') insertBits(binInst, '00001 001')
@@ -898,25 +869,132 @@ input = input.map((line,lineNumber) => {
                         insertMem(bytes,binInst,currentEmptyByte)
                     }
                 }
-                
-                return ''
             }
+            else if (opcode == 'b' || opcode == 'bl') {
+                if (params.length != 1 && params.length != 2) {
+                    errors.push(`B,BL opcodes take 1 or 2 parameters ${lineNumberToString(lineNumber)}`)
+                    return
+                }
 
+                if (params.length == 2) {
+                    let reg1 = interpretAsRegister(params[0])
+                    let reg2 = interpretAsRegister(params[1])
 
-            currentEmptyByte += 2
-            return ''
+                    if (!reg1) {
+                        errors.push(`First parmeter must be a register ${lineNumberToString(lineNumber)}`)
+                        return
+                    }
+                    else if (reg1.double) {
+                        errors.push(`Register in the first parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
+                        return
+                    }
+                    else if (!reg2) {
+                        errors.push(`Second parmeter must be a register ${lineNumberToString(lineNumber)}`)
+                        return
+                    }
+                    else if (reg2.double) {
+                        errors.push(`Register in the second parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
+                        return
+                    }
 
-            ////
+                    if (opcode=='b') insertBits(binInst, '00000 110')
+                    else insertBits(binInst, '00000 111')
+
+                    insertBits(binInst, reg1.reg.toString(2), 4)
+                    insertBits(binInst, reg2.reg.toString(2), 4)
+                    insertMem(bytes,binInst,currentEmptyByte)
+                }
+                else { // 1 param
+                    let reg1 = interpretAsRegister(params[0])
+                    if (!reg1) { // label
+
+                        if (opcode == 'b') insertBits(binInst, '00110 0')
+                        else insertBits(binInst, '00110 1')
+
+                        thirdPass.push({
+                            expr: exprPartialEvaluator(`(${params[0]}-(${currentEmptyByte}+2))/2`, map, lineNumber, lastGlobalLabel),
+                            lineNumber: lineNumber,
+                            isSigned: true,
+                            bits: 10,
+                            address: currentEmptyByte,
+                            binInst: binInst
+                        })
+                    }
+                    else if (reg1.double) { // b Ad
+                        if (opcode=='b') insertBits(binInst, '00000 110')
+                        else insertBits(binInst, '00000 111')
+
+                        insertBits(binInst, (reg1.reg+12).toString(2), 4)
+                        insertBits(binInst, (reg1.reg+8).toString(2), 4)
+                        insertMem(bytes,binInst,currentEmptyByte)
+                    }
+                    else { // b r0
+                        if (opcode=='b') insertBits(binInst, '00000 010')
+                        else insertBits(binInst, '00000 011')
+
+                        insertBits(binInst, reg1.reg.toString(2), 4)
+                        insertBits(binInst, '0000')
+                        insertMem(bytes,binInst,currentEmptyByte)
+                    }
+                }
+            }
+            else if ([...bccOpcodes, 'BCS','BCC'].includes(opcode.toUpperCase())) {
+                if (params.length != 1) {
+                    errors.push(`B{cc} opcodes take 1 parameter ${lineNumberToString(lineNumber)}`)
+                    return
+                }
+
+                let reg1 = interpretAsRegister(params[0])
+
+                if (reg1 && reg1.double) {
+                    errors.push(`Register in the first parameter lacks -l, -h suffixes ${lineNumberToString(lineNumber)}`)
+                    return
+                }
+                
+                if (reg1) { // bcc r0
+
+                    insertBits(binInst, '0001 0000')
+
+                    // 4 bit mode
+                    if (opcode == 'bcs') opcode = 'bhs'
+                    else if (opcode == 'bcc') opcode = 'blo'
+                    // 2+ because BEQ is index 2
+                    insertBits(binInst, (2+bccOpcodes.indexOf(opcode.toUpperCase())).toString(2), 4)
+
+                    insertBits(binInst, reg1.reg.toString(2), 4)
+                    insertMem(bytes,binInst,currentEmptyByte)
+                }
+                else { // bcc label
+                    insertBits(binInst, '0010')
+
+                    // 4 bit mode
+                    if (opcode == 'bcs') opcode = 'bhs'
+                    else if (opcode == 'bcc') opcode = 'blo'
+                    // 2+ because BEQ is index 2
+                    insertBits(binInst, (2+bccOpcodes.indexOf(opcode.toUpperCase())).toString(2), 4)
+                    
+                    thirdPass.push({
+                        expr: exprPartialEvaluator(`(${params[0]}-(${currentEmptyByte}+2))/2`, map, lineNumber, lastGlobalLabel),
+                        lineNumber: lineNumber,
+                        isSigned: true,
+                        bits: 8,
+                        address: currentEmptyByte,
+                        binInst: binInst
+                    })
+                }
+            }
         }
         else {
             errors.push(`Unknown opcode or directive ${matchResult[1]} in ${lineNumberToString(lineNumber)}`)
-            return line
+            return
         }
 
     })()
 
-    return line
-    
+    // if it was an opcode, increase the memory
+    if (head && opcodes.map(o => o.toLowerCase()).includes(head.toLowerCase())) {
+        currentEmptyByte += 2
+    }
 })
 
 
@@ -926,6 +1004,46 @@ if (errors.length) displayErrorsAndExit()
 
 
 // TODO: filled space boundaries
+
+
+
+// before third pass, remove all constants (not labels)
+for (let entry in map) {
+    if (map[entry].type == 0) { // if const
+        delete map[entry]
+    }
+}
+
+thirdPass.forEach(({expr,lineNumber,isSigned,bits,address,binInst},i) => {
+    let val = exprEvaluator(expr,map,lineNumber,'')
+    if (!val) return
+
+
+    if (!isSigned && val >= 2**bits ) {
+        errors.push(`Expression evaluates to ${val} and must be [0,${2**bits-1}] ${lineNumberToString(lineNumber)}`)
+        return
+    }
+
+    if (isSigned)
+    if (val >= 2**(bits-1) || val < -1*2**(bits-1)) {
+        errors.push(`Expression evaluates to ${val} and must be [-${2**(bits-1)},${2**(bits-1)-1}] ${lineNumberToString(lineNumber)}`)
+        return
+    }
+
+    if (val < 0) {
+        insertBits(binInst, (val+2**bits).toString(2), bits)
+    }
+    else { // unsigned, or non-negative signed
+        insertBits(binInst, val.toString(2), bits)
+    }
+    insertMem(bytes, binInst, address)
+
+
+})
+
+
+
+
 
 
 
@@ -939,9 +1057,23 @@ if (errors.length) displayErrorsAndExit()
 // l(input)
 // l(map)
 // l(bin)
+// l(thirdPass)
 
-for (let i = 0; i<100; i++) {
-    l(i.toString(16).padStart(2,'0'), ': ', bytes[i].toString(2).padStart(8, '0'), bytes[i].toString(16).padStart(2, '0'))
+l(`don\'t forget to set the test file correctly in source code!`)
+let testFileToCompare = './test/test3_bin.txt'
+l(`Test file: ${testFileToCompare}`)
+let testfile = fs.readFileSync(testFileToCompare, 'utf8')
+let testBytes = []
+let temp
+let reggg = /[01][01][01][01][01][01][01][01]/g
+while ( temp = reggg.exec(testfile) ) {
+    testBytes.push(temp[0])
+}
+
+l('\tCompiled HandConverted')
+for (let i = 0; i<100 && testBytes[i]; i++) {
+    let compiled = bytes[i+2].toString(2).padStart(8, '0')
+    l(i.toString(16).padStart(2,'0'), ': ', compiled!==testBytes[i]?red:'', compiled, testBytes[i], compiled!==testBytes[i]?black:'' )
 }
 
 // fs.writeFile('a.out', bin, 'binary', er => {
