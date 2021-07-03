@@ -1,13 +1,13 @@
-// Deniz Bashgoren v0.1 - 01 July 2021
+// Deniz Bashgoren v0.2 - 04 July 2021
 
 
 let fs = require("fs")
 
 /////////////// CONFIG
 let testFileToCompare
-testFileToCompare = './test/test2_bin.txt' // comment this out to not compare with hand-compiled code 
+// testFileToCompare = './test/test1_bin.txt' // uncomment this to compare with hand-compiled code 
 let saveToFile = false
-let emptyPlaceholder = 0xCD
+let emptyPlaceholder = 0x00
 let spacePlaceholder = 0xCD
 ///////////////
 
@@ -290,7 +290,7 @@ let filledRegions = [{fromInc: 0, startLine: 1}] // [ {fromInc: addr, toInc: add
 let bytes = Array(2**16).fill(emptyPlaceholder) // 2 byte address space
 
 let thirdPass = [] // [ {expr: '..', lineNumber: n, isSigned: bool, bits: n, address: n, binInst: ['1','0', ...] } ]
-
+let misalignedWarningIsIssued = false
 
 // register all the labels and strip from the code
 input.forEach((line,lineNumber) => {
@@ -1016,6 +1016,10 @@ input.forEach((line,lineNumber) => {
     // if it was an opcode, increase the memory
     if (head && opcodes.map(o => o.toLowerCase()).includes(head.toLowerCase())) {
         currentEmptyByte += 2
+        if (currentEmptyByte%2 && !misalignedWarningIsIssued) {
+            warnings.push(`Code from this line onwards is not 2 bytes aligned ${lineNumberToString(lineNumber)}`)
+            misalignedWarningIsIssued = true
+        }
     }
 })
 
