@@ -3,6 +3,15 @@
 
 let fs = require("fs")
 
+/////////////// CONFIG
+let testFileToCompare
+testFileToCompare = './test/test2_bin.txt' // comment this out to not compare with hand-compiled code 
+let saveToFile = false
+let emptyPlaceholder = 0xCD
+let spacePlaceholder = 0xCD
+///////////////
+
+
 let errors = [] // arr of strings
 let warnings = []
 let l = console.log
@@ -44,7 +53,7 @@ for (let i = 2; i<process.argv.length; i++) {
 }
 
 // if some files couldn't be read, we won't continue
-if (errors.length || warnings.length) displayErrorsAndExit()
+if (errors.length) displayErrorsAndExit()
 
 
 
@@ -278,8 +287,7 @@ let lastGlobalLabel
 let currentEmptyByte = 2
 let filledRegions = [{fromInc: 0, startLine: 1}] // [ {fromInc: addr, toInc: addr, startLine: line}]
 
-// -1 here means non-filled cell. we need to know which bytes are filled, to give warnings for overwrites
-let bytes = Array(2**16).fill(0xCD) // 2 byte address space
+let bytes = Array(2**16).fill(emptyPlaceholder) // 2 byte address space
 
 let thirdPass = [] // [ {expr: '..', lineNumber: n, isSigned: bool, bits: n, address: n, binInst: ['1','0', ...] } ]
 
@@ -397,9 +405,18 @@ input.forEach((line,lineNumber) => {
             }
         }
         else if (head == '#start') {
-            /// TODO: Return here after `b label`
-            errors.push(`#start is not implemented yet ${lineNumberToString(lineNumber)}`)
-            return
+            if (bytes[1] != emptyPlaceholder) {
+                warnings.push(`Overwriting the first instruction ${lineNumberToString(lineNumber)}`)
+            }
+
+            thirdPass.push({
+                expr: exprPartialEvaluator(`(${body}-2)/2`, map, lineNumber, lastGlobalLabel),
+                lineNumber: lineNumber,
+                isSigned: true,
+                bits: 10,
+                address: 0,
+                binInst: '001100'.split('')
+            })
         }
         else if (head == '#align') {
             let align = exprEvaluator(body, map, lineNumber, lastGlobalLabel)
@@ -421,10 +438,13 @@ input.forEach((line,lineNumber) => {
             if (org === undefined) {
                 return
             }
-            else {
-                filledRegions[filledRegions.length-1].toInc = currentEmptyByte-1
-                currentEmptyByte = org
-                filledRegions.push({fromInc: currentEmptyByte, startLine: lineNumber})
+            
+            filledRegions[filledRegions.length-1].toInc = currentEmptyByte-1
+            currentEmptyByte = org
+            filledRegions.push({fromInc: currentEmptyByte, startLine: lineNumber})
+            
+            if (currentEmptyByte == 0 || currentEmptyByte == 1) {
+                warnings.push(`First two addresses are supposed to be overwritten with #start ${lineNumberToString(lineNumber)}`)
             }
         }
         else if (head == 'space') {
@@ -454,7 +474,7 @@ input.forEach((line,lineNumber) => {
             }
             else {
                 for (let i = currentEmptyByte; i<currentEmptyByte+space; i++) {
-                    bytes[i] = 0xCD // fill with 0xCD
+                    bytes[i] = spacePlaceholder // fill with 0xCD
                 }
                 currentEmptyByte += space
             }
@@ -1001,11 +1021,35 @@ input.forEach((line,lineNumber) => {
 
 
 
+// filled space boundaries
+filledRegions[filledRegions.length-1].toInc = currentEmptyByte-1
+
+for (let i = 0; i<filledRegions.length; i++) {
+    for (let j = i+1; j<filledRegions.length; j++) {
+        let a = filledRegions[i], b = filledRegions[j]
+
+        if (a.toInc < a.fromInc || b.toInc < b.fromInc) continue
+        
+        let left, right
+        if (a.fromInc < b.fromInc) {
+            left = a
+            right = b
+        }
+        else {
+            left = b
+            right = a
+        }
+
+        if (left.toInc >= right.fromInc) {
+            warnings.push(`The addresses [${right.fromInc},${left.toInc}] are overwritten in ${lineNumberToString(left.startLine)} and ${lineNumberToString(right.startLine)}`)
+        }
+    }
+}
+
 // error checkpoint 2
-if (errors.length || warnings.length) displayErrorsAndExit()
+if (errors.length) displayErrorsAndExit()
 
 
-// TODO: filled space boundaries
 
 
 
@@ -1045,50 +1089,52 @@ thirdPass.forEach(({expr,lineNumber,isSigned,bits,address,binInst},i) => {
 
 
 
-
-
-
-
-
-
-
-// TODO: we don't need -1 -> 0xCD anymore
-// let bin = Buffer.from(bytes)
-
-// l(errors)
-// l(input)
-// l(map)
-// l(bin)
-// l(thirdPass)
-
 // error checkpoint 3
-if (errors.length || warnings.length) displayErrorsAndExit()
+if (errors.length) displayErrorsAndExit()
+
+let bin = Buffer.from(bytes)
+
+
+if (testFileToCompare) {
+    l(`Don\'t forget to set the test file correctly in source code!`)
+    l(`Test file: ${testFileToCompare}`)
+    let testfile = fs.readFileSync(testFileToCompare, 'utf8')
+    let testBytes = []
+    let temp
+    let reggg = /[01][01][01][01][01][01][01][01]/g
+    while ( temp = reggg.exec(testfile) ) {
+        testBytes.push(temp[0])
+    }
+    l('       Compiled HandConverted')
+    for (let i = 0; i<100 && testBytes[i]; i++) {
+        let compiled = bin[i+2].toString(2).padStart(8, '0')
+        l(i.toString(16).padStart(2,'0'), ': ', compiled!==testBytes[i]?red:'', compiled, testBytes[i], compiled!==testBytes[i]?black:'' )
+    }
+}
+
+else {
+    for (let i = 0; i<20; i++) {
+        let compiled = bin[i].toString(2).padStart(8, '0')
+        l(i.toString(16).padStart(2,'0'), ': ', compiled)
+    }
+}
+
+
+
+if (saveToFile) {
+    try {
+        fs.writeFileSync('a.out', Array.from(bin).map(byte => byte.toString(2).padStart(8, '0')).join('\n') )
+    }
+    catch(er) {
+        errors.push(`Couldn't save the binary code to a file`)
+    }
+}
+
+
+// error checkpoint 4
+if (errors.length) displayErrorsAndExit()
 
 if (warnings.length) {
     l(`${warnings.length} warning${warnings.length==1?'':'s'} occured:`)
     warnings.forEach(wr => l(`${yellow}[WARNING]${black} ${wr}`))
 }
-
-l(`don\'t forget to set the test file correctly in source code!`)
-let testFileToCompare = './test/test1_bin.txt'
-l(`Test file: ${testFileToCompare}`)
-let testfile = fs.readFileSync(testFileToCompare, 'utf8')
-let testBytes = []
-let temp
-let reggg = /[01][01][01][01][01][01][01][01]/g
-while ( temp = reggg.exec(testfile) ) {
-    testBytes.push(temp[0])
-}
-
-l('\tCompiled HandConverted')
-for (let i = 0; i<100 && testBytes[i]; i++) {
-    let compiled = bytes[i+2].toString(2).padStart(8, '0')
-    l(i.toString(16).padStart(2,'0'), ': ', compiled!==testBytes[i]?red:'', compiled, testBytes[i], compiled!==testBytes[i]?black:'' )
-}
-
-// fs.writeFile('a.out', bin, 'binary', er => {
-//     // TODO: better error msg
-//     if (er) throw 'ERROR: Couldnt save binary buffer'
-// })
-
-
