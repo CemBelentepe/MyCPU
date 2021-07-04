@@ -9,6 +9,7 @@ let testFileToCompare
 let saveToFile = true
 let emptyPlaceholder = 0x00
 let spacePlaceholder = 0xCD
+let bytesToPrint = 100
 ///////////////
 
 
@@ -1110,14 +1111,14 @@ if (testFileToCompare) {
         testBytes.push(temp[0])
     }
     l('       Compiled HandConverted')
-    for (let i = 0; i<100 && testBytes[i]; i++) {
+    for (let i = 0; i<bytesToPrint && testBytes[i]; i++) {
         let compiled = bin[i+2].toString(2).padStart(8, '0')
         l(i.toString(16).padStart(2,'0'), ': ', compiled!==testBytes[i]?red:'', compiled, testBytes[i], compiled!==testBytes[i]?black:'' )
     }
 }
 
 else {
-    for (let i = 0; i<20; i++) {
+    for (let i = 0; i<bytesToPrint; i++) {
         let compiled = bin[i].toString(2).padStart(8, '0')
         l(i.toString(16).padStart(2,'0'), ': ', compiled)
     }
@@ -1127,7 +1128,7 @@ else {
 
 if (saveToFile) {
     try {
-        fs.writeFileSync('a.out', Array.from(bin).map(byte => byte.toString(2).padStart(8, '0')).join('\n') )
+        fs.writeFileSync('a.out', Array.from(bin).slice(0,bytesToPrint).map(byte => byte.toString(2).padStart(8, '0')).join('\n') )
     }
     catch(er) {
         errors.push(`Couldn't save the binary code to a file`)
