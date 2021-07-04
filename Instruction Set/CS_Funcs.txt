@@ -6,10 +6,11 @@ F1
     FIM: DB <- Imm8
     FPI: DB <- PC+2*Imm{8, 10}
     FPC: DB <- PC
-    ALR: DB <- Rd op Rm
+    ALR: DB <- Rm op Rn
     ALI: DB <- Rd op Imm
     FRR: DB <- Rm, Rn
     FDZ: DB <- 0
+    ADM: DB <- Rd op Rm
 
 F2
     NOP: NOP

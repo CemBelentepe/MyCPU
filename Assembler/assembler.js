@@ -6,7 +6,7 @@ let fs = require("fs")
 /////////////// CONFIG
 let testFileToCompare
 // testFileToCompare = './test/test1_bin.txt' // uncomment this to compare with hand-compiled code 
-let saveToFile = false
+let saveToFile = true
 let emptyPlaceholder = 0x00
 let spacePlaceholder = 0xCD
 ///////////////

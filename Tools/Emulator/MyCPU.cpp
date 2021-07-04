@@ -27,7 +27,7 @@ void MyCPU::update()
 
 	ImGui::Checkbox("Auto Clock", &checked);
 	ImGui::SliderInt("CpF", &clockSpeed, 1, 120);
-	ImGui::SliderInt("IpS", &ips, 1, 1000000);
+	ImGui::SliderInt("IpS", &ips, 1, 240);
 	if (checked)
 	{
 		timer++;
@@ -145,6 +145,9 @@ void MyCPU::executeNext()
 	case F1::FDZ:
 		dbh = 0;
 		dbl = 0;
+		break;
+	case F1::ADM:
+		dbl = operate(cs.op, getRegVal(cs.p_rd), getRegVal(cs.p_rm));
 		break;
 	default:
 		std::cout << "[ERROR] Not implemented F1." << std::endl;

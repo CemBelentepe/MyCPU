@@ -5,18 +5,20 @@
 #include <fstream>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 
-static enum class F1 { NOP, FMM, FRD, FRM, FIM, FPI, FPC, ALR, ALI, FRR, FDZ, };
+static enum class F1 { NOP, FMM, FRD, FRM, FIM, FPI, FPC, ALR, ALI, FRR, FDZ, ADM, };
 static enum class F2 { NOP, TIL, TIH, TMM, TRD, TRM, TAR, TLR, };
 static enum class F3 { NOP, APC, ASP, AAR, ARA, ARI, };
 static enum class F4 { NOP, IPC, ISP, DSP, };
 
 static std::unordered_map<F1, std::string> F1_map{ {F1::NOP, "NOP"}, {F1::FMM, "FMM"}, {F1::FRD, "FRD"}, {F1::FRM, "FRM"}, {F1::FIM, "FIM"}, {F1::FPI, "FPI"},
-										{F1::FPC, "FPC"}, {F1::ALR, "ALR"}, {F1::ALI, "ALI"}, {F1::FRR, "FRR"}, {F1::FDZ, "FDZ"}, };
+										{F1::FPC, "FPC"}, {F1::ALR, "ALR"}, {F1::ALI, "ALI"}, {F1::FRR, "FRR"}, {F1::FDZ, "FDZ"},
+										{F1::ADM, "ADM"}, };
 static std::unordered_map<F2, std::string> F2_map{ {F2::NOP, "NOP"}, {F2::TIL, "TIL"}, {F2::TIH, "TIH"}, {F2::TMM, "TMM"}, {F2::TRD, "TRD"}, {F2::TRM, "TRM"},
 										{F2::TAR, "TAR"}, {F2::TLR, "TLR"}, };
-static std::unordered_map<F3, std::string> F3_map{ {F3::NOP, "NOP"}, {F3::APC, "APC"}, {F3::ASP, "ASP"}, {F3::AAR, "AAR"}, {F3::ARA, "ARA"}, {F3::ARI, "ARI"}, };
-
+static std::unordered_map<F3, std::string> F3_map{ {F3::NOP, "NOP"}, {F3::APC, "APC"}, {F3::ASP, "ASP"}, {F3::AAR, "AAR"}, {F3::ARA, "ARA"}, {F3::ARI, "ARI"},
+};
 static std::unordered_map<F4, std::string> F4_map{ {F4::NOP, "NOP"}, {F4::IPC, "IPC"}, {F4::ISP, "ISP"}, {F4::DSP, "DSP"}, };
 
 enum class CD { U, C };

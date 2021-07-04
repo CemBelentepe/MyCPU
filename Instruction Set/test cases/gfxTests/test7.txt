@@ -1,0 +1,84 @@
+
+
+_start:
+	mov spl, #0
+	mov sph, #0x2
+	mov arl, #0
+	mov arh, #0xc0
+	mov r0, #255
+	mov r1, #255
+	mov r2, #0
+	bl 	setColor
+	bl  clearScreen
+	mov r0, #0
+	mov r1, #0
+	mov r2, #128
+	bl	setColor
+
+	mov r0, #112
+	mov r1, #104
+	mov r2, #32
+	mov r3, #32
+	bl	drawRect
+.end:
+	b  	.end
+
+// void drawRect(r0, r1, r2, r3)
+drawRect:
+	psh lrh, lrl
+	psh r4, r5
+	
+	add r4, r0, r2
+	add r5, r1, r3
+
+.while1:
+	cmp r0, r4
+	beq .while1out
+	sub r1, r5, r3
+.while2:
+	cmp r1, r5
+	beq .while2out
+	bl 	updatePixel
+	add r1, #1
+	b	.while2
+.while2out:
+	add r0, #1
+	b	.while1
+.while1out:
+
+	pop r4, r5
+	pop pch, pcl
+
+// void clearScreen()
+clearScreen:
+	psh lrh, lrl
+	psh r0
+	mov r0, #0
+	str r0, [ar, #1]
+	str r0, [ar]
+	pop r0
+	pop pch, pcl
+	
+// void setColor(r0, r1, r2)
+setColor:
+	psh lrh, lrl
+	str r0, [ar, #2]
+	str r1, [ar, #3]
+	str r2, [ar, #4]
+	pop pch, pcl
+
+// void updatePixel(r0, r1)
+updatePixel:
+	psh lrh, lrl
+	psh r0, r1
+
+	str r0, [ar, #6]
+	str r1, [ar, #7]
+
+	mov r0, #1
+	str r0, [ar, #1]
+	str r0, [ar]
+
+	pop r0, r1
+	pop pch, pcl
+
