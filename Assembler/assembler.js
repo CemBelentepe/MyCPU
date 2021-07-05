@@ -82,21 +82,36 @@ function insertBits(arr, bitsStr, length) {
 }
 
 function insertMem(bytes,arr,address) {
-    let byte0 = 0, byte1 = 0
-    arr.reverse()
-    for (let i = 0; i<8; i++) {
-        if (arr[i]=='1') byte0 += (1<<i)
+    if (arr.length == 8) {
+        let byte0 = 0
+        arr.reverse()
+        for (let i = 0; i<8; i++) {
+            if (arr[i]=='1') byte0 += (1<<i)
+        }
+        bytes[address] = byte0
     }
-    for (let i = 0; i<8; i++) {
-        if (arr[8+i]=='1') byte1 += (1<<i)
+    else if (arr.length == 16) {
+        let byte0 = 0, byte1 = 0
+        arr.reverse()
+        for (let i = 0; i<8; i++) {
+            if (arr[i]=='1') byte0 += (1<<i)
+        }
+        for (let i = 0; i<8; i++) {
+            if (arr[8+i]=='1') byte1 += (1<<i)
+        }
+        bytes[address] = byte0
+        bytes[address+1] = byte1
     }
-    bytes[address] = byte0
-    bytes[address+1] = byte1
+    else {
+        errors.push(`Trying to insert an instruction of ${arr.length} bits. It must be either 8 or 16.`)
+        return
+    }
+    
 }
 
 // returns {reg: ind, double: bool} or null
 function interpretAsRegister(str) {
-    str = str.toLowerCase()
+    str = str.trim().toLowerCase()
     let index = ['r0','r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','r13','r14','r15'].indexOf(str)
     if (index > -1) return {reg: index, double: false}
     index = ['pcl','lrl','spl','arl','pch','lrh','sph','arh'].indexOf(str)
@@ -122,8 +137,7 @@ let reservedNames = new RegExp(temp1 = `^(?:ar[lh]?|sp[lh]?|pc[lh]?|lr[lh]?|r\\d
 
 
 function exprTokenizer(str, lineNumber) {
-    let reg1 = /\s*(\*\*|[\(\)\+\-\*\/]|0[xX][0-9a-fA-F]+|0[bB][0-1]+|0[oO][0-7]+|[0-9]+|[a-zA-Z_]\w*\.[a-zA-Z_]\w*|[a-zA-Z_]\w*|\.[a-zA-Z_]\w*)\s*/g
-    // str = '  3  + 0XA3a**2 - -(4+0o1*he4llo)+henlo.3wor--3)('
+    let reg1 = /\s*(\*\*|[\(\)\+\-\*\/\%]|0[xX][0-9a-fA-F]+|0[bB][0-1]+|0[oO][0-7]+|[0-9]+|[a-zA-Z_]\w*\.[a-zA-Z_]\w*|[a-zA-Z_]\w*|\.[a-zA-Z_]\w*)\s*/g
     let len=0
     let res = []
     let temp
@@ -136,7 +150,7 @@ function exprTokenizer(str, lineNumber) {
         return
     }
     if (str.length !== len) {
-        errors.push(`Expression must have only numbers, identifiers, and ()+-*/ characters ${lineNumberToString(lineNumber)}`)
+        errors.push(`Expression must have only numbers, identifiers, and ()+-*/% characters ${lineNumberToString(lineNumber)}`)
         return
     }
     return res
@@ -544,12 +558,21 @@ input.forEach((line,lineNumber) => {
                 }
                 else {
                     // expr
-                    let val = exprEvaluator(item, map, lineNumber, lastGlobalLabel)
-                    if (val === undefined) return
-                    else if (val < 0 || val > 255) {
-                        warnings.push(`Item ${i+1} of the list is not 0..256, mod 256 will be taken ${lineNumberToString(lineNumber)}`)
-                    }
-                    bytes[currentEmptyByte++] = val
+                    // let val = exprEvaluator(item, map, lineNumber, lastGlobalLabel)
+                    // if (val === undefined) return
+                    // else if (val < 0 || val > 255) {
+                    //     warnings.push(`Item ${i+1} of the list is not 0..256, mod 256 will be taken ${lineNumberToString(lineNumber)}`)
+                    // }
+                    // bytes[currentEmptyByte++] = val
+
+                    thirdPass.push({
+                        expr: exprPartialEvaluator(item, map, lineNumber, lastGlobalLabel),
+                        lineNumber: lineNumber,
+                        isSigned: false,
+                        bits: 8,
+                        address: currentEmptyByte++,
+                        binInst: []
+                    })
                 }
             }
         }
@@ -1070,7 +1093,8 @@ thirdPass.forEach(({expr,lineNumber,isSigned,bits,address,binInst},i) => {
     if (val === undefined) return
 
 
-    if (!isSigned && val >= 2**bits ) {
+    if (!isSigned)
+    if (val >= 2**bits || val < 0) {
         errors.push(`Expression evaluates to ${val} and must be [0,${2**bits-1}] ${lineNumberToString(lineNumber)}`)
         return
     }

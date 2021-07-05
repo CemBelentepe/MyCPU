@@ -8,7 +8,7 @@ The assembler accepts code in a custom assembly language ("the language" from no
 #define anotherConst someConst+3
 
 someSpace:	space 5
-someData:	db 1,2+2,  F( -someConst/anotherConst )
+someData:	db 1,2+2,  F( -someFunc/anotherConst )
 hello: db "Hello world\0"
 .end:
 
@@ -53,7 +53,7 @@ Instructions are 2-byte long, and must have 2 byte alignment to be properly exec
 The directives are: `db`, `space`, `#define`, `#undef`, `#start`, `#align`, `#org`. The ones starting with `#` are the ones which don't produce binary code, while the ones without `#` produce code. Directive instructions are like opcode instructions: they have to be on seperate lines, and can't span more than one line. There needs to be at least one space between the directive and the parameters, while between parameters no space is needed.
 
 ### space and db Directives
-`db` stands for "define bytes" and along with space produce bytes, typically for `bss` and `data` sections in traditional architectures. The signatures are `space expr` and `db expr1,expr2,exprN`, where `db` can also take strings instead of expressions. `space` reserves n bytes and fills those with `spacePlaceholder` config variable. `db` parameters can be expressions, or strings. Neither directive aligns implicitly, and will insert bytes wherever the instruction stands. Examples:
+`db` stands for "define bytes" and along with space produce bytes, typically for `bss` and `data` sections in traditional architectures. The signatures are `space expr` and `db expr1,expr2,exprN`, where `db` can also take strings instead of expressions. `space` reserves n bytes and fills those with `spacePlaceholder` config variable. `db` parameters can be expressions, or strings. Neither directive aligns implicitly, and will insert bytes wherever the instruction stands. `space` requires all of the labels in the expression to be defined already, whereas `db` can have labels which are declared later. Examples:
 ```
 space 3			// gives the bytes [0xCD, 0xCD, 0xCD]
 db 1, 2+2, "hello", 4	// gives the bytes [1, 4, 'h', 'e', 'l', 'l', 'o', 4]
@@ -92,7 +92,7 @@ Strings are inspired by C. They must start and end with `"` character, and can h
 Only single line comments are supported, and both `//` and `;` can be used as comment starters. The rest of the line is ignored.
 
 ## Expressions
-Expressions are categorized as either second pass, or third pass ones. The difference is, second pass ones are parsed at the same time as labels, so if a label declaration comes after the expression, it results in an error. Third pass expressions however can include labels which are declared later. For both cases, the constants have to be defined already. Expressions are made up of numbers (decimal: `10`, hexadecimal: `0xA`, octal: `012` or `0o12`, and binary: `0b1010`), identifiers (labels: global, local and both; and constants), math operators (`+`,`-`,`*`,`/`,`**`), parantheses `(`, `)` for grouping, as well as internal functions:
+Expressions are categorized as either second pass, or third pass ones. The difference is, second pass ones are parsed at the same time as labels, so if a label declaration comes after the expression, it results in an error. Third pass expressions however can include labels which are declared later. For both cases, the constants have to be defined already. Expressions are made up of numbers (decimal: `10`, hexadecimal: `0xA`, octal: `012` or `0o12`, and binary: `0b1010`), identifiers (labels: global, local and both; and constants), math operators (`+`,`-`,`*`,`/`, exponentiation: `**`, modulus: `%`), parantheses `(`, `)` for grouping, as well as internal functions:
 ```
 L(0x1234) // "lower half" yields 0x34. defined as L(x) = x & 0x00FF
 H(0x1234) // "upper half" yields 0x12. defined as H(x) = (x & 0xFF00) >> 8
