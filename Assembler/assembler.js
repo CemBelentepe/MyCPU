@@ -136,7 +136,7 @@ function exprTokenizer(str, lineNumber) {
         return
     }
     if (str.length !== len) {
-        errors.push(`Expression must have only numbers, identifiers, and ()+-*/^ characters ${lineNumberToString(lineNumber)}`)
+        errors.push(`Expression must have only numbers, identifiers, and ()+-*/ characters ${lineNumberToString(lineNumber)}`)
         return
     }
     return res
