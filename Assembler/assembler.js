@@ -1095,16 +1095,24 @@ thirdPass.forEach(({expr,lineNumber,isSigned,bits,address,binInst},i) => {
     if (val === undefined) return
 
 
-    if (!isSigned)
-    if (val >= 2**bits || val < 0) {
-        errors.push(`Expression evaluates to ${val} and must be [0,${2**bits-1}] ${lineNumberToString(lineNumber)}`)
-        return
+    if (!isSigned) {
+        if (val >= 2**bits || val < -1*2**(bits-1)) {
+            errors.push(`Expression evaluates to ${val} and must be [0,${2**bits-1}] ${lineNumberToString(lineNumber)}`)
+            return
+        }
+        if (val < 0) {
+            warnings.push(`Expression is changed from ${val} to ${val+2**bits} to fit [0,${2**bits-1}] ${lineNumberToString(lineNumber)}`)
+        }
     }
 
-    if (isSigned)
-    if (val >= 2**(bits-1) || val < -1*2**(bits-1)) {
-        errors.push(`Expression evaluates to ${val} and must be [-${2**(bits-1)},${2**(bits-1)-1}] ${lineNumberToString(lineNumber)}`)
-        return
+    if (isSigned) {
+        if (val >= 2**bits || val < -1*2**(bits-1)) {
+            errors.push(`Expression evaluates to ${val} and must be [-${2**(bits-1)},${2**(bits-1)-1}] ${lineNumberToString(lineNumber)}`)
+            return
+        }
+        if (val >= 2**(bits-1)) {
+            warnings.push(`Expression is changed from ${val} to ${val-2**bits} to fit [-${2**(bits-1)},${2**(bits-1)-1}] ${lineNumberToString(lineNumber)}`)
+        }
     }
 
     if (val < 0) {
