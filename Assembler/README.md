@@ -8,7 +8,7 @@ The assembler accepts code in a custom assembly language ("the language" from no
 #define anotherConst someConst+3
 
 someSpace:	space 5
-someData:	db 1,2+2,  F( -someFunc/anotherConst )
+someData:	db 1,2+2,  F( someFunc/anotherConst )
 hello: db "Hello world\0"
 .end:
 

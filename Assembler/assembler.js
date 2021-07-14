@@ -874,12 +874,14 @@ input.forEach((line,lineNumber) => {
                 }
                 else { // 3 params
 
+                    params[2] = params[2].trim()
+
                     if (!/\[\s*AR\s*/i.test(params[1]) ) {
                         errors.push(`Second parmeter must be [AR, Rd] or [AR, #imm] ${lineNumberToString(lineNumber)}`)
                         return
                     }
                     else if ( params[2][params[2].length-1] != ']')  { // if the last char isn't ]
-                        errors.push(`Second parmeter end with ] ${lineNumberToString(lineNumber)}`)
+                        errors.push(`Second parmeter must end with ] ${lineNumberToString(lineNumber)}`)
                         return
                     }
 
