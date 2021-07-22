@@ -17,6 +17,7 @@ void MyCPU::update()
 	static int clockSpeed = 60;
 	static int codeSize = 128;
 	static int ips = 1;
+	static int xSpeed = 1;
 
 	for (int i = 0; i < 8; i += 2)
 		ImGui::Text("R%d: 0x%.2X\t  R%d: 0x%.2X", i, gprs[i], i + 1, gprs[i + 1]);
@@ -27,13 +28,14 @@ void MyCPU::update()
 
 	ImGui::Checkbox("Auto Clock", &checked);
 	ImGui::SliderInt("CpF", &clockSpeed, 1, 120);
-	ImGui::SliderInt("IpS", &ips, 1, 240);
+	ImGui::SliderInt("IpS", &ips, 1, 512);
+	ImGui::SliderInt("xSpeed", &xSpeed, 1, 1024);
 	if (checked)
 	{
 		timer++;
 		if (timer >= clockSpeed)
 		{
-			for (int i = 0; i < ips; i++)
+			for (int i = 0; i < ips * xSpeed; i++)
 				executeNext();
 			timer = 0;
 		}

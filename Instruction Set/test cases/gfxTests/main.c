@@ -18,16 +18,39 @@ void drawRect(int x, int y, int w, int h)
     }
 }
 
-int main()
+void drawCircle(int x, int y, int r)
 {
-    int posX = 0;
-    int posY = 0;
-    while(true)
+    int r_ = r*2;
+    int r2 = r*r;
+    int i = 0;
+    while(i < r_)
     {
-        setColor(255, 255, 255);
-        clearScreen();
-        setColor(0, 0, 128);
-        drawRect(posX, posY, 32, 32);
+        int j = 0;
+        while(j < r_)
+        {
+            int i_ = i * i;
+            int j_ = j * j;
+            int temp = i_ + j_;
+            if(temp < r2)
+                updatePixel(x+i, y+j);
+            j++;
+        }
+        i++;
     }
 }
 
+void _start_old()
+{
+    setColor(255, 255, 0);
+    clearScreen();
+    setColor(0, 0, 128);
+    drawRect(112, 104, 32, 32);
+}
+
+void _start()
+{
+    setColor(255, 255, 0);
+    clearScreen();
+    setColor(0, 0, 128);
+    drawCircle(112, 104, 32);
+}

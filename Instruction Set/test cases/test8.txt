@@ -1,0 +1,10 @@
+#start _start
+
+_start:
+    mov r1, #0
+.loop:
+    add r1, #1
+    cmp r1, #240
+    blo .loop
+.end:
+    b   .end    

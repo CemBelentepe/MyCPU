@@ -1,5 +1,4 @@
 
-
 _start:
 	mov spl, #0
 	mov sph, #0x2
