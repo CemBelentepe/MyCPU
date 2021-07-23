@@ -74,7 +74,7 @@ module CPU(clk, reset, i_data_bus, o_data_bus, o_addr_bus, o_we, o_dbg);
     wire[7:0] alu_data;
     ALU alu(.i_a(alu_a), .i_b(alu_b), .i_op(alu_op), .i_zcnv(zcnv_flags), .o_res(alu_data), .o_zcnv(alu_zcnv));
     
-    always @(negedge clk) begin
+    always @(negedge clk or posedge reset) begin
         if(reset)
             zcnv_flags <= 0;
         else if(alu_set_flag)

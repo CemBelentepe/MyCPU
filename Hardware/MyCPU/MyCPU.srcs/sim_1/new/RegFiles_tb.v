@@ -28,7 +28,7 @@ module RunProgram_tb();
     CPU_Complex uut(clk, reset, o_data_bus, o_addr_bus, o_we, o_dbg);
     
     initial begin
-        clk <= 0; reset <= 1; #25;
+        clk <= 0; reset <= 1; #50;
         reset <= 0;
     end
     

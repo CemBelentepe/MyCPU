@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1625239656">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1627051507">
   <File Type="PA-TCL" Name="CPU_Complex.tcl"/>
+  <File Type="RDS-PROPCONSTRS" Name="CPU_Complex_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="CPU_Complex_reports.tcl"/>
   <File Type="RDS-RDS" Name="CPU_Complex.vds"/>
   <File Type="RDS-UTIL" Name="CPU_Complex_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="CPU_Complex_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="CPU_Complex.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="CPU_Complex_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="CPU_Complex_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/ALU.v">
@@ -69,6 +72,7 @@
       </FileInfo>
     </File>
     <Config>
+      <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_1/new/Cmod-A7.xdc"/>
       <Option Name="ConstrsType" Val="XDC"/>
     </Config>
   </FileSet>

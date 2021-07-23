@@ -1,0 +1,32 @@
+NOP
+
+str r3, [ar]
+str r7, [ar, r2]
+str r5, [ar, #2]
+ldr r3, [ar]
+ldr r7, [ar, r2]
+ldr r5, [ar, #2]
+
+psh r2
+psh lr
+pop r3
+pop pc
+
+mov r2, arl
+movd pc, r2, r4
+
+clr arh
+cmp r2, lrl
+cmp r3, #255
+
+b r2
+b lr
+loop: b loop
+bgt lrl
+bgt loop
+bl r2
+bl pcl, pch
+bl loop
+
+add r0, r2, r3
+sub r5, #15

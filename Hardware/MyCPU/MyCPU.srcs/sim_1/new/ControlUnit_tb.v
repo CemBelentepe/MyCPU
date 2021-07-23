@@ -25,15 +25,25 @@ module CU_tb();
     wire[15:0] imm_addr;
     wire dbg;
 
+    reg[7:0] program[0:99];
+
 ControlUnit uut(clk, reset, zcnv, ir, alu_set_flag, alu_sa, alu_sb, alu_op,
     gpr_sa, gpr_sb, gpr_sc, gpr_regsel, gpr_funsel, 
     adr_sa, adr_sb, adr_sc, adr_regsel, adr_as_dw, adr_funsel, 
     ir_h, ir_load, mem_we, bus_dbl, bus_dbh, bus_ab,
     imm_data, imm_addr, dbg);
 
+    integer i;
+
     initial begin
+        $readmemb("program.mem", program);
         clk <= 0; reset <= 1; zcnv <= 0; ir <= 0; #25;
         reset <= 0;
+        for(i = 0; i < 50; i = i + 2) begin
+            reset <= 1; zcnv <= 0; #25;
+            reset <= 0; 
+            ir <= {program[i+1], program[i]}; #200;
+        end
     end
     
     always begin

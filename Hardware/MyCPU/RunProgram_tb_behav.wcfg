@@ -3,57 +3,169 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="RunProgram_tb_behav.wdb" id="1">
+      <db_ref path="CU_tb_behav.wdb" id="1">
          <top_modules>
-            <top_module name="RunProgram_tb" />
+            <top_module name="CU_tb" />
             <top_module name="glbl" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="500000fs"></ZoomStartTime>
-      <ZoomEndTime time="3500001fs"></ZoomEndTime>
-      <Cursor1Time time="3000000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1403001fs"></ZoomEndTime>
+      <Cursor1Time time="249000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="138"></NameColumnWidth>
-      <ValueColumnWidth column_width="65"></ValueColumnWidth>
+      <NameColumnWidth column_width="137"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="9" />
-   <wvobject fp_name="/RunProgram_tb/clk" type="logic">
+   <WVObjectSize size="37" />
+   <wvobject fp_name="/CU_tb/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/reset" type="logic">
+   <wvobject fp_name="/CU_tb/reset" type="logic">
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/o_data_bus" type="array">
-      <obj_property name="ElementShortName">o_data_bus[7:0]</obj_property>
-      <obj_property name="ObjectShortName">o_data_bus[7:0]</obj_property>
+   <wvobject fp_name="/CU_tb/zcnv" type="array">
+      <obj_property name="ElementShortName">zcnv[3:0]</obj_property>
+      <obj_property name="ObjectShortName">zcnv[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/o_addr_bus" type="array">
-      <obj_property name="ElementShortName">o_addr_bus[15:0]</obj_property>
-      <obj_property name="ObjectShortName">o_addr_bus[15:0]</obj_property>
+   <wvobject fp_name="/CU_tb/ir" type="array">
+      <obj_property name="ElementShortName">ir[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ir[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/o_we" type="logic">
-      <obj_property name="ElementShortName">o_we</obj_property>
-      <obj_property name="ObjectShortName">o_we</obj_property>
+   <wvobject fp_name="/CU_tb/uut/f1" type="array">
+      <obj_property name="ElementShortName">f1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">f1[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/o_dbg" type="logic">
-      <obj_property name="ElementShortName">o_dbg</obj_property>
-      <obj_property name="ObjectShortName">o_dbg</obj_property>
+   <wvobject fp_name="/CU_tb/uut/f2" type="array">
+      <obj_property name="ElementShortName">f2[2:0]</obj_property>
+      <obj_property name="ObjectShortName">f2[2:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/car" type="array">
-      <obj_property name="ElementShortName">car[5:0]</obj_property>
-      <obj_property name="ObjectShortName">car[5:0]</obj_property>
+   <wvobject fp_name="/CU_tb/uut/f3" type="array">
+      <obj_property name="ElementShortName">f3[2:0]</obj_property>
+      <obj_property name="ObjectShortName">f3[2:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/mapped_inst" type="array">
-      <obj_property name="ElementShortName">mapped_inst[5:0]</obj_property>
-      <obj_property name="ObjectShortName">mapped_inst[5:0]</obj_property>
+   <wvobject fp_name="/CU_tb/uut/f4" type="array">
+      <obj_property name="ElementShortName">f4[1:0]</obj_property>
+      <obj_property name="ObjectShortName">f4[1:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/uut/cpu/ir/data" type="array">
-      <obj_property name="ElementShortName">data[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data[15:0]</obj_property>
+   <wvobject fp_name="/CU_tb/uut/cd" type="logic">
+      <obj_property name="ElementShortName">cd</obj_property>
+      <obj_property name="ObjectShortName">cd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/uut/br" type="logic">
+      <obj_property name="ElementShortName">br</obj_property>
+      <obj_property name="ObjectShortName">br</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/uut/br_ad" type="array">
+      <obj_property name="ElementShortName">br_ad[5:0]</obj_property>
+      <obj_property name="ObjectShortName">br_ad[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/alu_set_flag" type="logic">
+      <obj_property name="ElementShortName">alu_set_flag</obj_property>
+      <obj_property name="ObjectShortName">alu_set_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/alu_sa" type="logic">
+      <obj_property name="ElementShortName">alu_sa</obj_property>
+      <obj_property name="ObjectShortName">alu_sa</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/alu_sb" type="array">
+      <obj_property name="ElementShortName">alu_sb[1:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_sb[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/alu_op" type="array">
+      <obj_property name="ElementShortName">alu_op[3:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_op[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/gpr_sa" type="array">
+      <obj_property name="ElementShortName">gpr_sa[2:0]</obj_property>
+      <obj_property name="ObjectShortName">gpr_sa[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/gpr_sb" type="array">
+      <obj_property name="ElementShortName">gpr_sb[2:0]</obj_property>
+      <obj_property name="ObjectShortName">gpr_sb[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/gpr_sc" type="array">
+      <obj_property name="ElementShortName">gpr_sc[2:0]</obj_property>
+      <obj_property name="ObjectShortName">gpr_sc[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/gpr_regsel" type="array">
+      <obj_property name="ElementShortName">gpr_regsel[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gpr_regsel[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/gpr_funsel" type="logic">
+      <obj_property name="ElementShortName">gpr_funsel</obj_property>
+      <obj_property name="ObjectShortName">gpr_funsel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/adr_sa" type="array">
+      <obj_property name="ElementShortName">adr_sa[2:0]</obj_property>
+      <obj_property name="ObjectShortName">adr_sa[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/adr_sb" type="array">
+      <obj_property name="ElementShortName">adr_sb[2:0]</obj_property>
+      <obj_property name="ObjectShortName">adr_sb[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/adr_sc" type="array">
+      <obj_property name="ElementShortName">adr_sc[1:0]</obj_property>
+      <obj_property name="ObjectShortName">adr_sc[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/adr_regsel" type="array">
+      <obj_property name="ElementShortName">adr_regsel[7:0]</obj_property>
+      <obj_property name="ObjectShortName">adr_regsel[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/adr_as_dw" type="logic">
+      <obj_property name="ElementShortName">adr_as_dw</obj_property>
+      <obj_property name="ObjectShortName">adr_as_dw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/adr_funsel" type="array">
+      <obj_property name="ElementShortName">adr_funsel[1:0]</obj_property>
+      <obj_property name="ObjectShortName">adr_funsel[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/ir_h" type="logic">
+      <obj_property name="ElementShortName">ir_h</obj_property>
+      <obj_property name="ObjectShortName">ir_h</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/ir_load" type="logic">
+      <obj_property name="ElementShortName">ir_load</obj_property>
+      <obj_property name="ObjectShortName">ir_load</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/mem_we" type="logic">
+      <obj_property name="ElementShortName">mem_we</obj_property>
+      <obj_property name="ObjectShortName">mem_we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/bus_dbl" type="array">
+      <obj_property name="ElementShortName">bus_dbl[2:0]</obj_property>
+      <obj_property name="ObjectShortName">bus_dbl[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/bus_dbh" type="array">
+      <obj_property name="ElementShortName">bus_dbh[2:0]</obj_property>
+      <obj_property name="ObjectShortName">bus_dbh[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/bus_ab" type="array">
+      <obj_property name="ElementShortName">bus_ab[1:0]</obj_property>
+      <obj_property name="ObjectShortName">bus_ab[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/imm_data" type="array">
+      <obj_property name="ElementShortName">imm_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/imm_addr" type="array">
+      <obj_property name="ElementShortName">imm_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/dbg" type="logic">
+      <obj_property name="ElementShortName">dbg</obj_property>
+      <obj_property name="ObjectShortName">dbg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/CU_tb/program" type="array">
+      <obj_property name="ElementShortName">program[0:99][7:0]</obj_property>
+      <obj_property name="ObjectShortName">program[0:99][7:0]</obj_property>
    </wvobject>
 </wave_config>

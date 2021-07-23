@@ -8,9 +8,18 @@ module CPU_Complex(clk, reset, o_data_bus, o_addr_bus, o_we, o_dbg);
     output wire[15:0] o_addr_bus;
     output wire o_we;
     
+    reg cpu_clk;
+    
+    always @(negedge clk or posedge reset) begin
+        if(reset)
+            cpu_clk <= 0;
+        else            
+            cpu_clk <= ~cpu_clk;
+    end
+    
     wire[7:0] i_data_bus;
     
-    CPU cpu(.clk(clk), .reset(reset), .i_data_bus(i_data_bus), .o_data_bus(o_data_bus), .o_addr_bus(o_addr_bus), .o_we(o_we), .o_dbg(o_dbg));
+    CPU cpu(.clk(cpu_clk), .reset(reset), .i_data_bus(i_data_bus), .o_data_bus(o_data_bus), .o_addr_bus(o_addr_bus), .o_we(o_we), .o_dbg(o_dbg));
     RAM ram(.clk(clk), .i_data(o_data_bus), .i_addr(o_addr_bus), .o_data(i_data_bus), .i_we(o_we));
 endmodule
 

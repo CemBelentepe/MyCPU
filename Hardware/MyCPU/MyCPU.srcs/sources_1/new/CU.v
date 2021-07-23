@@ -70,7 +70,7 @@ module ControlUnit(clk, reset, zcnv, ir, alu_set_flag, alu_sa, alu_sb, alu_op,
         $readmemb("control_storage.mem", control_storage);
     end
     
-    always @(posedge clk) begin
+    always @(posedge clk or posedge reset) begin
         if(reset)
             car <= 0;
         else if(br)
@@ -129,21 +129,25 @@ module F1Decoder(i_func, i_rd, i_rm, i_rn, alu_set_flag, alu_sa, alu_sb, gpr_sa,
     // BUS
     output reg[2:0] bus_dbl, bus_dbh;
     
-    // enum class F1 { NOP = 0, FMM = 1, FRD = 2, FRM = 3, FIM = 4, FPI = 5, FPC = 6, ALR = 7, ALI = 8, FRR = 9, FDZ = A, };
+    // enum class F1 { NOP = 0, FMM = 1, FRD = 2, FRM = 3, FIM = 4, FPI = 5, FPC = 6, ALR = 7, ALI = 8, FRR = 9, FDZ = A, ADM = B};
     always @(*) begin
         case(i_func) 
-            4'h7, 4'h8: alu_set_flag <= 1;
+            4'h7, 4'h8, 4'hB: alu_set_flag <= 1;
             default: alu_set_flag <= 0; 
         endcase
         
         case(i_func) 
             4'h7: begin
-                alu_sa <= i_rd[3];
-                alu_sb <= {1'b0, i_rm[3]};
+                alu_sa <= i_rm[3];
+                alu_sb <= {1'b0, i_rn[3]};
             end
             4'h8: begin
                 alu_sa <= i_rd[3];
                 alu_sb <= 2'b10;
+            end
+            4'hB: begin
+                alu_sa <= i_rd[3];
+                alu_sb <= {1'b0, i_rm[3]};
             end
             default: begin
                 alu_sa <= 1'b0;
@@ -154,14 +158,17 @@ module F1Decoder(i_func, i_rd, i_rm, i_rn, alu_set_flag, alu_sa, alu_sb, gpr_sa,
         case(i_func) 
             4'h2: gpr_sa <= i_rd;
             4'h3: gpr_sa <= i_rm;
-            4'h7, 4'h8: gpr_sa <= i_rd;
+            4'h7: gpr_sa <= i_rm;
+            4'h8: gpr_sa <= i_rd;
             4'h9: gpr_sa <= i_rm;
+            4'hB: gpr_sa <= i_rd;
             default: gpr_sa <= 0;
         endcase
         
         case(i_func) 
-            4'h7: gpr_sb <= i_rm;
+            4'h7: gpr_sb <= i_rn;
             4'h9: gpr_sb <= i_rn;
+            4'hB: gpr_sb <= i_rm;
             default: gpr_sb <= 0;
         endcase
         
@@ -169,15 +176,18 @@ module F1Decoder(i_func, i_rd, i_rm, i_rn, alu_set_flag, alu_sa, alu_sb, gpr_sa,
             4'h2: adr_sa <= i_rd;
             4'h3: adr_sa <= i_rm;
             4'h5, 4'h6: adr_sa <= 4'b1000;
-            4'h7, 4'h8: adr_sa <= i_rd;
+            4'h7: adr_sa <= i_rm;
+            4'h8: adr_sa <= i_rd;
             4'h9: adr_sa <= i_rm;
+            4'hB: adr_sa <= i_rd;
             default: adr_sa <= 0;
         endcase
         
         case(i_func)
             4'h5, 4'h6: adr_sb <= 4'b1100;
-            4'h7: adr_sb <= i_rm;
+            4'h7: adr_sb <= i_rn;
             4'h9: adr_sb <= i_rn;
+            4'hB: adr_sb <= i_rm;
             default: adr_sb <= 0;
         endcase
         
@@ -190,6 +200,7 @@ module F1Decoder(i_func, i_rd, i_rm, i_rn, alu_set_flag, alu_sa, alu_sb, gpr_sa,
             4'h7, 4'h8: bus_dbl <= 6;
             4'h9: bus_dbl <= 3;
             4'hA: bus_dbl <= 0;
+            4'hB: bus_dbl <= 6;
             default: bus_dbl <= 0;
         endcase
         
@@ -524,7 +535,7 @@ module InstDecoder(i_inst, o_mapped, o_rd, o_rm, o_rn, o_ad, o_cond, imm_data, i
             6'b1?????: begin
                 // ALUI
                 inst_addr <= 5'b11011;
-                o_rd <= 4'h0;
+                o_rd <= {1'b0, i_inst[10:8]};
                 o_rm <= 4'h0;
                 o_rn <= 4'h0;
                 o_ad <= 2'h0;

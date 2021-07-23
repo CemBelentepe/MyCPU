@@ -10,7 +10,7 @@ module GeneralRegister(clk, reset, i_data, i_en, i_func, o_data);
     
     reg[7:0] data;
     
-    always @(negedge clk) begin
+    always @(negedge clk or posedge reset) begin
         if(reset)
             data <= 0;
         else if(i_en) begin
@@ -56,7 +56,7 @@ module AddressRegister(clk, reset, i_data, i_en, i_func, i_data_high, o_data);
     
     reg[15:0] data;
 
-    always @(negedge clk) begin
+    always @(negedge clk or posedge reset) begin
         if(reset) begin 
             data <= 0;
         end
@@ -128,7 +128,7 @@ module InstRegister(clk, reset, i_data, i_h, i_load, o_data);
     reg[15:0] data;
     assign o_data = data;
     
-    always@(negedge clk) begin
+    always@(negedge clk or posedge reset) begin
         if(reset)
             data <= 0;
         else if(i_load)

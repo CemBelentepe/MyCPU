@@ -3,10 +3,10 @@
 Nov 18 2020
 09:47:47
 C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.sim/sim_1/behav/xsim/glbl.v,1605673889,verilog,,,,glbl,,,,,,,,
-C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sim_1/new/ControlUnit_tb.v,1625255194,verilog,,,,CU_tb;F1Decoder_tb,,,,,,,,
-C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sim_1/new/RegFiles_tb.v,1625176876,verilog,,,,AddSub_tb;RegFiles_tb;RunProgram_tb,,,,,,,,
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sim_1/new/ControlUnit_tb.v,1627041631,verilog,,,,CU_tb;F1Decoder_tb,,,,,,,,
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sim_1/new/RegFiles_tb.v,1627049398,verilog,,,,AddSub_tb;RegFiles_tb;RunProgram_tb,,,,,,,,
 C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/ALU.v,1625239649,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CPU.v,,ALU;AddSub,,,,,,,,
-C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CPU.v,1625146054,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CPU_Complex.v,,CPU,,,,,,,,
-C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CPU_Complex.v,1625153239,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CU.v,,CPU_Complex;RAM,,,,,,,,
-C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CU.v,1625257776,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/RegFiles.v,,CondDecoder;ControlUnit;F1Decoder;F2Decoder;F3Decoder;F4Decoder;InstDecoder,,,,,,,,
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CPU.v,1627050249,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CPU_Complex.v,,CPU,,,,,,,,
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CPU_Complex.v,1627050337,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CU.v,,CPU_Complex;RAM,,,,,,,,
+C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/CU.v,1627046621,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/RegFiles.v,,CondDecoder;ControlUnit;F1Decoder;F2Decoder;F3Decoder;F4Decoder;InstDecoder,,,,,,,,
 C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sources_1/new/RegFiles.v,1625072454,verilog,,C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.srcs/sim_1/new/RegFiles_tb.v,,AddressRegister;AdrFile;GPRFile;GeneralRegister;InstRegister,,,,,,,,
