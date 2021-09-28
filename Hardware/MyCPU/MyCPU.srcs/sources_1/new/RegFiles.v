@@ -46,12 +46,12 @@ module GPRFile(clk, reset, i_data, i_funsel, i_regsel, i_sel_a, i_sel_b, i_sel_c
     assign o_c = outputs[i_sel_c];
 endmodule
 
-module AddressRegister(clk, reset, i_data, i_en, i_func, i_data_high, o_data);
+module AddressRegister(clk, reset, i_data, i_en, i_func, i_as_dw, o_data);
     input wire clk, reset;
     input wire[15:0] i_data;
     input wire[1:0] i_en;
     input wire[1:0] i_func;
-    input wire i_data_high;
+    input wire i_as_dw;
     output wire[15:0] o_data;
     
     reg[15:0] data;
@@ -64,7 +64,7 @@ module AddressRegister(clk, reset, i_data, i_en, i_func, i_data_high, o_data);
             case(i_func) 
                 2'b00: begin 
                     if(i_en[1]) begin
-                        data[15:8] <= i_data_high ? i_data[15:8] : i_data[7:0];
+                        data[15:8] <= i_as_dw ? i_data[15:8] : i_data[7:0];
                     end
                     if(i_en[0]) begin
                         data[7:0] <= i_data[7:0];

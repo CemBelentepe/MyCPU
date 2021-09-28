@@ -1,4 +1,6 @@
 `timescale 1ns / 1ps
+`default_nettype none
+
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -21,11 +23,10 @@
 
 module RunProgram_tb();
     reg clk, reset;
-    wire[7:0] o_data_bus;
-    wire[15:0] o_addr_bus;
-    wire o_we, o_dbg;
+    wire o_en, o_rs, o_rw, o_dbg;
+    wire[7:0] o_db;
     
-    CPU_Complex uut(clk, reset, o_data_bus, o_addr_bus, o_we, o_dbg);
+    CPU_Complex uut(.clk(clk), .reset(reset), .o_en(o_en), .o_rs(o_rs), .o_rw(o_rw), .o_db(o_db), .o_dbg(o_dbg));
     
     initial begin
         clk <= 0; reset <= 1; #50;
@@ -103,3 +104,5 @@ module RegFiles_tb();
         clk = ~clk; #25;
     end
 endmodule
+
+`default_nettype wire

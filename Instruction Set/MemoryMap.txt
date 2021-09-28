@@ -27,3 +27,9 @@ Peripherals:
         put_texture_rgb
         put_texture_rgba
     
+    LCD:
+    0xC100: Send Command
+    0xC101: Read busy flag & address
+    0xC102: Write data
+    0xC103: Read data (Not implemented)
+    

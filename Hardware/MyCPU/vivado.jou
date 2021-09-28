@@ -1,0 +1,184 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Sat Sep 25 16:20:30 2021
+# Process ID: 5912
+# Current directory: C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent3816 C:\Users\cemal\Documents\GitHub\myCPU\Hardware\MyCPU\MyCPU.xpr
+# Log file: C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/vivado.log
+# Journal file: C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/MyCPU.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 4 us
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 4 us
+restart
+run 4 us
+restart
+run 4 us
+restart
+run 4 us
+restart
+run 4 us
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 4 us
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 4 us
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 4 us
+run 4 us
+run 4 us
+run 24 us
+restart
+run 8 us
+restart
+run 8 us
+save_wave_config {C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 8 us
+run 8 us
+run 8 us
+run 8 us
+run 8 us
+run all
+restart
+run 32 us
+restart
+run 32 us
+save_wave_config {C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg}
+close_sim
+synth_design -rtl -rtl_skip_mlo -name rtl_1
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 32 us
+run 2 us
+run 2 us
+close_sim
+refresh_design
+refresh_design
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 32 us
+run 2 us
+run 2 us
+run 2 us
+restart
+run 34 us
+restart
+run 34 us
+restart
+run 34 us
+close_sim
+close_design
+synth_design -rtl -rtl_skip_mlo -name rtl_1
+close_design
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+current_wave_config {RunProgram_behav.wcfg}
+add_wave {{/RunProgram_tb/uut/cpu/cu/cond_decoder/i_zcnv}} 
+restart
+run 34 us
+run 34 us
+save_wave_config {C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 4 us
+run 4 us
+run 4 us
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+run 4 us
+run 4 us
+run 4 us
+run 4 us
+close_sim
+launch_simulation
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_tb_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/RunProgram_behav.wcfg
+open_wave_config C:/Users/cemal/Documents/GitHub/myCPU/Hardware/MyCPU/LCD_tb.wcfg
+source RunProgram_tb.tcl
+restart
+run 4 us
+run 4 us
+run 4 us
+run 4 us
+run 4 us
+run 4 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+run 40 us
+close_sim

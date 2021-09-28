@@ -10,7 +10,7 @@ module CPU(clk, reset, i_data_bus, o_data_bus, o_addr_bus, o_we, o_dbg);
     output wire o_dbg;
     
     // Control Bus
-     // ALU
+    // ALU
     wire alu_set_flag;
     wire alu_sa;
     wire[1:0] alu_sb;

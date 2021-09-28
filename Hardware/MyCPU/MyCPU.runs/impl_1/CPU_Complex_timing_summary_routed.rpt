@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Fri Jul 23 17:47:14 2021
+| Date         : Sun Aug  8 16:59:26 2021
 | Host         : DESKTOP-2N1UFQC running 64-bit major release  (build 9200)
 | Command      : report_timing_summary -max_paths 10 -file CPU_Complex_timing_summary_routed.rpt -pb CPU_Complex_timing_summary_routed.pb -rpx CPU_Complex_timing_summary_routed.rpx -warn_on_violation
 | Design       : CPU_Complex
@@ -44,7 +44,7 @@ Table of Contents
 3. checking pulse_width_clock (0)
 4. checking unconstrained_internal_endpoints (456)
 5. checking no_input_delay (1)
-6. checking no_output_delay (26)
+6. checking no_output_delay (12)
 7. checking multiple_clock (0)
 8. checking generated_clocks (0)
 9. checking loops (0)
@@ -81,9 +81,9 @@ Table of Contents
  There are 0 input ports with no input delay but user has a false path constraint.
 
 
-6. checking no_output_delay (26)
+6. checking no_output_delay (12)
 --------------------------------
- There are 26 ports with no output delay specified. (HIGH)
+ There are 12 ports with no output delay specified. (HIGH)
 
  There are 0 ports with no output delay but user has a false path constraint
 
@@ -128,7 +128,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-     74.283        0.000                      0                   17        0.552        0.000                      0                   17       41.160        0.000                       0                    18  
+     73.898        0.000                      0                   17        0.331        0.000                      0                   17       41.160        0.000                       0                    18  
 
 
 All user specified timing constraints are met.
@@ -151,7 +151,7 @@ sys_clk_pin  {0.000 41.660}     83.330          12.000
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-sys_clk_pin        74.283        0.000                      0                   17        0.552        0.000                      0                   17       41.160        0.000                       0                    18  
+sys_clk_pin        73.898        0.000                      0                   17        0.331        0.000                      0                   17       41.160        0.000                       0                    18  
 
 
 ------------------------------------------------------------------------------------------------
@@ -182,591 +182,15 @@ Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing 
 From Clock:  sys_clk_pin
   To Clock:  sys_clk_pin
 
-Setup :            0  Failing Endpoints,  Worst Slack       74.283ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.552ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack       73.898ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.331ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack       41.160ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             74.283ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_3/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_1_3/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        8.574ns  (logic 3.638ns (42.430%)  route 4.936ns (57.570%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        -0.022ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.019ns = ( 88.349 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.321ns
-    Clock Pessimism Removal (CPR):    0.280ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.778     5.321    ram/clk
-    RAMB36_X1Y27         RAMB36E1                                     r  ram/mem_reg_0_3/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X1Y27         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.193 r  ram/mem_reg_0_3/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.259    ram/mem_reg_0_3_n_0
-    RAMB36_X1Y28         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.684 r  ram/mem_reg_1_3/DOADO[0]
-                         net (fo=1, routed)           2.714    11.397    cpu/ir/o_data[3]
-    SLICE_X16Y121        LUT6 (Prop_lut6_I0_O)        0.124    11.521 r  cpu/ir/o_data_bus_OBUF[3]_inst_i_3/O
-                         net (fo=1, routed)           0.000    11.521    cpu/cu/data_reg[11]_2
-    SLICE_X16Y121        MUXF7 (Prop_muxf7_I1_O)      0.217    11.738 r  cpu/cu/o_data_bus_OBUF[3]_inst_i_1/O
-                         net (fo=21, routed)          2.157    13.896    ram/i_data[3]
-    RAMB36_X1Y28         RAMB36E1                                     r  ram/mem_reg_1_3/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.655    88.349    ram/clk
-    RAMB36_X1Y28         RAMB36E1                                     r  ram/mem_reg_1_3/CLKARDCLK
-                         clock pessimism              0.280    88.629    
-                         clock uncertainty           -0.035    88.594    
-    RAMB36_X1Y28         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    88.178    ram/mem_reg_1_3
-  -------------------------------------------------------------------
-                         required time                         88.178    
-                         arrival time                         -13.896    
-  -------------------------------------------------------------------
-                         slack                                 74.283    
-
-Slack (MET) :             74.309ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_3/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_3/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        8.569ns  (logic 3.638ns (42.454%)  route 4.931ns (57.546%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.016ns = ( 88.346 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.321ns
-    Clock Pessimism Removal (CPR):    0.305ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.778     5.321    ram/clk
-    RAMB36_X1Y27         RAMB36E1                                     r  ram/mem_reg_0_3/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X1Y27         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.193 r  ram/mem_reg_0_3/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.259    ram/mem_reg_0_3_n_0
-    RAMB36_X1Y28         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.684 r  ram/mem_reg_1_3/DOADO[0]
-                         net (fo=1, routed)           2.714    11.397    cpu/ir/o_data[3]
-    SLICE_X16Y121        LUT6 (Prop_lut6_I0_O)        0.124    11.521 r  cpu/ir/o_data_bus_OBUF[3]_inst_i_3/O
-                         net (fo=1, routed)           0.000    11.521    cpu/cu/data_reg[11]_2
-    SLICE_X16Y121        MUXF7 (Prop_muxf7_I1_O)      0.217    11.738 r  cpu/cu/o_data_bus_OBUF[3]_inst_i_1/O
-                         net (fo=21, routed)          2.152    13.891    ram/i_data[3]
-    RAMB36_X1Y27         RAMB36E1                                     r  ram/mem_reg_0_3/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.652    88.346    ram/clk
-    RAMB36_X1Y27         RAMB36E1                                     r  ram/mem_reg_0_3/CLKARDCLK
-                         clock pessimism              0.305    88.651    
-                         clock uncertainty           -0.035    88.616    
-    RAMB36_X1Y27         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    88.200    ram/mem_reg_0_3
-  -------------------------------------------------------------------
-                         required time                         88.200    
-                         arrival time                         -13.891    
-  -------------------------------------------------------------------
-                         slack                                 74.309    
-
-Slack (MET) :             74.617ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_5/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_5/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        8.263ns  (logic 3.666ns (44.366%)  route 4.597ns (55.634%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.012ns = ( 88.342 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.315ns
-    Clock Pessimism Removal (CPR):    0.303ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.772     5.315    ram/clk
-    RAMB36_X0Y23         RAMB36E1                                     r  ram/mem_reg_0_5/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y23         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.187 r  ram/mem_reg_0_5/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.253    ram/mem_reg_0_5_n_0
-    RAMB36_X0Y24         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.678 r  ram/mem_reg_1_5/DOADO[0]
-                         net (fo=1, routed)           1.346    10.023    cpu/ir/o_data[5]
-    SLICE_X19Y121        LUT6 (Prop_lut6_I0_O)        0.124    10.147 r  cpu/ir/o_data_bus_OBUF[5]_inst_i_3/O
-                         net (fo=1, routed)           0.000    10.147    cpu/cu/data_reg[13]_0
-    SLICE_X19Y121        MUXF7 (Prop_muxf7_I1_O)      0.245    10.392 r  cpu/cu/o_data_bus_OBUF[5]_inst_i_1/O
-                         net (fo=21, routed)          3.186    13.578    ram/i_data[5]
-    RAMB36_X0Y23         RAMB36E1                                     r  ram/mem_reg_0_5/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.648    88.342    ram/clk
-    RAMB36_X0Y23         RAMB36E1                                     r  ram/mem_reg_0_5/CLKARDCLK
-                         clock pessimism              0.303    88.645    
-                         clock uncertainty           -0.035    88.610    
-    RAMB36_X0Y23         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.415    88.195    ram/mem_reg_0_5
-  -------------------------------------------------------------------
-                         required time                         88.195    
-                         arrival time                         -13.578    
-  -------------------------------------------------------------------
-                         slack                                 74.617    
-
-Slack (MET) :             74.973ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_5/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_1_5/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        7.878ns  (logic 3.666ns (46.536%)  route 4.212ns (53.464%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        -0.029ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.007ns = ( 88.337 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.315ns
-    Clock Pessimism Removal (CPR):    0.279ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.772     5.315    ram/clk
-    RAMB36_X0Y23         RAMB36E1                                     r  ram/mem_reg_0_5/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y23         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.187 r  ram/mem_reg_0_5/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.253    ram/mem_reg_0_5_n_0
-    RAMB36_X0Y24         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.678 r  ram/mem_reg_1_5/DOADO[0]
-                         net (fo=1, routed)           1.346    10.023    cpu/ir/o_data[5]
-    SLICE_X19Y121        LUT6 (Prop_lut6_I0_O)        0.124    10.147 r  cpu/ir/o_data_bus_OBUF[5]_inst_i_3/O
-                         net (fo=1, routed)           0.000    10.147    cpu/cu/data_reg[13]_0
-    SLICE_X19Y121        MUXF7 (Prop_muxf7_I1_O)      0.245    10.392 r  cpu/cu/o_data_bus_OBUF[5]_inst_i_1/O
-                         net (fo=21, routed)          2.801    13.193    ram/i_data[5]
-    RAMB36_X0Y24         RAMB36E1                                     r  ram/mem_reg_1_5/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.643    88.337    ram/clk
-    RAMB36_X0Y24         RAMB36E1                                     r  ram/mem_reg_1_5/CLKARDCLK
-                         clock pessimism              0.279    88.616    
-                         clock uncertainty           -0.035    88.581    
-    RAMB36_X0Y24         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.415    88.166    ram/mem_reg_1_5
-  -------------------------------------------------------------------
-                         required time                         88.166    
-                         arrival time                         -13.193    
-  -------------------------------------------------------------------
-                         slack                                 74.973    
-
-Slack (MET) :             75.254ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_7/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_7/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        7.625ns  (logic 3.638ns (47.714%)  route 3.987ns (52.286%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    4.844ns = ( 88.174 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.140ns
-    Clock Pessimism Removal (CPR):    0.296ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.596     5.140    ram/clk
-    RAMB36_X0Y17         RAMB36E1                                     r  ram/mem_reg_0_7/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y17         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.012 r  ram/mem_reg_0_7/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.077    ram/mem_reg_0_7_n_0
-    RAMB36_X0Y18         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.502 r  ram/mem_reg_1_7/DOADO[0]
-                         net (fo=1, routed)           2.020    10.523    cpu/ir/o_data[7]
-    SLICE_X17Y120        LUT6 (Prop_lut6_I0_O)        0.124    10.647 r  cpu/ir/o_data_bus_OBUF[7]_inst_i_4/O
-                         net (fo=1, routed)           0.000    10.647    cpu/cu/data_reg[15]_7
-    SLICE_X17Y120        MUXF7 (Prop_muxf7_I1_O)      0.217    10.864 r  cpu/cu/o_data_bus_OBUF[7]_inst_i_1/O
-                         net (fo=21, routed)          1.901    12.765    ram/i_data[7]
-    RAMB36_X0Y17         RAMB36E1                                     r  ram/mem_reg_0_7/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.479    88.174    ram/clk
-    RAMB36_X0Y17         RAMB36E1                                     r  ram/mem_reg_0_7/CLKARDCLK
-                         clock pessimism              0.296    88.470    
-                         clock uncertainty           -0.035    88.435    
-    RAMB36_X0Y17         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    88.019    ram/mem_reg_0_7
-  -------------------------------------------------------------------
-                         required time                         88.019    
-                         arrival time                         -12.765    
-  -------------------------------------------------------------------
-                         slack                                 75.254    
-
-Slack (MET) :             75.328ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_2/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_2/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        7.550ns  (logic 3.638ns (48.183%)  route 3.912ns (51.817%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    4.848ns = ( 88.178 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.144ns
-    Clock Pessimism Removal (CPR):    0.296ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.600     5.144    ram/clk
-    RAMB36_X0Y19         RAMB36E1                                     r  ram/mem_reg_0_2/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y19         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.016 r  ram/mem_reg_0_2/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.081    ram/mem_reg_0_2_n_0
-    RAMB36_X0Y20         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.506 r  ram/mem_reg_1_2/DOADO[0]
-                         net (fo=1, routed)           1.435     9.942    cpu/ir/o_data[2]
-    SLICE_X16Y120        LUT6 (Prop_lut6_I0_O)        0.124    10.066 r  cpu/ir/o_data_bus_OBUF[2]_inst_i_3/O
-                         net (fo=1, routed)           0.000    10.066    cpu/cu/data_reg[10]_0
-    SLICE_X16Y120        MUXF7 (Prop_muxf7_I1_O)      0.217    10.283 r  cpu/cu/o_data_bus_OBUF[2]_inst_i_1/O
-                         net (fo=21, routed)          2.412    12.694    ram/i_data[2]
-    RAMB36_X0Y19         RAMB36E1                                     r  ram/mem_reg_0_2/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.483    88.178    ram/clk
-    RAMB36_X0Y19         RAMB36E1                                     r  ram/mem_reg_0_2/CLKARDCLK
-                         clock pessimism              0.296    88.474    
-                         clock uncertainty           -0.035    88.439    
-    RAMB36_X0Y19         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    88.023    ram/mem_reg_0_2
-  -------------------------------------------------------------------
-                         required time                         88.023    
-                         arrival time                         -12.694    
-  -------------------------------------------------------------------
-                         slack                                 75.328    
-
-Slack (MET) :             75.389ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_7/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_1_7/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        7.468ns  (logic 3.638ns (48.717%)  route 3.830ns (51.283%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        -0.022ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    4.847ns = ( 88.177 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.140ns
-    Clock Pessimism Removal (CPR):    0.271ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.596     5.140    ram/clk
-    RAMB36_X0Y17         RAMB36E1                                     r  ram/mem_reg_0_7/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y17         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.012 r  ram/mem_reg_0_7/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.077    ram/mem_reg_0_7_n_0
-    RAMB36_X0Y18         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.502 r  ram/mem_reg_1_7/DOADO[0]
-                         net (fo=1, routed)           2.020    10.523    cpu/ir/o_data[7]
-    SLICE_X17Y120        LUT6 (Prop_lut6_I0_O)        0.124    10.647 r  cpu/ir/o_data_bus_OBUF[7]_inst_i_4/O
-                         net (fo=1, routed)           0.000    10.647    cpu/cu/data_reg[15]_7
-    SLICE_X17Y120        MUXF7 (Prop_muxf7_I1_O)      0.217    10.864 r  cpu/cu/o_data_bus_OBUF[7]_inst_i_1/O
-                         net (fo=21, routed)          1.744    12.608    ram/i_data[7]
-    RAMB36_X0Y18         RAMB36E1                                     r  ram/mem_reg_1_7/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.482    88.177    ram/clk
-    RAMB36_X0Y18         RAMB36E1                                     r  ram/mem_reg_1_7/CLKARDCLK
-                         clock pessimism              0.271    88.448    
-                         clock uncertainty           -0.035    88.413    
-    RAMB36_X0Y18         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    87.997    ram/mem_reg_1_7
-  -------------------------------------------------------------------
-                         required time                         87.997    
-                         arrival time                         -12.608    
-  -------------------------------------------------------------------
-                         slack                                 75.389    
-
-Slack (MET) :             75.410ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_4/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_1_4/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        7.451ns  (logic 3.638ns (48.829%)  route 3.813ns (51.171%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        -0.018ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.012ns = ( 88.342 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.310ns
-    Clock Pessimism Removal (CPR):    0.280ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.767     5.310    ram/clk
-    RAMB36_X1Y25         RAMB36E1                                     r  ram/mem_reg_0_4/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X1Y25         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.182 r  ram/mem_reg_0_4/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.248    ram/mem_reg_0_4_n_0
-    RAMB36_X1Y26         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.673 r  ram/mem_reg_1_4/DOADO[0]
-                         net (fo=1, routed)           1.963    10.636    cpu/ir/o_data[4]
-    SLICE_X19Y122        LUT6 (Prop_lut6_I0_O)        0.124    10.760 r  cpu/ir/o_data_bus_OBUF[4]_inst_i_3/O
-                         net (fo=1, routed)           0.000    10.760    cpu/cu/data_reg[12]_3
-    SLICE_X19Y122        MUXF7 (Prop_muxf7_I1_O)      0.217    10.977 r  cpu/cu/o_data_bus_OBUF[4]_inst_i_1/O
-                         net (fo=21, routed)          1.784    12.761    ram/i_data[4]
-    RAMB36_X1Y26         RAMB36E1                                     r  ram/mem_reg_1_4/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.648    88.342    ram/clk
-    RAMB36_X1Y26         RAMB36E1                                     r  ram/mem_reg_1_4/CLKARDCLK
-                         clock pessimism              0.280    88.622    
-                         clock uncertainty           -0.035    88.587    
-    RAMB36_X1Y26         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    88.171    ram/mem_reg_1_4
-  -------------------------------------------------------------------
-                         required time                         88.171    
-                         arrival time                         -12.761    
-  -------------------------------------------------------------------
-                         slack                                 75.410    
-
-Slack (MET) :             75.456ns  (required time - arrival time)
-  Source:                 ram/mem_reg_0_2/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_1_2/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        7.487ns  (logic 3.638ns (48.590%)  route 3.849ns (51.410%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        0.064ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.022ns = ( 88.352 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.144ns
-    Clock Pessimism Removal (CPR):    0.186ns
-  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter     (TSJ):    0.071ns
-    Total Input Jitter      (TIJ):    0.000ns
-    Discrete Jitter          (DJ):    0.000ns
-    Phase Error              (PE):    0.000ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.972     3.448    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.600     5.144    ram/clk
-    RAMB36_X0Y19         RAMB36E1                                     r  ram/mem_reg_0_2/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y19         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.016 r  ram/mem_reg_0_2/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.081    ram/mem_reg_0_2_n_0
-    RAMB36_X0Y20         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.506 r  ram/mem_reg_1_2/DOADO[0]
-                         net (fo=1, routed)           1.435     9.942    cpu/ir/o_data[2]
-    SLICE_X16Y120        LUT6 (Prop_lut6_I0_O)        0.124    10.066 r  cpu/ir/o_data_bus_OBUF[2]_inst_i_3/O
-                         net (fo=1, routed)           0.000    10.066    cpu/cu/data_reg[10]_0
-    SLICE_X16Y120        MUXF7 (Prop_muxf7_I1_O)      0.217    10.283 r  cpu/cu/o_data_bus_OBUF[2]_inst_i_1/O
-                         net (fo=21, routed)          2.348    12.631    ram/i_data[2]
-    RAMB36_X0Y20         RAMB36E1                                     r  ram/mem_reg_1_2/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                     83.330    83.330 r  
-    L17                                               0.000    83.330 r  clk (IN)
-                         net (fo=0)                   0.000    83.330    clk
-    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           1.868    86.604    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.658    88.352    ram/clk
-    RAMB36_X0Y20         RAMB36E1                                     r  ram/mem_reg_1_2/CLKARDCLK
-                         clock pessimism              0.186    88.538    
-                         clock uncertainty           -0.035    88.503    
-    RAMB36_X0Y20         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    88.087    ram/mem_reg_1_2
-  -------------------------------------------------------------------
-                         required time                         88.087    
-                         arrival time                         -12.631    
-  -------------------------------------------------------------------
-                         slack                                 75.456    
-
-Slack (MET) :             75.862ns  (required time - arrival time)
+Slack (MET) :             73.898ns  (required time - arrival time)
   Source:                 ram/mem_reg_0_4/CLKARDCLK
                             (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
   Destination:            ram/mem_reg_0_4/DIADI[0]
@@ -774,12 +198,12 @@ Slack (MET) :             75.862ns  (required time - arrival time)
   Path Group:             sys_clk_pin
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        7.016ns  (logic 3.638ns (51.851%)  route 3.378ns (48.149%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
+  Data Path Delay:        9.155ns  (logic 3.545ns (38.720%)  route 5.610ns (61.280%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
   Clock Path Skew:        0.000ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    5.007ns = ( 88.337 - 83.330 ) 
-    Source Clock Delay      (SCD):    5.310ns
-    Clock Pessimism Removal (CPR):    0.303ns
+    Destination Clock Delay (DCD):    4.858ns = ( 88.188 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.156ns
+    Clock Pessimism Removal (CPR):    0.298ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -795,20 +219,20 @@ Slack (MET) :             75.862ns  (required time - arrival time)
     L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.972     3.448    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.767     5.310    ram/clk
-    RAMB36_X1Y25         RAMB36E1                                     r  ram/mem_reg_0_4/CLKARDCLK
+                         net (fo=17, routed)          1.613     5.156    ram/clk
+    RAMB36_X1Y0          RAMB36E1                                     r  ram/mem_reg_0_4/CLKARDCLK
   -------------------------------------------------------------------    -------------------
-    RAMB36_X1Y25         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      2.872     8.182 r  ram/mem_reg_0_4/CASCADEOUTA
-                         net (fo=1, routed)           0.065     8.248    ram/mem_reg_0_4_n_0
-    RAMB36_X1Y26         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.425     8.673 r  ram/mem_reg_1_4/DOADO[0]
-                         net (fo=1, routed)           1.963    10.636    cpu/ir/o_data[4]
-    SLICE_X19Y122        LUT6 (Prop_lut6_I0_O)        0.124    10.760 r  cpu/ir/o_data_bus_OBUF[4]_inst_i_3/O
-                         net (fo=1, routed)           0.000    10.760    cpu/cu/data_reg[12]_3
-    SLICE_X19Y122        MUXF7 (Prop_muxf7_I1_O)      0.217    10.977 r  cpu/cu/o_data_bus_OBUF[4]_inst_i_1/O
-                         net (fo=21, routed)          1.349    12.327    ram/i_data[4]
-    RAMB36_X1Y25         RAMB36E1                                     r  ram/mem_reg_0_4/DIADI[0]
+    RAMB36_X1Y0          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.028 r  ram/mem_reg_0_4/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.094    ram/mem_reg_0_4_n_0
+    RAMB36_X1Y1          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.519 r  ram/mem_reg_1_4/DOADO[0]
+                         net (fo=1, routed)           1.643    10.162    cpu/ir/o_data[0]
+    SLICE_X48Y25         LUT6 (Prop_lut6_I0_O)        0.124    10.286 r  cpu/ir/data[4]_i_4/O
+                         net (fo=1, routed)           1.242    11.528    cpu/cu/data_reg[4]_2
+    SLICE_X41Y31         LUT5 (Prop_lut5_I4_O)        0.124    11.652 r  cpu/cu/data[4]_i_1__3/O
+                         net (fo=21, routed)          2.660    14.312    ram/i_data[4]
+    RAMB36_X1Y0          RAMB36E1                                     r  ram/mem_reg_0_4/DIADI[0]
   -------------------------------------------------------------------    -------------------
 
                          (clock sys_clk_pin rise edge)
@@ -818,17 +242,593 @@ Slack (MET) :             75.862ns  (required time - arrival time)
     L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
                          net (fo=1, routed)           1.868    86.604    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          1.643    88.337    ram/clk
-    RAMB36_X1Y25         RAMB36E1                                     r  ram/mem_reg_0_4/CLKARDCLK
-                         clock pessimism              0.303    88.640    
-                         clock uncertainty           -0.035    88.605    
-    RAMB36_X1Y25         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
-                                                     -0.416    88.189    ram/mem_reg_0_4
+                         net (fo=17, routed)          1.494    88.188    ram/clk
+    RAMB36_X1Y0          RAMB36E1                                     r  ram/mem_reg_0_4/CLKARDCLK
+                         clock pessimism              0.298    88.486    
+                         clock uncertainty           -0.035    88.451    
+    RAMB36_X1Y0          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.210    ram/mem_reg_0_4
   -------------------------------------------------------------------
-                         required time                         88.189    
-                         arrival time                         -12.327    
+                         required time                         88.210    
+                         arrival time                         -14.312    
   -------------------------------------------------------------------
-                         slack                                 75.862    
+                         slack                                 73.898    
+
+Slack (MET) :             74.217ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_4/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_4/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        8.811ns  (logic 3.545ns (40.234%)  route 5.266ns (59.766%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        -0.026ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.857ns = ( 88.187 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.156ns
+    Clock Pessimism Removal (CPR):    0.273ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.613     5.156    ram/clk
+    RAMB36_X1Y0          RAMB36E1                                     r  ram/mem_reg_0_4/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y0          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.028 r  ram/mem_reg_0_4/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.094    ram/mem_reg_0_4_n_0
+    RAMB36_X1Y1          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.519 r  ram/mem_reg_1_4/DOADO[0]
+                         net (fo=1, routed)           1.643    10.162    cpu/ir/o_data[0]
+    SLICE_X48Y25         LUT6 (Prop_lut6_I0_O)        0.124    10.286 r  cpu/ir/data[4]_i_4/O
+                         net (fo=1, routed)           1.242    11.528    cpu/cu/data_reg[4]_2
+    SLICE_X41Y31         LUT5 (Prop_lut5_I4_O)        0.124    11.652 r  cpu/cu/data[4]_i_1__3/O
+                         net (fo=21, routed)          2.316    13.967    ram/i_data[4]
+    RAMB36_X1Y1          RAMB36E1                                     r  ram/mem_reg_1_4/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.493    88.187    ram/clk
+    RAMB36_X1Y1          RAMB36E1                                     r  ram/mem_reg_1_4/CLKARDCLK
+                         clock pessimism              0.273    88.460    
+                         clock uncertainty           -0.035    88.425    
+    RAMB36_X1Y1          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.184    ram/mem_reg_1_4
+  -------------------------------------------------------------------
+                         required time                         88.184    
+                         arrival time                         -13.967    
+  -------------------------------------------------------------------
+                         slack                                 74.217    
+
+Slack (MET) :             74.776ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_1/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_0_1/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        8.070ns  (logic 3.540ns (43.868%)  route 4.530ns (56.132%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.853ns = ( 88.183 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.149ns
+    Clock Pessimism Removal (CPR):    0.296ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.606     5.149    ram/clk
+    RAMB36_X2Y6          RAMB36E1                                     r  ram/mem_reg_0_1/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X2Y6          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.021 r  ram/mem_reg_0_1/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.087    ram/mem_reg_0_1_n_0
+    RAMB36_X2Y7          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.512 r  ram/mem_reg_1_1/DOADO[0]
+                         net (fo=2, routed)           1.423     9.934    cpu/cu/o_data[1]
+    SLICE_X47Y29         LUT6 (Prop_lut6_I4_O)        0.124    10.058 f  cpu/cu/o_db_OBUF[1]_inst_i_2/O
+                         net (fo=6, routed)           1.311    11.369    cpu/cu/o_db_OBUF[1]_inst_i_2_n_0
+    SLICE_X51Y34         LUT5 (Prop_lut5_I4_O)        0.119    11.488 r  cpu/cu/data[1]_i_1__3/O
+                         net (fo=12, routed)          1.731    13.219    ram/i_data[1]
+    RAMB36_X2Y6          RAMB36E1                                     r  ram/mem_reg_0_1/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.489    88.183    ram/clk
+    RAMB36_X2Y6          RAMB36E1                                     r  ram/mem_reg_0_1/CLKARDCLK
+                         clock pessimism              0.296    88.479    
+                         clock uncertainty           -0.035    88.444    
+    RAMB36_X2Y6          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.449    87.995    ram/mem_reg_0_1
+  -------------------------------------------------------------------
+                         required time                         87.995    
+                         arrival time                         -13.219    
+  -------------------------------------------------------------------
+                         slack                                 74.776    
+
+Slack (MET) :             75.193ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_1/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_1/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        7.632ns  (logic 3.540ns (46.381%)  route 4.092ns (53.619%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        -0.020ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.857ns = ( 88.187 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.149ns
+    Clock Pessimism Removal (CPR):    0.272ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.606     5.149    ram/clk
+    RAMB36_X2Y6          RAMB36E1                                     r  ram/mem_reg_0_1/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X2Y6          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.021 r  ram/mem_reg_0_1/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.087    ram/mem_reg_0_1_n_0
+    RAMB36_X2Y7          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.512 r  ram/mem_reg_1_1/DOADO[0]
+                         net (fo=2, routed)           1.423     9.934    cpu/cu/o_data[1]
+    SLICE_X47Y29         LUT6 (Prop_lut6_I4_O)        0.124    10.058 f  cpu/cu/o_db_OBUF[1]_inst_i_2/O
+                         net (fo=6, routed)           1.311    11.369    cpu/cu/o_db_OBUF[1]_inst_i_2_n_0
+    SLICE_X51Y34         LUT5 (Prop_lut5_I4_O)        0.119    11.488 r  cpu/cu/data[1]_i_1__3/O
+                         net (fo=12, routed)          1.293    12.782    ram/i_data[1]
+    RAMB36_X2Y7          RAMB36E1                                     r  ram/mem_reg_1_1/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.493    88.187    ram/clk
+    RAMB36_X2Y7          RAMB36E1                                     r  ram/mem_reg_1_1/CLKARDCLK
+                         clock pessimism              0.272    88.459    
+                         clock uncertainty           -0.035    88.424    
+    RAMB36_X2Y7          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.449    87.975    ram/mem_reg_1_1
+  -------------------------------------------------------------------
+                         required time                         87.975    
+                         arrival time                         -12.782    
+  -------------------------------------------------------------------
+                         slack                                 75.193    
+
+Slack (MET) :             75.477ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_5/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_0_5/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        7.577ns  (logic 3.545ns (46.786%)  route 4.032ns (53.214%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.855ns = ( 88.185 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.152ns
+    Clock Pessimism Removal (CPR):    0.297ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.609     5.152    ram/clk
+    RAMB36_X2Y2          RAMB36E1                                     r  ram/mem_reg_0_5/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X2Y2          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.024 r  ram/mem_reg_0_5/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.090    ram/mem_reg_0_5_n_0
+    RAMB36_X2Y3          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.515 r  ram/mem_reg_1_5/DOADO[0]
+                         net (fo=1, routed)           1.644    10.159    cpu/cu/o_data[4]
+    SLICE_X47Y28         LUT6 (Prop_lut6_I2_O)        0.124    10.283 r  cpu/cu/data[5]_i_3/O
+                         net (fo=1, routed)           0.670    10.953    cpu/cu/data[5]_i_3_n_0
+    SLICE_X47Y28         LUT5 (Prop_lut5_I1_O)        0.124    11.077 r  cpu/cu/data[5]_i_1__3/O
+                         net (fo=21, routed)          1.652    12.729    ram/i_data[5]
+    RAMB36_X2Y2          RAMB36E1                                     r  ram/mem_reg_0_5/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.491    88.185    ram/clk
+    RAMB36_X2Y2          RAMB36E1                                     r  ram/mem_reg_0_5/CLKARDCLK
+                         clock pessimism              0.297    88.482    
+                         clock uncertainty           -0.035    88.447    
+    RAMB36_X2Y2          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.206    ram/mem_reg_0_5
+  -------------------------------------------------------------------
+                         required time                         88.206    
+                         arrival time                         -12.729    
+  -------------------------------------------------------------------
+                         slack                                 75.477    
+
+Slack (MET) :             75.686ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_0/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_0_0/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        7.368ns  (logic 3.545ns (48.114%)  route 3.823ns (51.886%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.845ns = ( 88.175 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.139ns
+    Clock Pessimism Removal (CPR):    0.294ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.596     5.139    ram/clk
+    RAMB36_X2Y4          RAMB36E1                                     r  ram/mem_reg_0_0/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X2Y4          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.011 r  ram/mem_reg_0_0/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.077    ram/mem_reg_0_0_n_0
+    RAMB36_X2Y5          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.502 r  ram/mem_reg_1_0/DOADO[0]
+                         net (fo=1, routed)           1.606    10.108    cpu/cu/o_data[0]
+    SLICE_X42Y28         LUT6 (Prop_lut6_I2_O)        0.124    10.232 r  cpu/cu/data[0]_i_3/O
+                         net (fo=1, routed)           0.286    10.518    cpu/cu/data[0]_i_3_n_0
+    SLICE_X42Y28         LUT5 (Prop_lut5_I1_O)        0.124    10.642 r  cpu/cu/data[0]_i_1__3/O
+                         net (fo=21, routed)          1.865    12.507    ram/i_data[0]
+    RAMB36_X2Y4          RAMB36E1                                     r  ram/mem_reg_0_0/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.481    88.175    ram/clk
+    RAMB36_X2Y4          RAMB36E1                                     r  ram/mem_reg_0_0/CLKARDCLK
+                         clock pessimism              0.294    88.469    
+                         clock uncertainty           -0.035    88.434    
+    RAMB36_X2Y4          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.193    ram/mem_reg_0_0
+  -------------------------------------------------------------------
+                         required time                         88.193    
+                         arrival time                         -12.507    
+  -------------------------------------------------------------------
+                         slack                                 75.686    
+
+Slack (MET) :             75.799ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_5/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_5/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        7.224ns  (logic 3.545ns (49.069%)  route 3.679ns (50.931%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        -0.030ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.850ns = ( 88.180 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.152ns
+    Clock Pessimism Removal (CPR):    0.272ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.609     5.152    ram/clk
+    RAMB36_X2Y2          RAMB36E1                                     r  ram/mem_reg_0_5/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X2Y2          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.024 r  ram/mem_reg_0_5/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.090    ram/mem_reg_0_5_n_0
+    RAMB36_X2Y3          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.515 r  ram/mem_reg_1_5/DOADO[0]
+                         net (fo=1, routed)           1.644    10.159    cpu/cu/o_data[4]
+    SLICE_X47Y28         LUT6 (Prop_lut6_I2_O)        0.124    10.283 r  cpu/cu/data[5]_i_3/O
+                         net (fo=1, routed)           0.670    10.953    cpu/cu/data[5]_i_3_n_0
+    SLICE_X47Y28         LUT5 (Prop_lut5_I1_O)        0.124    11.077 r  cpu/cu/data[5]_i_1__3/O
+                         net (fo=21, routed)          1.300    12.377    ram/i_data[5]
+    RAMB36_X2Y3          RAMB36E1                                     r  ram/mem_reg_1_5/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.486    88.180    ram/clk
+    RAMB36_X2Y3          RAMB36E1                                     r  ram/mem_reg_1_5/CLKARDCLK
+                         clock pessimism              0.272    88.452    
+                         clock uncertainty           -0.035    88.417    
+    RAMB36_X2Y3          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.176    ram/mem_reg_1_5
+  -------------------------------------------------------------------
+                         required time                         88.176    
+                         arrival time                         -12.377    
+  -------------------------------------------------------------------
+                         slack                                 75.799    
+
+Slack (MET) :             76.026ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_0/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_0/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        6.996ns  (logic 3.545ns (50.672%)  route 3.451ns (49.328%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        -0.032ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.848ns = ( 88.178 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.139ns
+    Clock Pessimism Removal (CPR):    0.259ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.596     5.139    ram/clk
+    RAMB36_X2Y4          RAMB36E1                                     r  ram/mem_reg_0_0/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X2Y4          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.011 r  ram/mem_reg_0_0/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.077    ram/mem_reg_0_0_n_0
+    RAMB36_X2Y5          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.502 r  ram/mem_reg_1_0/DOADO[0]
+                         net (fo=1, routed)           1.606    10.108    cpu/cu/o_data[0]
+    SLICE_X42Y28         LUT6 (Prop_lut6_I2_O)        0.124    10.232 r  cpu/cu/data[0]_i_3/O
+                         net (fo=1, routed)           0.286    10.518    cpu/cu/data[0]_i_3_n_0
+    SLICE_X42Y28         LUT5 (Prop_lut5_I1_O)        0.124    10.642 r  cpu/cu/data[0]_i_1__3/O
+                         net (fo=21, routed)          1.493    12.135    ram/i_data[0]
+    RAMB36_X2Y5          RAMB36E1                                     r  ram/mem_reg_1_0/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.484    88.178    ram/clk
+    RAMB36_X2Y5          RAMB36E1                                     r  ram/mem_reg_1_0/CLKARDCLK
+                         clock pessimism              0.259    88.437    
+                         clock uncertainty           -0.035    88.402    
+    RAMB36_X2Y5          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.161    ram/mem_reg_1_0
+  -------------------------------------------------------------------
+                         required time                         88.161    
+                         arrival time                         -12.135    
+  -------------------------------------------------------------------
+                         slack                                 76.026    
+
+Slack (MET) :             76.041ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_2/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_2/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        6.989ns  (logic 3.545ns (50.725%)  route 3.444ns (49.275%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 RAMB36E1=1)
+  Clock Path Skew:        -0.024ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.859ns = ( 88.189 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.156ns
+    Clock Pessimism Removal (CPR):    0.273ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.613     5.156    ram/clk
+    RAMB36_X1Y8          RAMB36E1                                     r  ram/mem_reg_0_2/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y8          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.028 r  ram/mem_reg_0_2/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.094    ram/mem_reg_0_2_n_0
+    RAMB36_X1Y9          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.519 r  ram/mem_reg_1_2/DOADO[0]
+                         net (fo=1, routed)           1.330     9.849    cpu/cu/o_data[2]
+    SLICE_X41Y29         LUT6 (Prop_lut6_I2_O)        0.124     9.973 r  cpu/cu/data[2]_i_3/O
+                         net (fo=1, routed)           0.149    10.122    cpu/cu/data[2]_i_3_n_0
+    SLICE_X41Y29         LUT5 (Prop_lut5_I1_O)        0.124    10.246 r  cpu/cu/data[2]_i_1__3/O
+                         net (fo=21, routed)          1.899    12.145    ram/i_data[2]
+    RAMB36_X1Y9          RAMB36E1                                     r  ram/mem_reg_1_2/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.495    88.189    ram/clk
+    RAMB36_X1Y9          RAMB36E1                                     r  ram/mem_reg_1_2/CLKARDCLK
+                         clock pessimism              0.273    88.462    
+                         clock uncertainty           -0.035    88.427    
+    RAMB36_X1Y9          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.186    ram/mem_reg_1_2
+  -------------------------------------------------------------------
+                         required time                         88.186    
+                         arrival time                         -12.145    
+  -------------------------------------------------------------------
+                         slack                                 76.041    
+
+Slack (MET) :             76.268ns  (required time - arrival time)
+  Source:                 ram/mem_reg_0_6/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_0_6/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            83.330ns  (sys_clk_pin rise@83.330ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        6.785ns  (logic 3.545ns (52.244%)  route 3.240ns (47.755%))
+  Logic Levels:           3  (LUT6=2 RAMB36E1=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.853ns = ( 88.183 - 83.330 ) 
+    Source Clock Delay      (SCD):    5.151ns
+    Clock Pessimism Removal (CPR):    0.298ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.476     1.476 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     3.448    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.544 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.608     5.151    ram/clk
+    RAMB36_X1Y2          RAMB36E1                                     r  ram/mem_reg_0_6/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y2          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
+                                                      2.872     8.023 r  ram/mem_reg_0_6/CASCADEOUTA
+                         net (fo=1, routed)           0.065     8.089    ram/mem_reg_0_6_n_0
+    RAMB36_X1Y3          RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
+                                                      0.425     8.514 r  ram/mem_reg_1_6/DOADO[0]
+                         net (fo=1, routed)           1.443     9.957    cpu/cu/o_data[5]
+    SLICE_X47Y28         LUT6 (Prop_lut6_I2_O)        0.124    10.081 r  cpu/cu/data[6]_i_3/O
+                         net (fo=1, routed)           0.151    10.232    cpu/cu/data[6]_i_3_n_0
+    SLICE_X47Y28         LUT6 (Prop_lut6_I1_O)        0.124    10.356 r  cpu/cu/data[6]_i_1__3/O
+                         net (fo=21, routed)          1.580    11.937    ram/i_data[6]
+    RAMB36_X1Y2          RAMB36E1                                     r  ram/mem_reg_0_6/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                     83.330    83.330 r  
+    L17                                               0.000    83.330 r  clk (IN)
+                         net (fo=0)                   0.000    83.330    clk
+    L17                  IBUF (Prop_ibuf_I_O)         1.406    84.736 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    86.604    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    86.695 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          1.489    88.183    ram/clk
+    RAMB36_X1Y2          RAMB36E1                                     r  ram/mem_reg_0_6/CLKARDCLK
+                         clock pessimism              0.298    88.481    
+                         clock uncertainty           -0.035    88.446    
+    RAMB36_X1Y2          RAMB36E1 (Setup_ramb36e1_CLKARDCLK_DIADI[0])
+                                                     -0.241    88.205    ram/mem_reg_0_6
+  -------------------------------------------------------------------
+                         required time                         88.205    
+                         arrival time                         -11.937    
+  -------------------------------------------------------------------
+                         slack                                 76.268    
 
 
 
@@ -836,7 +836,7 @@ Slack (MET) :             75.862ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.552ns  (arrival time - required time)
+Slack (MET) :             0.331ns  (arrival time - required time)
   Source:                 cpu_clk_reg/C
                             (falling edge-triggered cell FDCE clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
   Destination:            cpu_clk_reg/D
@@ -844,7 +844,7 @@ Slack (MET) :             0.552ns  (arrival time - required time)
   Path Group:             sys_clk_pin
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sys_clk_pin fall@41.660ns - sys_clk_pin fall@41.660ns)
-  Data Path Delay:        0.650ns  (logic 0.191ns (29.403%)  route 0.459ns (70.598%))
+  Data Path Delay:        0.456ns  (logic 0.212ns (46.457%)  route 0.244ns (53.544%))
   Logic Levels:           1  (LUT1=1)
   Clock Path Skew:        0.000ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    1.981ns = ( 43.641 - 41.660 ) 
@@ -861,13 +861,13 @@ Slack (MET) :             0.552ns  (arrival time - required time)
                          net (fo=1, routed)           0.634    42.538    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026    42.564 f  clk_IBUF_BUFG_inst/O
                          net (fo=17, routed)          0.563    43.127    clk_IBUF_BUFG
-    SLICE_X36Y46         FDCE                                         r  cpu_clk_reg/C  (IS_INVERTED)
+    SLICE_X38Y46         FDCE                                         r  cpu_clk_reg/C  (IS_INVERTED)
   -------------------------------------------------------------------    -------------------
-    SLICE_X36Y46         FDCE (Prop_fdce_C_Q)         0.146    43.273 f  cpu_clk_reg/Q
-                         net (fo=2, routed)           0.459    43.731    cpu_clk
-    SLICE_X36Y46         LUT1 (Prop_lut1_I0_O)        0.045    43.776 r  cpu_clk_i_1/O
-                         net (fo=1, routed)           0.000    43.776    p_0_in
-    SLICE_X36Y46         FDCE                                         r  cpu_clk_reg/D
+    SLICE_X38Y46         FDCE (Prop_fdce_C_Q)         0.167    43.294 f  cpu_clk_reg/Q
+                         net (fo=3, routed)           0.244    43.538    cpu_clk
+    SLICE_X38Y46         LUT1 (Prop_lut1_I0_O)        0.045    43.583 r  cpu_clk_i_1/O
+                         net (fo=1, routed)           0.000    43.583    p_0_in
+    SLICE_X38Y46         FDCE                                         r  cpu_clk_reg/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sys_clk_pin fall edge)
@@ -878,16 +878,181 @@ Slack (MET) :             0.552ns  (arrival time - required time)
                          net (fo=1, routed)           0.689    42.780    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029    42.809 f  clk_IBUF_BUFG_inst/O
                          net (fo=17, routed)          0.832    43.641    clk_IBUF_BUFG
-    SLICE_X36Y46         FDCE                                         r  cpu_clk_reg/C  (IS_INVERTED)
+    SLICE_X38Y46         FDCE                                         r  cpu_clk_reg/C  (IS_INVERTED)
                          clock pessimism             -0.514    43.127    
-    SLICE_X36Y46         FDCE (Hold_fdce_C_D)         0.098    43.225    cpu_clk_reg
+    SLICE_X38Y46         FDCE (Hold_fdce_C_D)         0.125    43.252    cpu_clk_reg
   -------------------------------------------------------------------
-                         required time                        -43.225    
-                         arrival time                          43.776    
+                         required time                        -43.252    
+                         arrival time                          43.583    
   -------------------------------------------------------------------
-                         slack                                  0.552    
+                         slack                                  0.331    
 
-Slack (MET) :             1.653ns  (arrival time - required time)
+Slack (MET) :             1.570ns  (arrival time - required time)
+  Source:                 ram/mem_reg_1_3/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_0_3/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        1.736ns  (logic 0.675ns (38.887%)  route 1.061ns (61.113%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
+  Clock Path Skew:        0.011ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.021ns
+    Source Clock Delay      (SCD):    1.510ns
+    Clock Pessimism Removal (CPR):    0.499ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.634     0.878    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.606     1.510    ram/clk
+    RAMB36_X1Y7          RAMB36E1                                     r  ram/mem_reg_1_3/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y7          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.095 r  ram/mem_reg_1_3/DOADO[0]
+                         net (fo=1, routed)           0.527     2.622    cpu/cu/o_data[3]
+    SLICE_X42Y29         LUT6 (Prop_lut6_I2_O)        0.045     2.667 r  cpu/cu/o_db_OBUF[3]_inst_i_5/O
+                         net (fo=7, routed)           0.367     3.034    cpu/cu/mem_reg_1_3
+    SLICE_X48Y30         LUT5 (Prop_lut5_I1_O)        0.045     3.079 r  cpu/cu/data[3]_i_1__3/O
+                         net (fo=12, routed)          0.167     3.246    ram/i_data[3]
+    RAMB36_X1Y6          RAMB36E1                                     r  ram/mem_reg_0_3/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.689     1.120    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.871     2.021    ram/clk
+    RAMB36_X1Y6          RAMB36E1                                     r  ram/mem_reg_0_3/CLKARDCLK
+                         clock pessimism             -0.499     1.521    
+    RAMB36_X1Y6          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.676    ram/mem_reg_0_3
+  -------------------------------------------------------------------
+                         required time                         -1.676    
+                         arrival time                           3.246    
+  -------------------------------------------------------------------
+                         slack                                  1.570    
+
+Slack (MET) :             1.649ns  (arrival time - required time)
+  Source:                 ram/mem_reg_1_7/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_0_7/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        1.835ns  (logic 0.675ns (36.790%)  route 1.160ns (63.210%))
+  Logic Levels:           2  (LUT6=2)
+  Clock Path Skew:        0.031ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.013ns
+    Source Clock Delay      (SCD):    1.502ns
+    Clock Pessimism Removal (CPR):    0.479ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.634     0.878    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.598     1.502    ram/clk
+    RAMB36_X1Y5          RAMB36E1                                     r  ram/mem_reg_1_7/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y5          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.087 r  ram/mem_reg_1_7/DOADO[0]
+                         net (fo=1, routed)           0.368     2.455    cpu/cu/o_data[6]
+    SLICE_X43Y28         LUT6 (Prop_lut6_I2_O)        0.045     2.500 r  cpu/cu/data[7]_i_10/O
+                         net (fo=1, routed)           0.230     2.731    cpu/cu/data[7]_i_10_n_0
+    SLICE_X44Y28         LUT6 (Prop_lut6_I1_O)        0.045     2.776 r  cpu/cu/data[7]_i_2__3/O
+                         net (fo=21, routed)          0.561     3.337    ram/i_data[7]
+    RAMB36_X1Y4          RAMB36E1                                     r  ram/mem_reg_0_7/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.689     1.120    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.863     2.013    ram/clk
+    RAMB36_X1Y4          RAMB36E1                                     r  ram/mem_reg_0_7/CLKARDCLK
+                         clock pessimism             -0.479     1.533    
+    RAMB36_X1Y4          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.688    ram/mem_reg_0_7
+  -------------------------------------------------------------------
+                         required time                         -1.688    
+                         arrival time                           3.337    
+  -------------------------------------------------------------------
+                         slack                                  1.649    
+
+Slack (MET) :             1.731ns  (arrival time - required time)
+  Source:                 ram/mem_reg_1_7/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_7/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        1.886ns  (logic 0.675ns (35.786%)  route 1.211ns (64.214%))
+  Logic Levels:           2  (LUT6=2)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.016ns
+    Source Clock Delay      (SCD):    1.502ns
+    Clock Pessimism Removal (CPR):    0.513ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.634     0.878    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.598     1.502    ram/clk
+    RAMB36_X1Y5          RAMB36E1                                     r  ram/mem_reg_1_7/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y5          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.087 r  ram/mem_reg_1_7/DOADO[0]
+                         net (fo=1, routed)           0.368     2.455    cpu/cu/o_data[6]
+    SLICE_X43Y28         LUT6 (Prop_lut6_I2_O)        0.045     2.500 r  cpu/cu/data[7]_i_10/O
+                         net (fo=1, routed)           0.230     2.731    cpu/cu/data[7]_i_10_n_0
+    SLICE_X44Y28         LUT6 (Prop_lut6_I1_O)        0.045     2.776 r  cpu/cu/data[7]_i_2__3/O
+                         net (fo=21, routed)          0.613     3.388    ram/i_data[7]
+    RAMB36_X1Y5          RAMB36E1                                     r  ram/mem_reg_1_7/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.689     1.120    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.866     2.016    ram/clk
+    RAMB36_X1Y5          RAMB36E1                                     r  ram/mem_reg_1_7/CLKARDCLK
+                         clock pessimism             -0.513     1.502    
+    RAMB36_X1Y5          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.657    ram/mem_reg_1_7
+  -------------------------------------------------------------------
+                         required time                         -1.657    
+                         arrival time                           3.388    
+  -------------------------------------------------------------------
+                         slack                                  1.731    
+
+Slack (MET) :             1.802ns  (arrival time - required time)
   Source:                 ram/mem_reg_1_6/CLKARDCLK
                             (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
   Destination:            ram/mem_reg_1_6/DIADI[0]
@@ -895,12 +1060,12 @@ Slack (MET) :             1.653ns  (arrival time - required time)
   Path Group:             sys_clk_pin
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        1.745ns  (logic 0.695ns (39.819%)  route 1.050ns (60.181%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
+  Data Path Delay:        1.957ns  (logic 0.675ns (34.496%)  route 1.282ns (65.504%))
+  Logic Levels:           2  (LUT6=2)
   Clock Path Skew:        0.000ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.108ns
-    Source Clock Delay      (SCD):    1.589ns
-    Clock Pessimism Removal (CPR):    0.519ns
+    Destination Clock Delay (DCD):    2.019ns
+    Source Clock Delay      (SCD):    1.505ns
+    Clock Pessimism Removal (CPR):    0.513ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -911,72 +1076,17 @@ Slack (MET) :             1.653ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.634     0.878    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.685     1.589    ram/clk
-    RAMB36_X0Y22         RAMB36E1                                     r  ram/mem_reg_1_6/CLKARDCLK
+                         net (fo=17, routed)          0.601     1.505    ram/clk
+    RAMB36_X1Y3          RAMB36E1                                     r  ram/mem_reg_1_6/CLKARDCLK
   -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y22         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.174 r  ram/mem_reg_1_6/DOADO[0]
-                         net (fo=1, routed)           0.501     2.674    cpu/ir/o_data[6]
-    SLICE_X15Y122        LUT6 (Prop_lut6_I0_O)        0.045     2.719 r  cpu/ir/o_data_bus_OBUF[6]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.719    cpu/cu/data_reg[14]_0
-    SLICE_X15Y122        MUXF7 (Prop_muxf7_I1_O)      0.065     2.784 r  cpu/cu/o_data_bus_OBUF[6]_inst_i_1/O
-                         net (fo=21, routed)          0.550     3.334    ram/i_data[6]
-    RAMB36_X0Y22         RAMB36E1                                     r  ram/mem_reg_1_6/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.689     1.120    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.959     2.108    ram/clk
-    RAMB36_X0Y22         RAMB36E1                                     r  ram/mem_reg_1_6/CLKARDCLK
-                         clock pessimism             -0.519     1.589    
-    RAMB36_X0Y22         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.681    ram/mem_reg_1_6
-  -------------------------------------------------------------------
-                         required time                         -1.681    
-                         arrival time                           3.334    
-  -------------------------------------------------------------------
-                         slack                                  1.653    
-
-Slack (MET) :             1.673ns  (arrival time - required time)
-  Source:                 ram/mem_reg_1_0/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_0/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        1.774ns  (logic 0.695ns (39.187%)  route 1.079ns (60.813%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
-  Clock Path Skew:        0.009ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.101ns
-    Source Clock Delay      (SCD):    1.588ns
-    Clock Pessimism Removal (CPR):    0.504ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.634     0.878    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.684     1.588    ram/clk
-    RAMB36_X0Y26         RAMB36E1                                     r  ram/mem_reg_1_0/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y26         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.173 r  ram/mem_reg_1_0/DOADO[0]
-                         net (fo=1, routed)           0.491     2.664    cpu/ir/o_data[0]
-    SLICE_X15Y121        LUT6 (Prop_lut6_I0_O)        0.045     2.709 r  cpu/ir/o_data_bus_OBUF[0]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.709    cpu/cu/data_reg[8]_3
-    SLICE_X15Y121        MUXF7 (Prop_muxf7_I1_O)      0.065     2.774 r  cpu/cu/o_data_bus_OBUF[0]_inst_i_1/O
-                         net (fo=21, routed)          0.588     3.361    ram/i_data[0]
-    RAMB36_X0Y25         RAMB36E1                                     r  ram/mem_reg_0_0/DIADI[0]
+    RAMB36_X1Y3          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.090 r  ram/mem_reg_1_6/DOADO[0]
+                         net (fo=1, routed)           0.602     2.693    cpu/cu/o_data[5]
+    SLICE_X47Y28         LUT6 (Prop_lut6_I2_O)        0.045     2.738 r  cpu/cu/data[6]_i_3/O
+                         net (fo=1, routed)           0.050     2.788    cpu/cu/data[6]_i_3_n_0
+    SLICE_X47Y28         LUT6 (Prop_lut6_I1_O)        0.045     2.833 r  cpu/cu/data[6]_i_1__3/O
+                         net (fo=21, routed)          0.629     3.462    ram/i_data[6]
+    RAMB36_X1Y3          RAMB36E1                                     r  ram/mem_reg_1_6/DIADI[0]
   -------------------------------------------------------------------    -------------------
 
                          (clock sys_clk_pin rise edge)
@@ -986,241 +1096,18 @@ Slack (MET) :             1.673ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.689     1.120    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.952     2.101    ram/clk
-    RAMB36_X0Y25         RAMB36E1                                     r  ram/mem_reg_0_0/CLKARDCLK
-                         clock pessimism             -0.504     1.597    
-    RAMB36_X0Y25         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.689    ram/mem_reg_0_0
+                         net (fo=17, routed)          0.869     2.019    ram/clk
+    RAMB36_X1Y3          RAMB36E1                                     r  ram/mem_reg_1_6/CLKARDCLK
+                         clock pessimism             -0.513     1.505    
+    RAMB36_X1Y3          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.660    ram/mem_reg_1_6
   -------------------------------------------------------------------
-                         required time                         -1.689    
-                         arrival time                           3.361    
+                         required time                         -1.660    
+                         arrival time                           3.462    
   -------------------------------------------------------------------
-                         slack                                  1.673    
+                         slack                                  1.802    
 
-Slack (MET) :             1.713ns  (arrival time - required time)
-  Source:                 ram/mem_reg_1_6/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_6/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        1.824ns  (logic 0.695ns (38.112%)  route 1.129ns (61.888%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
-  Clock Path Skew:        0.019ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.112ns
-    Source Clock Delay      (SCD):    1.589ns
-    Clock Pessimism Removal (CPR):    0.504ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.634     0.878    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.685     1.589    ram/clk
-    RAMB36_X0Y22         RAMB36E1                                     r  ram/mem_reg_1_6/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y22         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.174 r  ram/mem_reg_1_6/DOADO[0]
-                         net (fo=1, routed)           0.501     2.674    cpu/ir/o_data[6]
-    SLICE_X15Y122        LUT6 (Prop_lut6_I0_O)        0.045     2.719 r  cpu/ir/o_data_bus_OBUF[6]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.719    cpu/cu/data_reg[14]_0
-    SLICE_X15Y122        MUXF7 (Prop_muxf7_I1_O)      0.065     2.784 r  cpu/cu/o_data_bus_OBUF[6]_inst_i_1/O
-                         net (fo=21, routed)          0.628     3.412    ram/i_data[6]
-    RAMB36_X0Y21         RAMB36E1                                     r  ram/mem_reg_0_6/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.689     1.120    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.963     2.112    ram/clk
-    RAMB36_X0Y21         RAMB36E1                                     r  ram/mem_reg_0_6/CLKARDCLK
-                         clock pessimism             -0.504     1.608    
-    RAMB36_X0Y21         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.700    ram/mem_reg_0_6
-  -------------------------------------------------------------------
-                         required time                         -1.700    
-                         arrival time                           3.412    
-  -------------------------------------------------------------------
-                         slack                                  1.713    
-
-Slack (MET) :             1.914ns  (arrival time - required time)
-  Source:                 ram/mem_reg_0_2/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_1_2/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        2.357ns  (logic 0.704ns (29.867%)  route 1.653ns (70.133%))
-  Logic Levels:           3  (LUT6=1 MUXF7=1 RAMB36E1=1)
-  Clock Path Skew:        0.351ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.113ns
-    Source Clock Delay      (SCD):    1.511ns
-    Clock Pessimism Removal (CPR):    0.250ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.634     0.878    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.607     1.511    ram/clk
-    RAMB36_X0Y19         RAMB36E1                                     r  ram/mem_reg_0_2/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y19         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_CASCADEOUTA)
-                                                      0.584     2.095 r  ram/mem_reg_0_2/CASCADEOUTA
-                         net (fo=1, routed)           0.065     2.161    ram/mem_reg_0_2_n_0
-    RAMB36_X0Y20         RAMB36E1 (Prop_ramb36e1_CASCADEINA_DOADO[0])
-                                                      0.010     2.171 r  ram/mem_reg_1_2/DOADO[0]
-                         net (fo=1, routed)           0.584     2.755    cpu/ir/o_data[2]
-    SLICE_X16Y120        LUT6 (Prop_lut6_I0_O)        0.045     2.800 r  cpu/ir/o_data_bus_OBUF[2]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.800    cpu/cu/data_reg[10]_0
-    SLICE_X16Y120        MUXF7 (Prop_muxf7_I1_O)      0.065     2.865 r  cpu/cu/o_data_bus_OBUF[2]_inst_i_1/O
-                         net (fo=21, routed)          1.003     3.868    ram/i_data[2]
-    RAMB36_X0Y20         RAMB36E1                                     r  ram/mem_reg_1_2/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.689     1.120    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.964     2.113    ram/clk
-    RAMB36_X0Y20         RAMB36E1                                     r  ram/mem_reg_1_2/CLKARDCLK
-                         clock pessimism             -0.250     1.863    
-    RAMB36_X0Y20         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.955    ram/mem_reg_1_2
-  -------------------------------------------------------------------
-                         required time                         -1.955    
-                         arrival time                           3.868    
-  -------------------------------------------------------------------
-                         slack                                  1.914    
-
-Slack (MET) :             1.972ns  (arrival time - required time)
-  Source:                 ram/mem_reg_1_1/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_1/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        2.078ns  (logic 0.695ns (33.440%)  route 1.383ns (66.560%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
-  Clock Path Skew:        0.014ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.111ns
-    Source Clock Delay      (SCD):    1.593ns
-    Clock Pessimism Removal (CPR):    0.504ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.634     0.878    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.689     1.593    ram/clk
-    RAMB36_X0Y28         RAMB36E1                                     r  ram/mem_reg_1_1/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y28         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.178 r  ram/mem_reg_1_1/DOADO[0]
-                         net (fo=1, routed)           0.598     2.775    cpu/ir/o_data[1]
-    SLICE_X18Y121        LUT6 (Prop_lut6_I0_O)        0.045     2.820 r  cpu/ir/o_data_bus_OBUF[1]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.820    cpu/cu/data_reg[9]_0
-    SLICE_X18Y121        MUXF7 (Prop_muxf7_I1_O)      0.065     2.885 r  cpu/cu/o_data_bus_OBUF[1]_inst_i_1/O
-                         net (fo=21, routed)          0.786     3.671    ram/i_data[1]
-    RAMB36_X0Y27         RAMB36E1                                     r  ram/mem_reg_0_1/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.689     1.120    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.962     2.111    ram/clk
-    RAMB36_X0Y27         RAMB36E1                                     r  ram/mem_reg_0_1/CLKARDCLK
-                         clock pessimism             -0.504     1.607    
-    RAMB36_X0Y27         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.699    ram/mem_reg_0_1
-  -------------------------------------------------------------------
-                         required time                         -1.699    
-                         arrival time                           3.671    
-  -------------------------------------------------------------------
-                         slack                                  1.972    
-
-Slack (MET) :             2.011ns  (arrival time - required time)
-  Source:                 ram/mem_reg_1_1/CLKARDCLK
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_1_1/DIADI[0]
-                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Path Group:             sys_clk_pin
-  Path Type:              Hold (Min at Fast Process Corner)
-  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        2.103ns  (logic 0.695ns (33.049%)  route 1.408ns (66.951%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
-  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.113ns
-    Source Clock Delay      (SCD):    1.593ns
-    Clock Pessimism Removal (CPR):    0.520ns
-
-    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
-  -------------------------------------------------------------------    -------------------
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.634     0.878    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.689     1.593    ram/clk
-    RAMB36_X0Y28         RAMB36E1                                     r  ram/mem_reg_1_1/CLKARDCLK
-  -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y28         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.178 r  ram/mem_reg_1_1/DOADO[0]
-                         net (fo=1, routed)           0.598     2.775    cpu/ir/o_data[1]
-    SLICE_X18Y121        LUT6 (Prop_lut6_I0_O)        0.045     2.820 r  cpu/ir/o_data_bus_OBUF[1]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.820    cpu/cu/data_reg[9]_0
-    SLICE_X18Y121        MUXF7 (Prop_muxf7_I1_O)      0.065     2.885 r  cpu/cu/o_data_bus_OBUF[1]_inst_i_1/O
-                         net (fo=21, routed)          0.810     3.696    ram/i_data[1]
-    RAMB36_X0Y28         RAMB36E1                                     r  ram/mem_reg_1_1/DIADI[0]
-  -------------------------------------------------------------------    -------------------
-
-                         (clock sys_clk_pin rise edge)
-                                                      0.000     0.000 r  
-    L17                                               0.000     0.000 r  clk (IN)
-                         net (fo=0)                   0.000     0.000    clk
-    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
-                         net (fo=1, routed)           0.689     1.120    clk_IBUF
-    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.964     2.113    ram/clk
-    RAMB36_X0Y28         RAMB36E1                                     r  ram/mem_reg_1_1/CLKARDCLK
-                         clock pessimism             -0.520     1.593    
-    RAMB36_X0Y28         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.685    ram/mem_reg_1_1
-  -------------------------------------------------------------------
-                         required time                         -1.685    
-                         arrival time                           3.696    
-  -------------------------------------------------------------------
-                         slack                                  2.011    
-
-Slack (MET) :             2.039ns  (arrival time - required time)
+Slack (MET) :             1.827ns  (arrival time - required time)
   Source:                 ram/mem_reg_1_2/CLKARDCLK
                             (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
   Destination:            ram/mem_reg_0_2/DIADI[0]
@@ -1228,12 +1115,12 @@ Slack (MET) :             2.039ns  (arrival time - required time)
   Path Group:             sys_clk_pin
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        2.314ns  (logic 0.695ns (30.034%)  route 1.619ns (69.966%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
-  Clock Path Skew:        0.183ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.026ns
-    Source Clock Delay      (SCD):    1.593ns
-    Clock Pessimism Removal (CPR):    0.250ns
+  Data Path Delay:        1.997ns  (logic 0.675ns (33.808%)  route 1.322ns (66.192%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
+  Clock Path Skew:        0.015ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.028ns
+    Source Clock Delay      (SCD):    1.513ns
+    Clock Pessimism Removal (CPR):    0.499ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -1244,17 +1131,17 @@ Slack (MET) :             2.039ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.634     0.878    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.689     1.593    ram/clk
-    RAMB36_X0Y20         RAMB36E1                                     r  ram/mem_reg_1_2/CLKARDCLK
+                         net (fo=17, routed)          0.609     1.513    ram/clk
+    RAMB36_X1Y9          RAMB36E1                                     r  ram/mem_reg_1_2/CLKARDCLK
   -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y20         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.178 r  ram/mem_reg_1_2/DOADO[0]
-                         net (fo=1, routed)           0.584     2.762    cpu/ir/o_data[2]
-    SLICE_X16Y120        LUT6 (Prop_lut6_I0_O)        0.045     2.807 r  cpu/ir/o_data_bus_OBUF[2]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.807    cpu/cu/data_reg[10]_0
-    SLICE_X16Y120        MUXF7 (Prop_muxf7_I1_O)      0.065     2.872 r  cpu/cu/o_data_bus_OBUF[2]_inst_i_1/O
-                         net (fo=21, routed)          1.035     3.907    ram/i_data[2]
-    RAMB36_X0Y19         RAMB36E1                                     r  ram/mem_reg_0_2/DIADI[0]
+    RAMB36_X1Y9          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.098 r  ram/mem_reg_1_2/DOADO[0]
+                         net (fo=1, routed)           0.577     2.675    cpu/cu/o_data[2]
+    SLICE_X41Y29         LUT6 (Prop_lut6_I2_O)        0.045     2.720 r  cpu/cu/data[2]_i_3/O
+                         net (fo=1, routed)           0.049     2.769    cpu/cu/data[2]_i_3_n_0
+    SLICE_X41Y29         LUT5 (Prop_lut5_I1_O)        0.045     2.814 r  cpu/cu/data[2]_i_1__3/O
+                         net (fo=21, routed)          0.696     3.510    ram/i_data[2]
+    RAMB36_X1Y8          RAMB36E1                                     r  ram/mem_reg_0_2/DIADI[0]
   -------------------------------------------------------------------    -------------------
 
                          (clock sys_clk_pin rise edge)
@@ -1264,31 +1151,31 @@ Slack (MET) :             2.039ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.689     1.120    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.877     2.026    ram/clk
-    RAMB36_X0Y19         RAMB36E1                                     r  ram/mem_reg_0_2/CLKARDCLK
-                         clock pessimism             -0.250     1.776    
-    RAMB36_X0Y19         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.868    ram/mem_reg_0_2
+                         net (fo=17, routed)          0.878     2.028    ram/clk
+    RAMB36_X1Y8          RAMB36E1                                     r  ram/mem_reg_0_2/CLKARDCLK
+                         clock pessimism             -0.499     1.528    
+    RAMB36_X1Y8          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.683    ram/mem_reg_0_2
   -------------------------------------------------------------------
-                         required time                         -1.868    
-                         arrival time                           3.907    
+                         required time                         -1.683    
+                         arrival time                           3.510    
   -------------------------------------------------------------------
-                         slack                                  2.039    
+                         slack                                  1.827    
 
-Slack (MET) :             2.065ns  (arrival time - required time)
-  Source:                 ram/mem_reg_1_4/CLKARDCLK
+Slack (MET) :             1.923ns  (arrival time - required time)
+  Source:                 ram/mem_reg_1_6/CLKARDCLK
                             (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
-  Destination:            ram/mem_reg_0_4/DIADI[0]
+  Destination:            ram/mem_reg_0_6/DIADI[0]
                             (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
   Path Group:             sys_clk_pin
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        2.166ns  (logic 0.695ns (32.088%)  route 1.471ns (67.912%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
-  Clock Path Skew:        0.009ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.099ns
-    Source Clock Delay      (SCD):    1.587ns
-    Clock Pessimism Removal (CPR):    0.503ns
+  Data Path Delay:        2.096ns  (logic 0.675ns (32.203%)  route 1.421ns (67.797%))
+  Logic Levels:           2  (LUT6=2)
+  Clock Path Skew:        0.018ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.023ns
+    Source Clock Delay      (SCD):    1.505ns
+    Clock Pessimism Removal (CPR):    0.499ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -1299,17 +1186,17 @@ Slack (MET) :             2.065ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.634     0.878    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.683     1.587    ram/clk
-    RAMB36_X1Y26         RAMB36E1                                     r  ram/mem_reg_1_4/CLKARDCLK
+                         net (fo=17, routed)          0.601     1.505    ram/clk
+    RAMB36_X1Y3          RAMB36E1                                     r  ram/mem_reg_1_6/CLKARDCLK
   -------------------------------------------------------------------    -------------------
-    RAMB36_X1Y26         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.172 r  ram/mem_reg_1_4/DOADO[0]
-                         net (fo=1, routed)           0.817     2.989    cpu/ir/o_data[4]
-    SLICE_X19Y122        LUT6 (Prop_lut6_I0_O)        0.045     3.034 r  cpu/ir/o_data_bus_OBUF[4]_inst_i_3/O
-                         net (fo=1, routed)           0.000     3.034    cpu/cu/data_reg[12]_3
-    SLICE_X19Y122        MUXF7 (Prop_muxf7_I1_O)      0.065     3.099 r  cpu/cu/o_data_bus_OBUF[4]_inst_i_1/O
-                         net (fo=21, routed)          0.653     3.753    ram/i_data[4]
-    RAMB36_X1Y25         RAMB36E1                                     r  ram/mem_reg_0_4/DIADI[0]
+    RAMB36_X1Y3          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.090 r  ram/mem_reg_1_6/DOADO[0]
+                         net (fo=1, routed)           0.602     2.693    cpu/cu/o_data[5]
+    SLICE_X47Y28         LUT6 (Prop_lut6_I2_O)        0.045     2.738 r  cpu/cu/data[6]_i_3/O
+                         net (fo=1, routed)           0.050     2.788    cpu/cu/data[6]_i_3_n_0
+    SLICE_X47Y28         LUT6 (Prop_lut6_I1_O)        0.045     2.833 r  cpu/cu/data[6]_i_1__3/O
+                         net (fo=21, routed)          0.768     3.601    ram/i_data[6]
+    RAMB36_X1Y2          RAMB36E1                                     r  ram/mem_reg_0_6/DIADI[0]
   -------------------------------------------------------------------    -------------------
 
                          (clock sys_clk_pin rise edge)
@@ -1319,18 +1206,73 @@ Slack (MET) :             2.065ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.689     1.120    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.950     2.099    ram/clk
-    RAMB36_X1Y25         RAMB36E1                                     r  ram/mem_reg_0_4/CLKARDCLK
-                         clock pessimism             -0.503     1.596    
-    RAMB36_X1Y25         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.688    ram/mem_reg_0_4
+                         net (fo=17, routed)          0.873     2.023    ram/clk
+    RAMB36_X1Y2          RAMB36E1                                     r  ram/mem_reg_0_6/CLKARDCLK
+                         clock pessimism             -0.499     1.523    
+    RAMB36_X1Y2          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.678    ram/mem_reg_0_6
   -------------------------------------------------------------------
-                         required time                         -1.688    
-                         arrival time                           3.753    
+                         required time                         -1.678    
+                         arrival time                           3.601    
   -------------------------------------------------------------------
-                         slack                                  2.065    
+                         slack                                  1.923    
 
-Slack (MET) :             2.107ns  (arrival time - required time)
+Slack (MET) :             1.983ns  (arrival time - required time)
+  Source:                 ram/mem_reg_1_3/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_3/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        2.138ns  (logic 0.675ns (31.567%)  route 1.463ns (68.433%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.026ns
+    Source Clock Delay      (SCD):    1.510ns
+    Clock Pessimism Removal (CPR):    0.515ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.634     0.878    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.606     1.510    ram/clk
+    RAMB36_X1Y7          RAMB36E1                                     r  ram/mem_reg_1_3/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y7          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.095 r  ram/mem_reg_1_3/DOADO[0]
+                         net (fo=1, routed)           0.527     2.622    cpu/cu/o_data[3]
+    SLICE_X42Y29         LUT6 (Prop_lut6_I2_O)        0.045     2.667 r  cpu/cu/o_db_OBUF[3]_inst_i_5/O
+                         net (fo=7, routed)           0.367     3.034    cpu/cu/mem_reg_1_3
+    SLICE_X48Y30         LUT5 (Prop_lut5_I1_O)        0.045     3.079 r  cpu/cu/data[3]_i_1__3/O
+                         net (fo=12, routed)          0.569     3.648    ram/i_data[3]
+    RAMB36_X1Y7          RAMB36E1                                     r  ram/mem_reg_1_3/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.689     1.120    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.876     2.026    ram/clk
+    RAMB36_X1Y7          RAMB36E1                                     r  ram/mem_reg_1_3/CLKARDCLK
+                         clock pessimism             -0.515     1.510    
+    RAMB36_X1Y7          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.665    ram/mem_reg_1_3
+  -------------------------------------------------------------------
+                         required time                         -1.665    
+                         arrival time                           3.648    
+  -------------------------------------------------------------------
+                         slack                                  1.983    
+
+Slack (MET) :             1.996ns  (arrival time - required time)
   Source:                 ram/mem_reg_1_0/CLKARDCLK
                             (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
   Destination:            ram/mem_reg_1_0/DIADI[0]
@@ -1338,12 +1280,12 @@ Slack (MET) :             2.107ns  (arrival time - required time)
   Path Group:             sys_clk_pin
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
-  Data Path Delay:        2.199ns  (logic 0.695ns (31.600%)  route 1.504ns (68.400%))
-  Logic Levels:           2  (LUT6=1 MUXF7=1)
+  Data Path Delay:        2.151ns  (logic 0.675ns (31.385%)  route 1.476ns (68.615%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
   Clock Path Skew:        0.000ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    2.106ns
-    Source Clock Delay      (SCD):    1.588ns
-    Clock Pessimism Removal (CPR):    0.518ns
+    Destination Clock Delay (DCD):    2.017ns
+    Source Clock Delay      (SCD):    1.504ns
+    Clock Pessimism Removal (CPR):    0.512ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -1354,17 +1296,17 @@ Slack (MET) :             2.107ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.634     0.878    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.684     1.588    ram/clk
-    RAMB36_X0Y26         RAMB36E1                                     r  ram/mem_reg_1_0/CLKARDCLK
+                         net (fo=17, routed)          0.600     1.504    ram/clk
+    RAMB36_X2Y5          RAMB36E1                                     r  ram/mem_reg_1_0/CLKARDCLK
   -------------------------------------------------------------------    -------------------
-    RAMB36_X0Y26         RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
-                                                      0.585     2.173 r  ram/mem_reg_1_0/DOADO[0]
-                         net (fo=1, routed)           0.491     2.664    cpu/ir/o_data[0]
-    SLICE_X15Y121        LUT6 (Prop_lut6_I0_O)        0.045     2.709 r  cpu/ir/o_data_bus_OBUF[0]_inst_i_3/O
-                         net (fo=1, routed)           0.000     2.709    cpu/cu/data_reg[8]_3
-    SLICE_X15Y121        MUXF7 (Prop_muxf7_I1_O)      0.065     2.774 r  cpu/cu/o_data_bus_OBUF[0]_inst_i_1/O
-                         net (fo=21, routed)          1.013     3.787    ram/i_data[0]
-    RAMB36_X0Y26         RAMB36E1                                     r  ram/mem_reg_1_0/DIADI[0]
+    RAMB36_X2Y5          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.089 r  ram/mem_reg_1_0/DOADO[0]
+                         net (fo=1, routed)           0.672     2.761    cpu/cu/o_data[0]
+    SLICE_X42Y28         LUT6 (Prop_lut6_I2_O)        0.045     2.806 r  cpu/cu/data[0]_i_3/O
+                         net (fo=1, routed)           0.091     2.898    cpu/cu/data[0]_i_3_n_0
+    SLICE_X42Y28         LUT5 (Prop_lut5_I1_O)        0.045     2.943 r  cpu/cu/data[0]_i_1__3/O
+                         net (fo=21, routed)          0.712     3.655    ram/i_data[0]
+    RAMB36_X2Y5          RAMB36E1                                     r  ram/mem_reg_1_0/DIADI[0]
   -------------------------------------------------------------------    -------------------
 
                          (clock sys_clk_pin rise edge)
@@ -1374,16 +1316,71 @@ Slack (MET) :             2.107ns  (arrival time - required time)
     L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
                          net (fo=1, routed)           0.689     1.120    clk_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
-                         net (fo=17, routed)          0.957     2.106    ram/clk
-    RAMB36_X0Y26         RAMB36E1                                     r  ram/mem_reg_1_0/CLKARDCLK
-                         clock pessimism             -0.518     1.588    
-    RAMB36_X0Y26         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
-                                                      0.092     1.680    ram/mem_reg_1_0
+                         net (fo=17, routed)          0.867     2.017    ram/clk
+    RAMB36_X2Y5          RAMB36E1                                     r  ram/mem_reg_1_0/CLKARDCLK
+                         clock pessimism             -0.512     1.504    
+    RAMB36_X2Y5          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.659    ram/mem_reg_1_0
   -------------------------------------------------------------------
-                         required time                         -1.680    
-                         arrival time                           3.787    
+                         required time                         -1.659    
+                         arrival time                           3.655    
   -------------------------------------------------------------------
-                         slack                                  2.107    
+                         slack                                  1.996    
+
+Slack (MET) :             2.037ns  (arrival time - required time)
+  Source:                 ram/mem_reg_1_2/CLKARDCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Destination:            ram/mem_reg_1_2/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by sys_clk_pin  {rise@0.000ns fall@41.660ns period=83.330ns})
+  Path Group:             sys_clk_pin
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (sys_clk_pin rise@0.000ns - sys_clk_pin rise@0.000ns)
+  Data Path Delay:        2.192ns  (logic 0.675ns (30.789%)  route 1.517ns (69.211%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.029ns
+    Source Clock Delay      (SCD):    1.513ns
+    Clock Pessimism Removal (CPR):    0.515ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.244     0.244 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.634     0.878    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.026     0.904 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.609     1.513    ram/clk
+    RAMB36_X1Y9          RAMB36E1                                     r  ram/mem_reg_1_2/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X1Y9          RAMB36E1 (Prop_ramb36e1_CLKARDCLK_DOADO[0])
+                                                      0.585     2.098 r  ram/mem_reg_1_2/DOADO[0]
+                         net (fo=1, routed)           0.577     2.675    cpu/cu/o_data[2]
+    SLICE_X41Y29         LUT6 (Prop_lut6_I2_O)        0.045     2.720 r  cpu/cu/data[2]_i_3/O
+                         net (fo=1, routed)           0.049     2.769    cpu/cu/data[2]_i_3_n_0
+    SLICE_X41Y29         LUT5 (Prop_lut5_I1_O)        0.045     2.814 r  cpu/cu/data[2]_i_1__3/O
+                         net (fo=21, routed)          0.891     3.705    ram/i_data[2]
+    RAMB36_X1Y9          RAMB36E1                                     r  ram/mem_reg_1_2/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock sys_clk_pin rise edge)
+                                                      0.000     0.000 r  
+    L17                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    L17                  IBUF (Prop_ibuf_I_O)         0.432     0.432 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           0.689     1.120    clk_IBUF
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     1.149 r  clk_IBUF_BUFG_inst/O
+                         net (fo=17, routed)          0.879     2.029    ram/clk
+    RAMB36_X1Y9          RAMB36E1                                     r  ram/mem_reg_1_2/CLKARDCLK
+                         clock pessimism             -0.515     1.513    
+    RAMB36_X1Y9          RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[0])
+                                                      0.155     1.668    ram/mem_reg_1_2
+  -------------------------------------------------------------------
+                         required time                         -1.668    
+                         arrival time                           3.705    
+  -------------------------------------------------------------------
+                         slack                                  2.037    
 
 
 
@@ -1397,20 +1394,20 @@ Period(ns):         83.330
 Sources:            { clk }
 
 Check Type        Corner  Lib Pin             Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location      Pin
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X0Y27  ram/mem_reg_0_1/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y27  ram/mem_reg_0_3/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X0Y23  ram/mem_reg_0_5/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X0Y17  ram/mem_reg_0_7/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X0Y28  ram/mem_reg_1_1/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y28  ram/mem_reg_1_3/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X0Y24  ram/mem_reg_1_5/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X0Y18  ram/mem_reg_1_7/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X0Y19  ram/mem_reg_0_2/CLKARDCLK
-Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y25  ram/mem_reg_0_4/CLKARDCLK
-Low Pulse Width   Slow    FDCE/C              n/a            0.500         41.660      41.160     SLICE_X36Y46  cpu_clk_reg/C
-Low Pulse Width   Fast    FDCE/C              n/a            0.500         41.660      41.160     SLICE_X36Y46  cpu_clk_reg/C
-High Pulse Width  Fast    FDCE/C              n/a            0.500         41.670      41.170     SLICE_X36Y46  cpu_clk_reg/C
-High Pulse Width  Slow    FDCE/C              n/a            0.500         41.670      41.170     SLICE_X36Y46  cpu_clk_reg/C
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X2Y6   ram/mem_reg_0_1/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y6   ram/mem_reg_0_3/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X2Y2   ram/mem_reg_0_5/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y4   ram/mem_reg_0_7/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X2Y7   ram/mem_reg_1_1/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y7   ram/mem_reg_1_3/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X2Y3   ram/mem_reg_1_5/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y5   ram/mem_reg_1_7/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y8   ram/mem_reg_0_2/CLKARDCLK
+Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.892         83.330      80.438     RAMB36_X1Y0   ram/mem_reg_0_4/CLKARDCLK
+Low Pulse Width   Slow    FDCE/C              n/a            0.500         41.660      41.160     SLICE_X38Y46  cpu_clk_reg/C
+Low Pulse Width   Fast    FDCE/C              n/a            0.500         41.660      41.160     SLICE_X38Y46  cpu_clk_reg/C
+High Pulse Width  Fast    FDCE/C              n/a            0.500         41.670      41.170     SLICE_X38Y46  cpu_clk_reg/C
+High Pulse Width  Slow    FDCE/C              n/a            0.500         41.670      41.170     SLICE_X38Y46  cpu_clk_reg/C
 
 
 

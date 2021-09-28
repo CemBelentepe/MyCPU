@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="4000001fs"></ZoomEndTime>
-      <Cursor1Time time="2158110fs"></Cursor1Time>
+      <ZoomStartTime time="9410000fs"></ZoomStartTime>
+      <ZoomEndTime time="13815001fs"></ZoomEndTime>
+      <Cursor1Time time="11900000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="113"></NameColumnWidth>
+      <NameColumnWidth column_width="89"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="27" />
+   <WVObjectSize size="40" />
    <wvobject fp_name="/RunProgram_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -32,21 +32,45 @@
       <obj_property name="ElementShortName">cpu_clk</obj_property>
       <obj_property name="ObjectShortName">cpu_clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/o_data_bus" type="array">
-      <obj_property name="ElementShortName">o_data_bus[7:0]</obj_property>
-      <obj_property name="ObjectShortName">o_data_bus[7:0]</obj_property>
+   <wvobject fp_name="/RunProgram_tb/o_en" type="logic">
+      <obj_property name="ElementShortName">o_en</obj_property>
+      <obj_property name="ObjectShortName">o_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/o_addr_bus" type="array">
-      <obj_property name="ElementShortName">o_addr_bus[15:0]</obj_property>
-      <obj_property name="ObjectShortName">o_addr_bus[15:0]</obj_property>
+   <wvobject fp_name="/RunProgram_tb/o_rs" type="logic">
+      <obj_property name="ElementShortName">o_rs</obj_property>
+      <obj_property name="ObjectShortName">o_rs</obj_property>
    </wvobject>
-   <wvobject fp_name="/RunProgram_tb/o_we" type="logic">
-      <obj_property name="ElementShortName">o_we</obj_property>
-      <obj_property name="ObjectShortName">o_we</obj_property>
+   <wvobject fp_name="/RunProgram_tb/o_rw" type="logic">
+      <obj_property name="ElementShortName">o_rw</obj_property>
+      <obj_property name="ObjectShortName">o_rw</obj_property>
    </wvobject>
    <wvobject fp_name="/RunProgram_tb/o_dbg" type="logic">
       <obj_property name="ElementShortName">o_dbg</obj_property>
       <obj_property name="ObjectShortName">o_dbg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/ram/i_we" type="logic">
+      <obj_property name="ElementShortName">i_we</obj_property>
+      <obj_property name="ObjectShortName">i_we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/ram/i_addr" type="array">
+      <obj_property name="ElementShortName">i_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">i_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/ram/i_data" type="array">
+      <obj_property name="ElementShortName">i_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">i_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/o_db" type="array">
+      <obj_property name="ElementShortName">o_db[7:0]</obj_property>
+      <obj_property name="ObjectShortName">o_db[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/o_data_bus" type="array">
+      <obj_property name="ElementShortName">o_data_bus[7:0]</obj_property>
+      <obj_property name="ObjectShortName">o_data_bus[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/o_addr_bus" type="array">
+      <obj_property name="ElementShortName">o_addr_bus[15:0]</obj_property>
+      <obj_property name="ObjectShortName">o_addr_bus[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/ir" type="array">
       <obj_property name="ElementShortName">ir[15:0]</obj_property>
@@ -55,7 +79,6 @@
    <wvobject fp_name="/RunProgram_tb/uut/cpu/gpr_file/outputs" type="array">
       <obj_property name="ElementShortName">outputs[0:7][7:0]</obj_property>
       <obj_property name="ObjectShortName">outputs[0:7][7:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/RunProgram_tb/uut/cpu/adr_file/outputs" type="array">
       <obj_property name="ElementShortName">outputs[0:7][7:0]</obj_property>
@@ -94,6 +117,10 @@
       <obj_property name="ElementShortName">f4[1:0]</obj_property>
       <obj_property name="ObjectShortName">f4[1:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/can_jmp" type="logic">
+      <obj_property name="ElementShortName">can_jmp</obj_property>
+      <obj_property name="ObjectShortName">can_jmp</obj_property>
+   </wvobject>
    <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/cd" type="logic">
       <obj_property name="ElementShortName">cd</obj_property>
       <obj_property name="ObjectShortName">cd</obj_property>
@@ -129,5 +156,29 @@
    <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/imm_addr" type="array">
       <obj_property name="ElementShortName">imm_addr[15:0]</obj_property>
       <obj_property name="ObjectShortName">imm_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/gpr_regsel" type="array">
+      <obj_property name="ElementShortName">gpr_regsel[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gpr_regsel[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/cpu/cu/adr_regsel" type="array">
+      <obj_property name="ElementShortName">adr_regsel[7:0]</obj_property>
+      <obj_property name="ObjectShortName">adr_regsel[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/cpu/adr_file/i_as_dw" type="logic">
+      <obj_property name="ElementShortName">i_as_dw</obj_property>
+      <obj_property name="ObjectShortName">i_as_dw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/cpu/adr_file/i_regsel" type="array">
+      <obj_property name="ElementShortName">i_regsel[7:0]</obj_property>
+      <obj_property name="ObjectShortName">i_regsel[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/cpu/adr_file/i_funsel" type="array">
+      <obj_property name="ElementShortName">i_funsel[1:0]</obj_property>
+      <obj_property name="ObjectShortName">i_funsel[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RunProgram_tb/uut/cpu/adr_file/i_data" type="array">
+      <obj_property name="ElementShortName">i_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">i_data[15:0]</obj_property>
    </wvobject>
 </wave_config>

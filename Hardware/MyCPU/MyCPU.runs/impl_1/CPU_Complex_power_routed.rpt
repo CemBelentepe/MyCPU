@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date             : Fri Jul 23 17:47:14 2021
+| Date             : Sun Aug  8 16:59:26 2021
 | Host             : DESKTOP-2N1UFQC running 64-bit major release  (build 9200)
 | Command          : report_power -file CPU_Complex_power_routed.rpt -pb CPU_Complex_power_summary_routed.pb -rpx CPU_Complex_power_routed.rpx
 | Design           : CPU_Complex
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.084        |
+| Total On-Chip Power (W)  | 0.078        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.012        |
+| Dynamic (W)              | 0.005        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.6         |
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |     1063 |       --- |             --- |
-|   LUT as Logic |    <0.001 |      662 |     20800 |            3.18 |
+| Slice Logic    |    <0.001 |     1106 |       --- |             --- |
+|   LUT as Logic |    <0.001 |      765 |     20800 |            3.68 |
 |   CARRY4       |    <0.001 |       55 |      8150 |            0.67 |
 |   BUFG         |    <0.001 |        1 |        32 |            3.13 |
-|   F7/F8 Muxes  |    <0.001 |       47 |     32600 |            0.14 |
 |   Register     |    <0.001 |      155 |     41600 |            0.37 |
-|   Others       |     0.000 |       15 |       --- |             --- |
-| Signals        |    <0.001 |      868 |       --- |             --- |
+|   F7/F8 Muxes  |    <0.001 |       14 |     32600 |            0.04 |
+|   Others       |     0.000 |       14 |       --- |             --- |
+| Signals        |    <0.001 |      979 |       --- |             --- |
 | Block RAM      |     0.004 |       16 |        50 |           32.00 |
-| I/O            |     0.006 |       28 |       106 |           26.42 |
+| I/O            |    <0.001 |       14 |       106 |           13.21 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.084 |          |           |                 |
+| Total          |     0.078 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -76,7 +76,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Vccint    |       1.000 |     0.015 |       0.005 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -143,9 +143,8 @@ Table of Contents
 +-------------+-----------+
 | Name        | Power (W) |
 +-------------+-----------+
-| CPU_Complex |     0.012 |
-|   cpu       |     0.002 |
-|     cu      |     0.001 |
+| CPU_Complex |     0.005 |
+|   cpu       |     0.001 |
 |   ram       |     0.004 |
 +-------------+-----------+
 

@@ -1,10 +1,11 @@
 // Reverses an array
-#define size 11
+#define size 10
+#start _start
 
 arr1:
-    db 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+    db 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 arr2:
-    space 10
+    space size
 
 #align 2
 _start:
@@ -23,7 +24,7 @@ _start:
     str r0, [ar, r3]
     add r3, #1
     cmp r2, #0
-    bgt .loop
+    bne .loop
 
 .end:
     b   .end

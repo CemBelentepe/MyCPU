@@ -9,7 +9,7 @@ let testFileToCompare
 let saveToFile = true
 let emptyPlaceholder = 0x00
 let spacePlaceholder = 0xCD
-let bytesToPrint = 100
+let bytesToPrint = 256
 ///////////////
 
 
